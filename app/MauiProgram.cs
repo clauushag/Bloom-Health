@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using app.Data;
 
 namespace app;
 
@@ -14,6 +15,17 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+		// 1. Configuramos la ruta del archivo SQLite
+        string dbPath = Path.Combine(FileSystem.AppDataDirectory, "bloomhealth.db3");
+
+		// Te imprimirá la ruta exacta en la consola de VS Code
+		Console.WriteLine($"---> LA RUTA DE MI BASE DE DATOS ES: {dbPath}");
+
+        // 2. Registramos la base de datos como un servicio
+        builder.Services.AddSingleton(s => new SaludDatabase(dbPath));
+
+        // 3. Registramos la página principal para poder inyectarle la base de datos
+        builder.Services.AddTransient<MainPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
