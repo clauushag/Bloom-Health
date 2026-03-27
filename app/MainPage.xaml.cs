@@ -13,7 +13,11 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         _database = database;
     }
-
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await _database.InicializarAsync(); // Aseguramos que la base de datos esté inicializada antes de usarla
+    }
     private async void OnGuardarClicked(object sender, EventArgs e)
 {
     // 1. Verificamos que los campos no estén vacíos

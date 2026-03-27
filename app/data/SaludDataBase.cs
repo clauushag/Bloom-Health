@@ -6,20 +6,27 @@ namespace app.Data;
 public class SaludDatabase
 {
     private SQLiteAsyncConnection _conexion;
-
+    private bool _isInitialized = false; 
     public SaludDatabase(string rutaBD)
     {
-        bool existe = File.Exists(rutaBD);
         _conexion = new SQLiteAsyncConnection(rutaBD);
-        // Esto crea la tabla la primera vez que se ejecuta la app
-        if (!existe)
-        {
-            InicializarBBDD().Wait(); 
-            _conexion.CreateTableAsync<Paciente>().Wait();
-            
-        }
         
     }
+
+    public async Task InicializarAsync()
+    {
+        if (_isInitialized) return;
+        await InicializarBBDD();
+        await _conexion.CreateTableAsync<Paciente>();
+        await InsertarCategoriasIniciales();
+        await InsertarRetosIniciales();
+        _isInitialized = true;
+    }
+
+
+
+
+
 
     public Task<List<Paciente>> ObtenerPacientesAsync()
     {
@@ -34,43 +41,93 @@ public class SaludDatabase
         else
             return _conexion.InsertAsync(paciente);
     }
+    public async Task InsertarUsuarioAsync(Usuario usuario)
+    {
+        await _conexion.InsertAsync(usuario);
+    }
 
-
+    //encatgado de crear todas las tablas de la BBDD
     private async Task InicializarBBDD()
-{
-    // Activar claves foráneas
-    await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
+    {
+        // Activar claves foráneas
+        await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
 
-    //tabla Usuario
-    await _conexion.ExecuteAsync(@"
-        CREATE TABLE IF NOT EXISTS Usuario (
-            ID_Usuario INTEGER PRIMARY KEY AUTOINCREMENT,
-            Nombre TEXT NOT NULL,
-            Peso REAL NOT NULL UNIQUE,
-            Altura REAL NOT NULL,
-            FechaNacimiento TEXT NOT NULL,
-            Genero TEXT NOT NULL
-        );");
-    await _conexion.ExecuteAsync(@"
-        CREATE TABLE IF NOT EXISTS Retos (
-            ID_Reto INTEGER PRIMARY KEY AUTOINCREMENT,
-            Nombre TEXT NOT NULL,
-            Descripcion TEXT NOT NULL,
-            Puntos_Recompensa INTEGER NOT NULL
-        );");
-     await _conexion.ExecuteAsync(@"
-        CREATE TABLE IF NOT EXISTS ProgresoReto (
-            ID_ProgresoReto INTEGER PRIMARY KEY AUTOINCREMENT,
-            ID_Usuario INTEGER NOT NULL,
-            ID_Reto INTEGER NOT NULL,
-            FechaInicio TEXT NOT NULL,
-            FechaFin TEXT,
-            progreso INTEGER NOT NULL,
-            Estado TEXT NOT NULL,
-            FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
-            FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
-        );");
+        //tabla Usuario
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Usuario (
+                ID_Usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+                Nombre TEXT NOT NULL,
+                Peso REAL NOT NULL UNIQUE,
+                Altura REAL NOT NULL,
+                FechaNacimiento TEXT NOT NULL,
+                Genero TEXT NOT NULL
+            );");
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Categorias (
+                ID_Categoria INTEGER PRIMARY KEY AUTOINCREMENT,
+                Nombre TEXT NOT NULL UNIQUE
+            );
+            ");
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Retos (
+                ID_Reto INTEGER PRIMARY KEY AUTOINCREMENT,
+                Nombre TEXT NOT NULL,
+                Descripcion TEXT NOT NULL,
+                Puntos_Recompensa INTEGER NOT NULL,
+                ID_Categoria INTEGER NOT NULL,
+                Objetivo REAL NOT NULL,
+                FOREIGN KEY (ID_Categoria) REFERENCES Categorias(ID_Categoria)
+            );");
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS ProgresoReto (
+                ID_ProgresoReto INTEGER PRIMARY KEY AUTOINCREMENT,
+                ID_Usuario INTEGER NOT NULL,
+                ID_Reto INTEGER NOT NULL,
+                FechaInicio TEXT NOT NULL,
+                FechaFin TEXT,
+                progreso INTEGER NOT NULL,
+                Estado TEXT NOT NULL,
+                FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
+                FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
+            );");
 
-    
-}
+        
+    }
+    //categorias por defecto
+    private async Task InsertarCategoriasIniciales()
+    {
+        var count = await _conexion.Table<Categorias>().CountAsync();
+        if (count > 0) return;
+
+        var categorias = new List<Categorias>
+        {
+            new Categorias { Nombre = "Actividad Física" },
+            new Categorias { Nombre = "Sueño" },
+            new Categorias { Nombre = "Nutrición" },
+            new Categorias { Nombre = "Hidratación" },
+            new Categorias { Nombre = "Bienestar" },
+            new Categorias { Nombre = "Salud Mental" }
+        };
+
+        await _conexion.InsertAllAsync(categorias);
+    }
+    private async Task InsertarRetosIniciales()
+    {
+        // Si ya hay retos, no hacemos nada
+        var count = await _conexion.Table<Retos>().CountAsync();
+        if (count > 0) return;
+
+        // Lista de retos iniciales
+        var retos = new List<Retos>
+        {
+            new Retos { Nombre = "Caminar 5.000 pasos", Descripcion = "Alcanza 5.000 pasos en un día", Puntos_Recompensa = 10, ID_Categoria =1, Objetivo = 5000 },
+            new Retos { Nombre = "Caminar 10.000 pasos", Descripcion = "Alcanza 10.000 pasos en un día", Puntos_Recompensa = 25, ID_Categoria =1, Objetivo = 10000 },
+            new Retos { Nombre = "Caminar 15.000 pasos", Descripcion = "Alcanza 15.000 pasos en un día", Puntos_Recompensa = 40, ID_Categoria =1, Objetivo = 15000 },
+            new Retos { Nombre = "Caminar 20.000 pasos", Descripcion = "Alcanza 20.000 pasos en un día", Puntos_Recompensa = 50, ID_Categoria =1, Objetivo = 20000 }
+
+        };
+
+        // Inserción masiva
+        await _conexion.InsertAllAsync(retos);
+    }
 }

@@ -19,7 +19,7 @@ dotnet add package SQLitePCLRaw.bundle_green
 ## ▶️ Comando para ejecutar la aplicación
 
 ```bash
-dotnet run -f net8.0-windows10.0.19041.0
+dotnet run -f net10.0-windows10.0.19041.0
 ```
 
 ---
