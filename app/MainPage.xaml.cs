@@ -6,42 +6,35 @@ namespace app;
 public partial class MainPage : ContentPage
 {
     private SaludDatabase _database;
+    public Usuario UsuarioActual { get; set; }
 
     // Modificamos el constructor para recibir la base de datos
     public MainPage(SaludDatabase database)
     {
         InitializeComponent();
         _database = database;
+        UsuarioActual=new Usuario();
+        BindingContext = UsuarioActual;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
+        
         await _database.InicializarAsync(); // Aseguramos que la base de datos esté inicializada antes de usarla
+
+
     }
     private async void OnGuardarClicked(object sender, EventArgs e)
-{
-    // 1. Verificamos que los campos no estén vacíos
-    if (string.IsNullOrWhiteSpace(NombreEntry.Text) || string.IsNullOrWhiteSpace(SintomasEditor.Text))
     {
-        await DisplayAlertAsync("Atención", "Por favor, llena todos los campos.", "OK");
-        return; // Detenemos la ejecución si falta información
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(UsuarioActual));
+        Console.WriteLine($"Fecha de Nacimiento: {UsuarioActual.GetFechaNacimiento()}");
+        if (UsuarioActual.EsValido()){
+            await _database.InsertarUsuarioAsync(UsuarioActual);
+            await Shell.Current.GoToAsync("//HomePage");
+        }
+        else
+        {
+            await DisplayAlert("Error", "Rellena todos los campos", "OK");
+        }
     }
-
-    // 2. Creamos el paciente con los datos que escribió el usuario
-    var nuevoPaciente = new Paciente 
-    { 
-        Nombre = NombreEntry.Text, 
-        Sintomas = SintomasEditor.Text 
-    };
-
-    // 3. Lo guardamos en SQLite
-    await _database.GuardarPacienteAsync(nuevoPaciente);
-    
-    // 4. Mostramos el mensaje de éxito
-    await DisplayAlertAsync("Éxito", $"El paciente {nuevoPaciente.Nombre} ha sido guardado.", "OK");
-
-    // 5. Limpiamos los campos para poder ingresar otro paciente
-    NombreEntry.Text = string.Empty;
-    SintomasEditor.Text = string.Empty;
-}
 }

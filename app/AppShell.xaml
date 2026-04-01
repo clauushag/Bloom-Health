@@ -7,8 +7,15 @@
     Title="app">
 
     <ShellContent
-        Title="Home"
+        Title="Formulario"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    <ShellContent 
+        Title="Home"
+        ContentTemplate="{DataTemplate local:HomePage}"
+        Route="HomePage"
+        />
+
+    
 
 </Shell>

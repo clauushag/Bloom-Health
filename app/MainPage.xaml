@@ -1,7 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="app.MainPage">
+             x:Class="app.MainPage"
+             Title="Formulario de Usuario"
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutBehavior="Disabled">
+             
 
     <ScrollView>
         <VerticalStackLayout
@@ -20,22 +24,61 @@
         FontAttributes="Bold"
         HorizontalOptions="Center" />
 
-    <Entry 
-        x:Name="NombreEntry"
-        Placeholder="Nombre y Apellidos"
-        ClearButtonVisibility="WhileEditing" />
 
-    <Editor 
-        x:Name="SintomasEditor"
-        Placeholder="Escribe los síntomas aquí..."
-        HeightRequest="100" />
+        <!-- Nombre -->
+        <VerticalStackLayout>
+            <Label Text="Nombre:"
+                    FontAttributes="Bold"/>
+            <Entry Placeholder="Introduce tu nombre"
+                    Text="{Binding Nombre}"/>
+        </VerticalStackLayout>
 
-    <Button 
-        Text="Guardar Paciente"
-        Clicked="OnGuardarClicked"
-        HorizontalOptions="Fill" />
+        <!-- Peso -->
+        <VerticalStackLayout>
+            <Label Text="Peso (kg):"
+                    FontAttributes="Bold"/>
+            <Entry Placeholder="Ej: 72.5"
+                    Keyboard="Numeric"
+                    Text="{Binding Peso}"/>
+        </VerticalStackLayout>
 
-</VerticalStackLayout>
+
+
+        <!-- Altura -->
+        <VerticalStackLayout>
+            <Label Text="Altura (cm):"
+                    FontAttributes="Bold"/>
+            <Entry Placeholder="Ej: 175"
+                    Keyboard="Numeric"
+                    Text="{Binding Altura}"/>
+        </VerticalStackLayout>
+
+
+        <!-- Fecha de nacimiento -->
+        <VerticalStackLayout>
+            <Label Text="Fecha de nacimiento:"
+                    FontAttributes="Bold"/>
+            <DatePicker Date="{Binding FechaNacDate}"/>
+        </VerticalStackLayout>
+
+        <!-- Género -->
+        <VerticalStackLayout>
+            <Label Text="Género:"
+                    FontAttributes="Bold"/>
+            <Picker Title="Selecciona un género"
+                    ItemsSource="{Binding ListaGeneros}"
+                    SelectedItem="{Binding Genero}"/>
+        </VerticalStackLayout>
+
+        <!-- Botón Guardar -->
+        <Button Text="Guardar"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                FontAttributes="Bold"
+                Clicked="OnGuardarClicked"/>
+
+
+        </VerticalStackLayout>
     </ScrollView>
 
 </ContentPage>
