@@ -1,40 +1,15 @@
-﻿using app.Data;
-using app.Models;
-
-namespace app;
-
-public partial class MainPage : ContentPage
+﻿namespace app // <--- Asegúrate que esto coincida con el nombre de tu proyecto
 {
-    private SaludDatabase _database;
-    public Usuario UsuarioActual { get; set; }
-
-    // Modificamos el constructor para recibir la base de datos
-    public MainPage(SaludDatabase database)
+    public partial class MainPage : ContentPage
     {
-        InitializeComponent();
-        _database = database;
-        UsuarioActual=new Usuario();
-        BindingContext = UsuarioActual;
-    }
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        
-        await _database.InicializarAsync(); // Aseguramos que la base de datos esté inicializada antes de usarla
-
-
-    }
-    private async void OnGuardarClicked(object sender, EventArgs e)
-    {
-        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(UsuarioActual));
-        Console.WriteLine($"Fecha de Nacimiento: {UsuarioActual.GetFechaNacimiento()}");
-        if (UsuarioActual.EsValido()){
-            await _database.InsertarUsuarioAsync(UsuarioActual);
-            await Shell.Current.GoToAsync("//HomePage");
-        }
-        else
+        public MainPage()
         {
-            await DisplayAlert("Error", "Rellena todos los campos", "OK");
+            InitializeComponent();
+        }
+
+        private void OnAddClicked(object sender, EventArgs e)
+        {
+            // Aquí irá la lógica para abrir el menú
         }
     }
 }
