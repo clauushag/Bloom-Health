@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app.RetosPage"
+             BackgroundColor="#F7F9F7"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="30,60,30,40" VerticalOptions="Start">
+
+            <Label Text="RETOS DIARIOS"
+                   FontSize="24"
+                   CharacterSpacing="3"
+                   TextColor="#2D3A2F"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   FontFamily="OpenSansSemibold" 
+                   Margin="0,0,0,0"/>
+
+            <Label Text="COMPLETA RETOS PARA DAR ENERGÍA"
+                   FontSize="10"
+                   CharacterSpacing="1.5"
+                   TextColor="#7A8B7C"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   Margin="0,0,0,10"/>
+
+            <Frame BackgroundColor="#8EB497"
+                   CornerRadius="30"
+                   HasShadow="True"
+                   BorderColor="Transparent"
+                   Padding="25,30">
+                <Frame.Shadow>
+                    <Shadow Brush="#8EB497" Offset="0,10" Radius="20" Opacity="0.4" />
+                </Frame.Shadow>
+
+                <Grid ColumnDefinitions="*,*">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                        <Label Text="ENERGÍA HOY" TextColor="White" FontSize="10" CharacterSpacing="1" FontAttributes="Bold" Opacity="0.9"/>
+                        <Label Text="30 XP" TextColor="White" FontSize="28" FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout Grid.Column="1" HorizontalOptions="End" Spacing="5">
+                        <Label Text="COMPLETADOS" TextColor="White" FontSize="10" CharacterSpacing="1" FontAttributes="Bold" HorizontalOptions="End" Opacity="0.9"/>
+                        <Label Text="1/3" TextColor="White" FontSize="28" FontAttributes="Bold" HorizontalOptions="End" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Frame>
+
+            <VerticalStackLayout Spacing="15">
+                
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       HasShadow="True"
+                       BorderColor="Transparent"
+                       Padding="15,20">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E" Offset="0,10" Radius="20" Opacity="0.15" />
+                    </Frame.Shadow>
+                    
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Frame Grid.Column="0" BackgroundColor="#F7F9F7" CornerRadius="20" HeightRequest="45" WidthRequest="45" HasShadow="False" Padding="0" VerticalOptions="Center">
+                            <Label Text="🌙" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20"/>
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Dormir 8 horas" FontSize="15" FontAttributes="Bold" TextColor="#2D3A2F" />
+                            <Label Text="Descansa bien para recargar energía" FontSize="11" TextColor="#7A8B7C" />
+                            <Label Text="✨ +25 XP" FontSize="12" TextColor="#8EB497" FontAttributes="Bold" Margin="0,4,0,0"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="#E8F2E9"
+                       CornerRadius="25"
+                       HasShadow="False"
+                       BorderColor="#D1E2D4"
+                       Padding="15,20">
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Frame Grid.Column="0" BackgroundColor="White" CornerRadius="20" HeightRequest="45" WidthRequest="45" HasShadow="False" Padding="0" VerticalOptions="Center">
+                            <Label Text="💨" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20"/>
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Hacer Yoga" FontSize="15" FontAttributes="Bold" TextColor="#2D3A2F" />
+                            <Label Text="20 minutos de estiramiento" FontSize="11" TextColor="#7A8B7C" />
+                            <Label Text="✨ +30 XP" FontSize="12" TextColor="#8EB497" FontAttributes="Bold" Margin="0,4,0,0"/>
+                        </VerticalStackLayout>
+                        <Frame Grid.Column="2" BackgroundColor="#8EB497" CornerRadius="12" HeightRequest="24" WidthRequest="24" HasShadow="False" Padding="0" VerticalOptions="Center">
+                            <Label Text="✓" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White" FontSize="12" FontAttributes="Bold"/>
+                        </Frame>
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="White"
+                       CornerRadius="25"
+                       HasShadow="True"
+                       BorderColor="Transparent"
+                       Padding="15,20">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E" Offset="0,10" Radius="20" Opacity="0.15" />
+                    </Frame.Shadow>
+                    
+                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                        <Frame Grid.Column="0" BackgroundColor="#F7F9F7" CornerRadius="20" HeightRequest="45" WidthRequest="45" HasShadow="False" Padding="0" VerticalOptions="Center">
+                            <Label Text="💧" HorizontalOptions="Center" VerticalOptions="Center" FontSize="20"/>
+                        </Frame>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Beber 2L de agua" FontSize="15" FontAttributes="Bold" TextColor="#2D3A2F" />
+                            <Label Text="Mantén tu cuerpo hidratado" FontSize="11" TextColor="#7A8B7C" />
+                            <Label Text="✨ +20 XP" FontSize="12" TextColor="#8EB497" FontAttributes="Bold" Margin="0,4,0,0"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

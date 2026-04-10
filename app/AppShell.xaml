@@ -20,6 +20,11 @@
         ContentTemplate="{DataTemplate local:crearPerfil}"
         Route="crearPerfil"
         />
+    <ShellContent 
+        Title="RetosPage"
+        ContentTemplate="{DataTemplate local:RetosPage}"
+        Route="RetosPage"
+        />
 
     
 
