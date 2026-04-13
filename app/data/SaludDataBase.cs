@@ -91,7 +91,27 @@ public class SaludDatabase
                 FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
-        
+
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS RegistroDiario (
+                ID_Registro INTEGER PRIMARY KEY AUTOINCREMENT,
+                ID_Usuario INTEGER NOT NULL,
+                Fecha TEXT NOT NULL,
+                FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario)
+            );");
+
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Fisico (
+                ID_Registro INTEGER PRIMARY KEY,
+                Pasos INTEGER NOT NULL,
+                Kcal_Quemadas REAL NOT NULL,
+                Tiempo_Ejercicio REAL NOT NULL,
+                FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
+            );");
+
+
+
+
     }
     //categorias por defecto
     private async Task InsertarCategoriasIniciales()
