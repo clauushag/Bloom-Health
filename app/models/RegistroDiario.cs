@@ -2,7 +2,7 @@ using SQLite;
 
 namespace app.Models
 {
-    public abstract class RegistroDiario
+    public class RegistroDiario
     {
         [PrimaryKey, AutoIncrement]
         public int ID_Registro { get; set; }
