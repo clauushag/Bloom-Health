@@ -21,11 +21,19 @@
         Route="crearPerfil"
         />
     <ShellContent 
-        Title="RetosPage"
+        Title="Retos"
         ContentTemplate="{DataTemplate local:RetosPage}"
         Route="RetosPage"
         />
-
-    
+    <ShellContent 
+        Title="Nutricion"
+        ContentTemplate="{DataTemplate local:NutricionPage}"
+        Route="NutricionPage"
+        />
+    <ShellContent 
+        Title="Ciclo Menstrual"
+        ContentTemplate="{DataTemplate local:MenstrualPage}"
+        Route="MenstrualPage"
+        />
 
 </Shell>
