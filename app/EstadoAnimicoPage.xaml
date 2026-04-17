@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app.EstadoAnimicoPage"
+             BackgroundColor="#F7F9F7"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="25,50,25,40">
+
+            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
+                <Label Grid.Column="0" Text="←" FontSize="26" TextColor="#2D3A2F" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnVolverClicked" />
+                    </Label.GestureRecognizers>
+                </Label>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Label Text="Estado Anímico" FontSize="20" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                    <Label Text="¿Cómo te sientes hoy?" FontSize="12" TextColor="#7A8B7C"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                <Frame Grid.Column="0" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label Text="🧠" FontSize="18" HorizontalOptions="Center"/>
+                        <Label Text="Registros" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                        <Label Text="12 este mes" FontSize="12" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="1" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label Text="🤍" FontSize="18" HorizontalOptions="Center"/>
+                        <Label Text="Promedio" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                        <Label Text="Bien 😊" FontSize="12" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame Grid.Column="2" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
+                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label Text="✨" FontSize="18" HorizontalOptions="Center"/>
+                        <Label Text="Racha" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                        <Label Text="5 días" FontSize="12" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+            </Grid>
+
+            <VerticalStackLayout Spacing="15">
+                <Label Text="Selecciona tu estado de ánimo" FontSize="14" FontAttributes="Bold" TextColor="#7A8B7C" Margin="5,0"/>
+                
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
+                    
+                    <Frame x:Name="MoodIncreible" Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="😊" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Increíble" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+40 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame x:Name="MoodBien" Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="🙂" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Bien" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+30 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame x:Name="MoodNormal" Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="😐" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Normal" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+20 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame x:Name="MoodTriste" Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="😔" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Triste" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+15 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame x:Name="MoodAnsioso" Grid.Row="2" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="😰" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Ansioso/a" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+15 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame x:Name="MoodEstresado" Grid.Row="2" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnMoodTapped" /></Frame.GestureRecognizers>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="😫" FontSize="26" Margin="0,0,0,5"/>
+                            <Label Text="Estresado/a" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
+                                <Label Text="+15 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
+                            </Frame>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="15">
+                <Label Text="¿Cómo te sientes? (opcional)" FontSize="14" FontAttributes="Bold" TextColor="#7A8B7C" Margin="5,0"/>
+                
+                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="10" RowSpacing="10">
+                    
+                    <Frame Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="⚡"/><Label Text="Con energía" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+                    <Frame Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="😴"/><Label Text="Cansado/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="🎯"/><Label Text="Concentrado/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+                    <Frame Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="💭"/><Label Text="Distraído/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="2" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="🔥"/><Label Text="Motivado/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+                    <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="🌊"/><Label Text="Abrumado/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="3" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="🕊️"/><Label Text="En paz" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+                    <Frame Grid.Row="3" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="15,12">
+                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnFeelingTapped" /></Frame.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="8" VerticalOptions="Center"><Label Text="😤"/><Label Text="Irritado/a" FontSize="12" TextColor="#2D3A2F" VerticalOptions="Center"/></HorizontalStackLayout>
+                    </Frame>
+                </Grid>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="20" Margin="0,10,0,0">
+                
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Notas (opcional)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
+                    <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
+                        <Editor Placeholder="¿Qué te ha hecho sentir así? Escribe lo que quieras..." HeightRequest="80" TextColor="#2D3A2F" PlaceholderColor="#94A696" FontSize="13" BackgroundColor="Transparent"/>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="✨ ¿Por qué estás agradecido/a hoy? (opcional)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
+                    <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15,0">
+                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
+                        <Entry Placeholder="Ej: Un buen desayuno, una llamada..." TextColor="#2D3A2F" PlaceholderColor="#94A696" FontSize="13" BackgroundColor="Transparent"/>
+                    </Frame>
+                </VerticalStackLayout>
+
+                <Button Text="Guardar Registro Anímico" BackgroundColor="#8EB497" TextColor="White" FontAttributes="Bold" FontSize="15" CornerRadius="25" HeightRequest="55" Margin="0,5,0,10">
+                    <Button.Shadow><Shadow Brush="#8EB497" Offset="0,8" Radius="15" Opacity="0.3" /></Button.Shadow>
+                </Button>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Registros recientes" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
+                
+                <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                    <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                            <Label Grid.Column="0" Text="🙂" FontSize="28" VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Bien" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                                <Label Text="Hace 3 horas" FontSize="11" TextColor="#7A8B7C"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="+30 XP" FontSize="12" FontAttributes="Bold" TextColor="#8EB497" VerticalOptions="Center"/>
+                        </Grid>
+                        <HorizontalStackLayout Spacing="8">
+                            <Frame BackgroundColor="#F0F5F1" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="10,4"><Label Text="Con energía" FontSize="10" TextColor="#8EB497" FontAttributes="Bold"/></Frame>
+                            <Frame BackgroundColor="#F0F5F1" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="10,4"><Label Text="Concentrado/a" FontSize="10" TextColor="#8EB497" FontAttributes="Bold"/></Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
+                    <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
+                            <Label Grid.Column="0" Text="😊" FontSize="28" VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Increíble" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                                <Label Text="Ayer" FontSize="11" TextColor="#7A8B7C"/>
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="+40 XP" FontSize="12" FontAttributes="Bold" TextColor="#8EB497" VerticalOptions="Center"/>
+                        </Grid>
+                        <HorizontalStackLayout Spacing="8">
+                            <Frame BackgroundColor="#F0F5F1" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="10,4"><Label Text="Motivado/a" FontSize="10" TextColor="#8EB497" FontAttributes="Bold"/></Frame>
+                            <Frame BackgroundColor="#F0F5F1" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="10,4"><Label Text="En paz" FontSize="10" TextColor="#8EB497" FontAttributes="Bold"/></Frame>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

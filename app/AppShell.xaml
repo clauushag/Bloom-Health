@@ -35,5 +35,15 @@
         ContentTemplate="{DataTemplate local:MenstrualPage}"
         Route="MenstrualPage"
         />
+    <ShellContent 
+        Title="Registro de Actividad"
+        ContentTemplate="{DataTemplate local:RegistroActividadPage}"
+        Route="RegistroActividadPage"
+        />
+    <ShellContent 
+        Title="Estado Anímico"
+        ContentTemplate="{DataTemplate local:EstadoAnimicoPage}"
+        Route="EstadoAnimicoPage"
+        />
 
 </Shell>
