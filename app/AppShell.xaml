@@ -20,13 +20,18 @@
         ContentTemplate="{DataTemplate local:RetosPage}"
         Route="RetosPage"/>
     <ShellContent
-        Title="Menu"
-        ContentTemplate="{DataTemplate local:Menu}"
-        Route="Menu"/>
+        Title="Menstrual"
+        ContentTemplate="{DataTemplate local:MenstrualPage}"
+        Route="MenstrualPage"/>
+    <ShellContent
+        Title="Nutricion"
+        ContentTemplate="{DataTemplate local:NutricionPage}"
+        Route="NutricionPage"/>
     <ShellContent
         Title="Perfil"
         ContentTemplate="{DataTemplate local:PerfilPage}"
         Route="PerfilPage"/>
+
 
 
 
