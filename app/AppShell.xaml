@@ -7,25 +7,28 @@
     Title="app">
 
     <ShellContent
-        Title="Formulario"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent 
         Title="Home"
-        ContentTemplate="{DataTemplate local:HomePage}"
-        Route="HomePage"
-        />
-    <ShellContent 
-        Title="crearperfil"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"/>
+
+    <ShellContent
+        Title="Crear Perfil"
         ContentTemplate="{DataTemplate local:crearPerfil}"
-        Route="crearPerfil"
-        />
-    <ShellContent 
+        Route="crearPerfil"/>
+    <ShellContent
         Title="RetosPage"
         ContentTemplate="{DataTemplate local:RetosPage}"
-        Route="RetosPage"
-        />
+        Route="RetosPage"/>
+    <ShellContent
+        Title="Menu"
+        ContentTemplate="{DataTemplate local:Menu}"
+        Route="Menu"/>
+    <ShellContent
+        Title="Perfil"
+        ContentTemplate="{DataTemplate local:PerfilPage}"
+        Route="PerfilPage"/>
 
-    
+
+
 
 </Shell>
