@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app.PerfilPage"
+             BackgroundColor="#F7F9F1"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*, Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20"
+                                 Padding="25,40,25,20"
+                                 MaximumWidthRequest="800"
+                                 HorizontalOptions="Fill">
+
+                <VerticalStackLayout Spacing="2"
+                        Margin="0,0,0,10">
+                    <Label Text="Perfil"
+                            FontSize="28"
+                            FontAttributes="Bold"
+                            TextColor="#2D3A2F"/>
+                    <Label Text="Configura tu experiencia"
+                            FontSize="14"
+                            TextColor="#7A8B7C"/>
+                </VerticalStackLayout>
+
+                <Frame BackgroundColor="#8EB497"
+                        CornerRadius="30"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        Padding="25"
+                        HorizontalOptions="Fill">
+                    <VerticalStackLayout Spacing="20">
+                        <Grid ColumnDefinitions="Auto, *"
+                                ColumnSpacing="15">
+                            <Border StrokeShape="RoundRectangle 30"
+                                    HeightRequest="60"
+                                    WidthRequest="60"
+                                    BackgroundColor="#A4C7AB"
+                                    StrokeThickness="0">
+                                <Label Text="👤"
+                                        FontSize="30"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1"
+                                    VerticalOptions="Center">
+                                <Label Text="María García"
+                                        FontSize="20"
+                                        FontAttributes="Bold"
+                                        TextColor="White"/>
+                                <Label Text="Miembro desde Marzo 2026"
+                                        FontSize="12"
+                                        TextColor="#E1EFE3"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <BoxView HeightRequest="0.5"
+                                BackgroundColor="#A4C7AB"
+                                Margin="0,5"/>
+
+                        <Grid ColumnDefinitions="*, *, *">
+                            <VerticalStackLayout Grid.Column="0"
+                                    HorizontalOptions="Center">
+                                <Label Text="Racha"
+                                        FontSize="11"
+                                        TextColor="#E1EFE3"
+                                        HorizontalOptions="Center"/>
+                                <Label Text="7 días"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1"
+                                    HorizontalOptions="Center">
+                                <Label Text="XP Total"
+                                        FontSize="11"
+                                        TextColor="#E1EFE3"
+                                        HorizontalOptions="Center"/>
+                                <Label Text="1,240"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="2"
+                                    HorizontalOptions="Center">
+                                <Label Text="Nivel"
+                                        FontSize="11"
+                                        TextColor="#E1EFE3"
+                                        HorizontalOptions="Center"/>
+                                <Label Text="12"
+                                        FontSize="18"
+                                        FontAttributes="Bold"
+                                        TextColor="White"
+                                        HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Label Text="Configuración"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        TextColor="#7A8B7C"
+                        Margin="5,10,0,0"/>
+
+                <Frame BackgroundColor="White"
+                        CornerRadius="20"
+                        Padding="15,10"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Fill">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E"
+                                Offset="0,4"
+                                Radius="10"
+                                Opacity="0.05"/>
+                    </Frame.Shadow>
+                    <Grid ColumnDefinitions="Auto, *, Auto">
+                        <Label Text="🌙"
+                                FontSize="18"
+                                VerticalOptions="Center"
+                                Margin="5,0,15,0"/>
+                        <VerticalStackLayout Grid.Column="1"
+                                VerticalOptions="Center">
+                            <Label Text="Modo Oscuro"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="#2D3A2F"/>
+                            <Label Text="Desactivado"
+                                    FontSize="12"
+                                    TextColor="#7A8B7C"/>
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="2"
+                                OnColor="#8EB497"
+                                ThumbColor="White"
+                                VerticalOptions="Center"/>
+                    </Grid>
+                </Frame>
+
+                <Label Text="Acciones"
+                        FontSize="13"
+                        FontAttributes="Bold"
+                        TextColor="#7A8B7C"
+                        Margin="5,10,0,0"/>
+
+                <Frame BackgroundColor="White"
+                        CornerRadius="20"
+                        Padding="15"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Fill">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E"
+                                Offset="0,4"
+                                Radius="10"
+                                Opacity="0.05"/>
+                    </Frame.Shadow>
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Border BackgroundColor="#F1F5F1"
+                                StrokeShape="RoundRectangle 10"
+                                HeightRequest="40"
+                                WidthRequest="40"
+                                StrokeThickness="0"
+                                Margin="0,0,15,0">
+                            <Label Text="⬇️"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                VerticalOptions="Center">
+                            <Label Text="Exportar Informe PDF"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="#2D3A2F"/>
+                            <Label Text="Descarga tu progreso mensual"
+                                    FontSize="11"
+                                    TextColor="#7A8B7C"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="White"
+                        CornerRadius="20"
+                        Padding="15"
+                        HasShadow="False"
+                        BorderColor="Transparent"
+                        HorizontalOptions="Fill">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E"
+                                Offset="0,4"
+                                Radius="10"
+                                Opacity="0.05"/>
+                    </Frame.Shadow>
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Border BackgroundColor="#F1F5F1"
+                                StrokeShape="RoundRectangle 10"
+                                HeightRequest="40"
+                                WidthRequest="40"
+                                StrokeThickness="0"
+                                Margin="0,0,15,0">
+                            <Label Text="☁️"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1"
+                                VerticalOptions="Center">
+                            <Label Text="Sincronizar con Nube"
+                                    FontSize="14"
+                                    FontAttributes="Bold"
+                                    TextColor="#2D3A2F"/>
+                            <Label Text="Drive / iCloud"
+                                    FontSize="11"
+                                    TextColor="#7A8B7C"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Frame>
+
+                <VerticalStackLayout Spacing="20"
+                        Margin="10,10,0,40">
+                    <Label Text="Notificaciones"
+                            FontSize="14"
+                            TextColor="#2D3A2F"/>
+                    <Label Text="Privacidad y seguridad"
+                            FontSize="14"
+                            TextColor="#2D3A2F"/>
+                    <Label Text="Ayuda y soporte"
+                            FontSize="14"
+                            TextColor="#2D3A2F"/>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Frame Grid.Row="1"
+               BackgroundColor="White"
+               CornerRadius="0"
+               Padding="15,10"
+               HasShadow="False"
+               BorderColor="#EEF2EE"
+               VerticalOptions="End">
+
+            <Grid ColumnDefinitions="*, *, *"
+                  MaximumWidthRequest="800"
+                  HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                    <Label Text="🏠"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            TextColor="#7A8B7C"/>
+                    <Label Text="Inicio"
+                            FontSize="11"
+                            TextColor="#7A8B7C"
+                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                    <Label Text="🏆"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            TextColor="#7A8B7C"/>
+                    <Label Text="Retos"
+                            FontSize="11"
+                            TextColor="#7A8B7C"
+                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2"
+                        HorizontalOptions="Center"
+                        Spacing="2">
+                    <Label Text="👤"
+                            FontSize="22"
+                            HorizontalOptions="Center"
+                            TextColor="#2D3A2F"/>
+                    <Label Text="Perfil"
+                            FontSize="11"
+                            TextColor="#2D3A2F"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Frame>
+
+    </Grid>
+</ContentPage>

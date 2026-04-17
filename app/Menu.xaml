@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app.Menu"
+             BackgroundColor="#80000000" 
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*, Auto">
+        
+        <BoxView Grid.Row="0" BackgroundColor="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnBackClicked"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Frame Grid.Row="1" 
+               BackgroundColor="White" 
+               CornerRadius="40" 
+               Padding="30,40"
+               Margin="0"
+               HasShadow="True"
+               BorderColor="Transparent"
+               VerticalOptions="End">
+            
+            <VerticalStackLayout Spacing="18">
+                
+                <Grid ColumnDefinitions="*, Auto" Margin="0,0,0,5">
+                    <Label Text="AÑADIR REGISTRO" 
+                           FontSize="18" 
+                           FontAttributes="Bold" 
+                           TextColor="#2D3A2F"
+                           CharacterSpacing="1"/>
+                    <Button Grid.Column="1" 
+                            Text="✕" 
+                            TextColor="#7A8B7C"
+                            BackgroundColor="Transparent"
+                            Clicked="OnBackClicked"
+                            FontSize="20"/>
+                </Grid>
+
+                <Frame BackgroundColor="#8EBC8F" Padding="18" CornerRadius="20" HasShadow="False" BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnActividadTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🏃" FontSize="24" VerticalOptions="Center"/>
+                        <Label Text="ACTIVIDAD" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" FontSize="15" CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#D9A673" Padding="18" CornerRadius="20" HasShadow="False" BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnComidaTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🍎" FontSize="24" VerticalOptions="Center"/>
+                        <Label Text="COMIDA" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" FontSize="15" CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#5E8D5E" Padding="18" CornerRadius="20" HasShadow="False" BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEstadoTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🧠" FontSize="24" VerticalOptions="Center"/>
+                        <Label Text="ESTADO ANÍMICO" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" FontSize="15" CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <Frame BackgroundColor="#F2A7B5" Padding="18" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Margin="0,0,0,10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnSaludMenstrualTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="📅" FontSize="24" VerticalOptions="Center"/>
+                        <Label Text="SALUD MENSTRUAL" TextColor="White" FontAttributes="Bold" VerticalOptions="Center" FontSize="15" CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

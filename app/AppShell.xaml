@@ -7,43 +7,37 @@
     Title="app">
 
     <ShellContent
-        Title="Formulario"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
-    <ShellContent 
         Title="Home"
-        ContentTemplate="{DataTemplate local:HomePage}"
-        Route="HomePage"
-        />
-    <ShellContent 
-        Title="crearperfil"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage"/>
+
+    <ShellContent
+        Title="Crear Perfil"
         ContentTemplate="{DataTemplate local:crearPerfil}"
-        Route="crearPerfil"
-        />
-    <ShellContent 
-        Title="Retos"
+        Route="crearPerfil"/>
+    <ShellContent
+        Title="RetosPage"
         ContentTemplate="{DataTemplate local:RetosPage}"
-        Route="RetosPage"
-        />
-    <ShellContent 
+        Route="RetosPage"/>
+    <ShellContent
+        Title="Menstrual"
+        ContentTemplate="{DataTemplate local:MenstrualPage}"
+        Route="MenstrualPage"/>
+    <ShellContent
         Title="Nutricion"
         ContentTemplate="{DataTemplate local:NutricionPage}"
-        Route="NutricionPage"
-        />
-    <ShellContent 
+        Route="NutricionPage"/>
+    <ShellContent
         Title="Ciclo Menstrual"
         ContentTemplate="{DataTemplate local:MenstrualPage}"
-        Route="MenstrualPage"
-        />
-    <ShellContent 
+        Route="MenstrualPage"/>
+    <ShellContent
         Title="Registro de Actividad"
         ContentTemplate="{DataTemplate local:RegistroActividadPage}"
-        Route="RegistroActividadPage"
-        />
-    <ShellContent 
+        Route="RegistroActividadPage"/>
+    <ShellContent
         Title="Estado Anímico"
         ContentTemplate="{DataTemplate local:EstadoAnimicoPage}"
-        Route="EstadoAnimicoPage"
-        />
+        Route="EstadoAnimicoPage"/>
 
 </Shell>
