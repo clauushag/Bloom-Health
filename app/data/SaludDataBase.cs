@@ -99,6 +99,15 @@ public class SaludDatabase
                 FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
+            await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Avatar (
+                ID_Avatar INTEGER PRIMARY KEY AUTOINCREMENT,
+                ID_Usuario INTEGER NOT NULL UNIQUE,
+                Nivel_Evolucion INTEGER NOT NULL,
+                Estado_Salud TEXT NOT NULL,
+                FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario)
+            );");
+
 
         await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS RegistroDiario (
@@ -117,8 +126,32 @@ public class SaludDatabase
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
             );");
 
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Nutricional (
+                ID_Registro INTEGER PRIMARY KEY,
+                Comida TEXT NOT NULL,
+                Kcal_Ingeridos REAL NOT NULL,
+                Vasos_Agua INTEGER NOT NULL,
+                FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
+            );");
 
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Mental (
+                ID_Registro INTEGER PRIMARY KEY,
+                Estado_Animo TEXT NOT NULL,
+                Horas_Sueno REAL NOT NULL,
+                Notas_diario TEXT,
+                FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
+            );");
 
+        await _conexion.ExecuteAsync(@"
+            CREATE TABLE IF NOT EXISTS Menstruacion (
+                ID_Registro INTEGER PRIMARY KEY,
+                Fecha_Inicio_Ciclo TEXT NOT NULL,
+                Estado_Animo TEXT NOT NULL,
+                Sintomas TEXT NOT NULL,
+                FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
+            );");
 
     }
     //categorias por defecto
