@@ -6,25 +6,31 @@ namespace app
     public partial class MainPage : ContentPage
     {
         private SaludDatabase _database;
-        public Usuario UsuarioActual { get; set; }  
+        public PerfilViewModel ViewModel { get; set; }
         public MainPage(SaludDatabase database)
         {
             InitializeComponent();
             _database = database;
-            UsuarioActual = new Usuario();
-            BindingContext = UsuarioActual; 
+            ViewModel = new PerfilViewModel();
+            BindingContext = ViewModel; 
         }
         protected override async void OnAppearing()
         {
             base.OnAppearing();
             await _database.InicializarAsync();
             Usuario usuario = await _database.ObtenerUsuarioAsync();
-            UsuarioActual = usuario;
-            BindingContext = UsuarioActual; // Actualizamos el BindingContext con el usuario obtenido
+
             if (usuario == null)
             {
                 await Shell.Current.GoToAsync("//crearPerfil");
             }
+            else
+            {
+                ViewModel.UsuarioActual = usuario;
+                ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
+            }
+            
+           
         }
         private void OnAddClicked(object sender, EventArgs e)
         {

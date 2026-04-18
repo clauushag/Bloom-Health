@@ -8,6 +8,8 @@ namespace app.Models
         public int ID_Avatar { get; set; }
 
         public int Nivel_Evolucion { get; set; }
+        public int XP { get; set; }
+        
 
         public int ID_Usuario { get; set; }
 

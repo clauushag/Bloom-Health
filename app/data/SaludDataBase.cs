@@ -93,6 +93,7 @@ public class SaludDatabase
             CREATE TABLE IF NOT EXISTS Avatar (
                 ID_Avatar INTEGER PRIMARY KEY AUTOINCREMENT,
                 ID_Usuario INTEGER NOT NULL UNIQUE,
+                XP INTEGER NOT NULL,
                 Nivel_Evolucion INTEGER NOT NULL,
                 Estado_Salud TEXT NOT NULL,
                 FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario)
@@ -112,6 +113,7 @@ public class SaludDatabase
                 ID_Registro INTEGER PRIMARY KEY,
                 Distancia INTEGER NOT NULL,
                 Tipo_Actividad TEXT NOT NULL,
+                XP INTEGER NOT NULL,
                 Kcal_Quemadas REAL NOT NULL,
                 Tiempo_Ejercicio REAL NOT NULL,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
@@ -189,8 +191,14 @@ public class SaludDatabase
         {
             ID_Usuario = 1, // Aquí deberías poner el ID del usuario actual
             Nivel_Evolucion = 1,
+            XP = 0,
             Estado_Salud = Avatar.Tipos_Estados_Salud[8] // "Estable"
         };
         await _conexion.InsertAsync(avatar);
+    }
+    public async Task<Avatar> ObtenerAvatarAsync(int idUsuario)
+    {
+        return await _conexion.Table<Avatar>()
+                               .FirstOrDefaultAsync(a => a.ID_Usuario == idUsuario);
     }
 }
