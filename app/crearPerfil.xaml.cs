@@ -31,6 +31,7 @@ public partial class crearPerfil : ContentPage
         if (UsuarioActual.EsValido())
         {
             await _database.InsertarUsuarioAsync(UsuarioActual);
+            await _database.CrearAvatarAsync();
             await Shell.Current.GoToAsync("//MainPage");
         }
         else

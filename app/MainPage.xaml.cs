@@ -6,10 +6,13 @@ namespace app
     public partial class MainPage : ContentPage
     {
         private SaludDatabase _database;
+        public PerfilViewModel ViewModel { get; set; }
         public MainPage(SaludDatabase database)
         {
             InitializeComponent();
             _database = database;
+            ViewModel = new PerfilViewModel();
+            BindingContext = ViewModel; 
         }
         protected override async void OnAppearing()
         {
@@ -21,6 +24,13 @@ namespace app
             {
                 await Shell.Current.GoToAsync("//crearPerfil");
             }
+            else
+            {
+                ViewModel.UsuarioActual = usuario;
+                ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
+            }
+            
+           
         }
         private void OnAddClicked(object sender, EventArgs e)
         {
