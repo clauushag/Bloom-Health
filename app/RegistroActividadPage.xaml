@@ -5,214 +5,699 @@
              BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="25,50,25,40">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="25"
+                                 Padding="25,50,25,40">
 
-            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
-                <Label Grid.Column="0" Text="←" FontSize="26" TextColor="#2D3A2F" VerticalOptions="Center">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnVolverClicked" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                    <Label Text="Registro de Actividad" FontSize="20" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                    <Label Text="¿Qué ejercicio hiciste hoy?" FontSize="12" TextColor="#7A8B7C"/>
-                </VerticalStackLayout>
-            </Grid>
-
-            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
-                <Frame Grid.Column="0" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="🔥" FontSize="18" HorizontalOptions="Center"/>
-                        <Label Text="Hoy" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                        <Label Text="320 kcal" FontSize="14" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
+                <Grid ColumnDefinitions="Auto, *"
+                      ColumnSpacing="15">
+                    <Label Grid.Column="0"
+                           Text="←"
+                           FontSize="26"
+                           TextColor="#2D3A2F"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnVolverClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <VerticalStackLayout Grid.Column="1"
+                                         VerticalOptions="Center">
+                        <Label Text="Registro de Actividad"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#2D3A2F"/>
+                        <Label Text="¿Qué ejercicio hiciste hoy?"
+                               FontSize="12"
+                               TextColor="#7A8B7C"/>
                     </VerticalStackLayout>
-                </Frame>
-                <Frame Grid.Column="1" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="⏱️" FontSize="18" HorizontalOptions="Center"/>
-                        <Label Text="Duración" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                        <Label Text="45 min" FontSize="14" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-                <Frame Grid.Column="2" BackgroundColor="#E8F2E9" CornerRadius="20" HasShadow="False" BorderColor="Transparent" Padding="10,15">
-                    <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
-                        <Label Text="📈" FontSize="18" HorizontalOptions="Center"/>
-                        <Label Text="Racha" FontSize="11" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                        <Label Text="7 días" FontSize="14" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
-                </Frame>
-            </Grid>
-
-            <VerticalStackLayout Spacing="15">
-                <Label Text="Selecciona tu actividad" FontSize="14" FontAttributes="Bold" TextColor="#7A8B7C" Margin="5,0"/>
-                
-                <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="15">
-                    
-                    <Frame x:Name="CardCaminar" Grid.Row="0" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Caminar"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🚶" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Caminar" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="150-200 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+20 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardCorrer" Grid.Row="0" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Correr"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🏃" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Correr" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="300-400 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+35 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardYoga" Grid.Row="1" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Yoga"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🧘" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Yoga" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="120-180 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+25 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardCiclismo" Grid.Row="1" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Ciclismo"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🚴" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Ciclismo" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="250-350 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+30 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardNatacion" Grid.Row="2" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Natación"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🏊" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Natación" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="350-450 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+40 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardGimnasio" Grid.Row="2" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Gimnasio"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="💪" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Gimnasio" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="200-300 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+30 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardBaile" Grid.Row="3" Grid.Column="0" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Baile"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="💃" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Baile" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="180-250 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+25 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
-                    <Frame x:Name="CardEstiramiento" Grid.Row="3" Grid.Column="1" BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/></Frame.Shadow>
-                        <Frame.GestureRecognizers><TapGestureRecognizer Tapped="OnActividadTapped" CommandParameter="Estiramiento"/></Frame.GestureRecognizers>
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="🤸" FontSize="26" Margin="0,0,0,5"/>
-                            <Label Text="Estiramiento" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="80-120 kcal/30min" FontSize="10" TextColor="#7A8B7C"/>
-                            <Frame BackgroundColor="#E8F2E9" CornerRadius="12" HasShadow="False" BorderColor="Transparent" Padding="8,4" HorizontalOptions="Start" Margin="0,5,0,0">
-                                <Label Text="+15 XP" FontSize="10" FontAttributes="Bold" TextColor="#8EB497"/>
-                            </Frame>
-                        </VerticalStackLayout>
-                    </Frame>
-
                 </Grid>
-            </VerticalStackLayout>
 
-            <VerticalStackLayout x:Name="ContenedorFormulario" Spacing="15" Margin="0,10,0,0" IsVisible="False">
-                <Label x:Name="LabelActividadSeleccionada" Text="Actividad" FontSize="16" FontAttributes="Bold" TextColor="#8EB497" HorizontalOptions="Center"/>
-                
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Duración (minutos)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
-                    <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15,0">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                        <Entry Text="30" Keyboard="Numeric" TextColor="#2D3A2F" FontSize="14"/>
+                <Grid ColumnDefinitions="*,*,*"
+                      ColumnSpacing="10">
+                    <Frame Grid.Column="0"
+                           BackgroundColor="#E8F2E9"
+                           CornerRadius="20"
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           Padding="10,15">
+                        <VerticalStackLayout HorizontalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="🔥"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Hoy"
+                                   FontSize="11"
+                                   TextColor="#7A8B7C"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="320 kcal"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#8EB497"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame Grid.Column="1"
+                           BackgroundColor="#E8F2E9"
+                           CornerRadius="20"
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           Padding="10,15">
+                        <VerticalStackLayout HorizontalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="⏱️"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Duración"
+                                   FontSize="11"
+                                   TextColor="#7A8B7C"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="45 min"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#8EB497"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame Grid.Column="2"
+                           BackgroundColor="#E8F2E9"
+                           CornerRadius="20"
+                           HasShadow="False"
+                           BorderColor="Transparent"
+                           Padding="10,15">
+                        <VerticalStackLayout HorizontalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="📈"
+                                   FontSize="18"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="Racha"
+                                   FontSize="11"
+                                   TextColor="#7A8B7C"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="7 días"
+                                   FontSize="14"
+                                   FontAttributes="Bold"
+                                   TextColor="#8EB497"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Selecciona tu actividad"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="#7A8B7C"
+                           Margin="5,0"/>
+
+                    <Grid ColumnDefinitions="*, *"
+                          RowDefinitions="Auto, Auto, Auto, Auto"
+                          ColumnSpacing="15"
+                          RowSpacing="15">
+
+                        <Frame x:Name="CardCaminar"
+                               Grid.Row="0"
+                               Grid.Column="0"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Caminar"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🚶"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Caminar"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="150-200 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+20 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardCorrer"
+                               Grid.Row="0"
+                               Grid.Column="1"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Correr"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🏃"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Correr"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="300-400 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+35 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardYoga"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Yoga"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🧘"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Yoga"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="120-180 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+25 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardCiclismo"
+                               Grid.Row="1"
+                               Grid.Column="1"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Ciclismo"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🚴"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Ciclismo"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="250-350 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+30 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardNatacion"
+                               Grid.Row="2"
+                               Grid.Column="0"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Natación"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🏊"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Natación"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="350-450 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+40 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardGimnasio"
+                               Grid.Row="2"
+                               Grid.Column="1"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Gimnasio"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="💪"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Gimnasio"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="200-300 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+30 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardBaile"
+                               Grid.Row="3"
+                               Grid.Column="0"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Baile"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="💃"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Baile"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="180-250 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+25 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <Frame x:Name="CardEstiramiento"
+                               Grid.Row="3"
+                               Grid.Column="1"
+                               BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,6"
+                                        Radius="15"
+                                        Opacity="0.1"/>
+                            </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnActividadTapped"
+                                                      CommandParameter="Estiramiento"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="🤸"
+                                       FontSize="26"
+                                       Margin="0,0,0,5"/>
+                                <Label Text="Estiramiento"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="80-120 kcal/30min"
+                                       FontSize="10"
+                                       TextColor="#7A8B7C"/>
+                                <Frame BackgroundColor="#E8F2E9"
+                                       CornerRadius="12"
+                                       HasShadow="False"
+                                       BorderColor="Transparent"
+                                       Padding="8,4"
+                                       HorizontalOptions="Start"
+                                       Margin="0,5,0,0">
+                                    <Label Text="+15 XP"
+                                           FontSize="10"
+                                           FontAttributes="Bold"
+                                           TextColor="#8EB497"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout x:Name="ContenedorFormulario"
+                                     Spacing="15"
+                                     Margin="0,10,0,0"
+                                     IsVisible="False">
+                    <Label x:Name="LabelActividadSeleccionada"
+                           Text="Actividad"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="#8EB497"
+                           HorizontalOptions="Center"/>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Duración (minutos)"
+                               FontSize="12"
+                               TextColor="#7A8B7C"
+                               FontAttributes="Bold"
+                               Margin="5,0"/>
+                        <Frame BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15,0">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,4"
+                                        Radius="10"
+                                        Opacity="0.08"/>
+                            </Frame.Shadow>
+                            <Entry Text="30"
+                                   Keyboard="Numeric"
+                                   TextColor="#2D3A2F"
+                                   FontSize="14"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="Notas (opcional)"
+                               FontSize="12"
+                               TextColor="#7A8B7C"
+                               FontAttributes="Bold"
+                               Margin="5,0"/>
+                        <Frame BackgroundColor="White"
+                               CornerRadius="20"
+                               HasShadow="True"
+                               BorderColor="Transparent"
+                               Padding="15">
+                            <Frame.Shadow>
+                                <Shadow Brush="#A0AF9E"
+                                        Offset="0,4"
+                                        Radius="10"
+                                        Opacity="0.08"/>
+                            </Frame.Shadow>
+                            <Editor Placeholder="¿Cómo te sentiste?"
+                                    HeightRequest="80"
+                                    TextColor="#2D3A2F"
+                                    PlaceholderColor="#94A696"
+                                    FontSize="14"
+                                    BackgroundColor="Transparent"/>
+                        </Frame>
+                    </VerticalStackLayout>
+
+                    <Button Text="Guardar Actividad"
+                            BackgroundColor="#8EB497"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            CornerRadius="25"
+                            HeightRequest="55"
+                            Margin="0,10,0,10">
+                        <Button.Shadow>
+                            <Shadow Brush="#8EB497"
+                                    Offset="0,8"
+                                    Radius="15"
+                                    Opacity="0.3"/>
+                        </Button.Shadow>
+                    </Button>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="Actividades recientes"
+                           FontSize="12"
+                           TextColor="#7A8B7C"
+                           FontAttributes="Bold"
+                           Margin="5,0"/>
+
+                    <Frame BackgroundColor="White"
+                           CornerRadius="20"
+                           HasShadow="True"
+                           BorderColor="Transparent"
+                           Padding="15,15">
+                        <Frame.Shadow>
+                            <Shadow Brush="#A0AF9E"
+                                    Offset="0,4"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Frame.Shadow>
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="15">
+                            <Label Grid.Column="0"
+                                   Text="🧘"
+                                   FontSize="28"
+                                   VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="2">
+                                <Label Text="Yoga"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="30 min • Hace 2 horas"
+                                       FontSize="11"
+                                       TextColor="#7A8B7C"/>
+                            </VerticalStackLayout>
+                            <Frame Grid.Column="2"
+                                   BackgroundColor="#E8F2E9"
+                                   CornerRadius="15"
+                                   HasShadow="False"
+                                   BorderColor="Transparent"
+                                   Padding="12,8"
+                                   VerticalOptions="Center">
+                                <Label Text="+25 XP"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="#8EB497"/>
+                            </Frame>
+                        </Grid>
+                    </Frame>
+
+                    <Frame BackgroundColor="White"
+                           CornerRadius="20"
+                           HasShadow="True"
+                           BorderColor="Transparent"
+                           Padding="15,15">
+                        <Frame.Shadow>
+                            <Shadow Brush="#A0AF9E"
+                                    Offset="0,4"
+                                    Radius="10"
+                                    Opacity="0.08"/>
+                        </Frame.Shadow>
+                        <Grid ColumnDefinitions="Auto, *, Auto"
+                              ColumnSpacing="15">
+                            <Label Grid.Column="0"
+                                   Text="🚶"
+                                   FontSize="28"
+                                   VerticalOptions="Center"/>
+                            <VerticalStackLayout Grid.Column="1"
+                                                 VerticalOptions="Center"
+                                                 Spacing="2">
+                                <Label Text="Caminar"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3A2F"/>
+                                <Label Text="45 min • Ayer"
+                                       FontSize="11"
+                                       TextColor="#7A8B7C"/>
+                            </VerticalStackLayout>
+                            <Frame Grid.Column="2"
+                                   BackgroundColor="#E8F2E9"
+                                   CornerRadius="15"
+                                   HasShadow="False"
+                                   BorderColor="Transparent"
+                                   Padding="12,8"
+                                   VerticalOptions="Center">
+                                <Label Text="+20 XP"
+                                       FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="#8EB497"/>
+                            </Frame>
+                        </Grid>
                     </Frame>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="8">
-                    <Label Text="Notas (opcional)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
-                    <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
-                        <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                        <Editor Placeholder="¿Cómo te sentiste?" HeightRequest="80" TextColor="#2D3A2F" PlaceholderColor="#94A696" FontSize="14" BackgroundColor="Transparent"/>
-                    </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Frame Grid.Row="1"
+               BackgroundColor="White"
+               CornerRadius="0"
+               Padding="15,10"
+               HasShadow="False"
+               BorderColor="#EEF2EE"
+               VerticalOptions="End">
+
+            <Grid ColumnDefinitions="*, *, *"
+                  MaximumWidthRequest="800"
+                  HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <Label Text="🏠"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#7A8B7C"/>
+                    <Label Text="Inicio"
+                           FontSize="11"
+                           TextColor="#7A8B7C"
+                           HorizontalOptions="Center"/>
                 </VerticalStackLayout>
 
-                <Button Text="Guardar Actividad" BackgroundColor="#8EB497" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="25" HeightRequest="55" Margin="0,10,0,10">
-                    <Button.Shadow><Shadow Brush="#8EB497" Offset="0,8" Radius="15" Opacity="0.3" /></Button.Shadow>
-                </Button>
-            </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <Label Text="🏆"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#7A8B7C"/>
+                    <Label Text="Retos"
+                           FontSize="11"
+                           TextColor="#7A8B7C"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
 
-            <VerticalStackLayout Spacing="12">
-                <Label Text="Actividades recientes" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
-                
-                <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15,15">
-                    <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                        <Label Grid.Column="0" Text="🧘" FontSize="28" VerticalOptions="Center"/>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                            <Label Text="Yoga" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="30 min • Hace 2 horas" FontSize="11" TextColor="#7A8B7C"/>
-                        </VerticalStackLayout>
-                        <Frame Grid.Column="2" BackgroundColor="#E8F2E9" CornerRadius="15" HasShadow="False" BorderColor="Transparent" Padding="12,8" VerticalOptions="Center">
-                            <Label Text="+25 XP" FontSize="12" FontAttributes="Bold" TextColor="#8EB497"/>
-                        </Frame>
-                    </Grid>
-                </Frame>
+                <VerticalStackLayout Grid.Column="2"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <Label Text="👤"
+                           FontSize="22"
+                           HorizontalOptions="Center"
+                           TextColor="#2D3A2F"/>
+                    <Label Text="Perfil"
+                           FontSize="11"
+                           TextColor="#2D3A2F"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
 
-                <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15,15">
-                    <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                    <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="15">
-                        <Label Grid.Column="0" Text="🚶" FontSize="28" VerticalOptions="Center"/>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
-                            <Label Text="Caminar" FontSize="14" FontAttributes="Bold" TextColor="#2D3A2F"/>
-                            <Label Text="45 min • Ayer" FontSize="11" TextColor="#7A8B7C"/>
-                        </VerticalStackLayout>
-                        <Frame Grid.Column="2" BackgroundColor="#E8F2E9" CornerRadius="15" HasShadow="False" BorderColor="Transparent" Padding="12,8" VerticalOptions="Center">
-                            <Label Text="+20 XP" FontSize="12" FontAttributes="Bold" TextColor="#8EB497"/>
-                        </Frame>
-                    </Grid>
-                </Frame>
-            </VerticalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+            </Grid>
+        </Frame>
+    </Grid>
 </ContentPage>

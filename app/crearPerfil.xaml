@@ -2,110 +2,217 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app.crearPerfil"
-             BackgroundColor="#F7F9F7" 
+             BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
 
-    <ScrollView>
-        <VerticalStackLayout Spacing="30" Padding="30,60,30,40" VerticalOptions="Start">
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Spacing="30"
+                    Padding="30,60,30,40"
+                    VerticalOptions="Start">
 
-            <Label Text="CREAR PERFIL"
-                   FontSize="24"
-                   CharacterSpacing="3"
-                   TextColor="#2D3A2F"
-                   FontAttributes="Bold"
-                   HorizontalOptions="Center"
-                   FontFamily="OpenSansSemibold" />
+                <Label Text="CREAR PERFIL"
+                       FontSize="24"
+                       CharacterSpacing="3"
+                       TextColor="#2D3A2F"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       FontFamily="OpenSansSemibold"/>
 
-            <Frame BackgroundColor="White"
-                   CornerRadius="40"
-                   HasShadow="True"
-                   BorderColor="Transparent"
-                   Padding="25,40">
-                <Frame.Shadow>
-                    <Shadow Brush="#A0AF9E" Offset="0,15" Radius="30" Opacity="0.15" />
-                </Frame.Shadow>
+                <Frame BackgroundColor="White"
+                       CornerRadius="40"
+                       HasShadow="True"
+                       BorderColor="Transparent"
+                       Padding="25,40">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E"
+                                Offset="0,15"
+                                Radius="30"
+                                Opacity="0.15"/>
+                    </Frame.Shadow>
 
-                <VerticalStackLayout Spacing="22">
-                    
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="NOMBRE COMPLETO" 
-                               FontSize="11" 
-                               CharacterSpacing="1.5"
-                               TextColor="#7A8B7C" 
-                               FontAttributes="Bold" 
-                               Margin="10,0"/>
-                        <Frame BackgroundColor="#E8F2E9" 
-                               Padding="18,2" 
-                               CornerRadius="25" 
-                               HasShadow="False"
-                               BorderColor="#D1E2D4">
-                            <Entry Placeholder="ESCRIBE TU NOMBRE..." 
-                                   PlaceholderColor="#94A696"
-                                   TextColor="#2D3A2F"
-                                   FontSize="15"
+                    <VerticalStackLayout Spacing="22">
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="NOMBRE COMPLETO"
+                                   FontSize="11"
+                                   CharacterSpacing="1.5"
+                                   TextColor="#7A8B7C"
                                    FontAttributes="Bold"
-                                   Text="{Binding Nombre}"/>
-                        </Frame>
-                    </VerticalStackLayout>
-
-                    <Grid ColumnDefinitions="*, *" ColumnSpacing="15">
-                        <VerticalStackLayout Grid.Column="0" Spacing="8">
-                            <Label Text="PESO (KG)" FontSize="10" TextColor="#7A8B7C" FontAttributes="Bold" Margin="10,0"/>
-                            <Frame BackgroundColor="#F9FAF9" Padding="15,0" CornerRadius="20" HasShadow="False" BorderColor="#EEF2EE">
-                                <Entry Placeholder="00.0" Keyboard="Numeric" TextColor="#2D3A2F" Text="{Binding Peso}"/>
+                                   Margin="10,0"/>
+                            <Frame BackgroundColor="#E8F2E9"
+                                   Padding="18,2"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   BorderColor="#D1E2D4">
+                                <Entry Placeholder="ESCRIBE TU NOMBRE..."
+                                       PlaceholderColor="#94A696"
+                                       TextColor="#2D3A2F"
+                                       FontSize="15"
+                                       FontAttributes="Bold"
+                                       Text="{Binding Nombre}"/>
                             </Frame>
                         </VerticalStackLayout>
-                        
-                        <VerticalStackLayout Grid.Column="1" Spacing="8">
-                            <Label Text="ALTURA (CM)" FontSize="10" TextColor="#7A8B7C" FontAttributes="Bold" Margin="10,0"/>
-                            <Frame BackgroundColor="#F9FAF9" Padding="15,0" CornerRadius="20" HasShadow="False" BorderColor="#EEF2EE">
-                                <Entry Placeholder="000" Keyboard="Numeric" TextColor="#2D3A2F" Text="{Binding Altura}"/>
+
+                        <Grid ColumnDefinitions="*, *"
+                                ColumnSpacing="15">
+                            <VerticalStackLayout Grid.Column="0"
+                                    Spacing="8">
+                                <Label Text="PESO (KG)"
+                                        FontSize="10"
+                                        TextColor="#7A8B7C"
+                                        FontAttributes="Bold"
+                                        Margin="10,0"/>
+                                <Frame BackgroundColor="#F9FAF9"
+                                        Padding="15,0"
+                                        CornerRadius="20"
+                                        HasShadow="False"
+                                        BorderColor="#EEF2EE">
+                                    <Entry Placeholder="00.0"
+                                            Keyboard="Numeric"
+                                            TextColor="#2D3A2F"
+                                            Text="{Binding Peso}"/>
+                                </Frame>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                    Spacing="8">
+                                <Label Text="ALTURA (CM)"
+                                        FontSize="10"
+                                        TextColor="#7A8B7C"
+                                        FontAttributes="Bold"
+                                        Margin="10,0"/>
+                                <Frame BackgroundColor="#F9FAF9"
+                                        Padding="15,0"
+                                        CornerRadius="20"
+                                        HasShadow="False"
+                                        BorderColor="#EEF2EE">
+                                    <Entry Placeholder="000"
+                                            Keyboard="Numeric"
+                                            TextColor="#2D3A2F"
+                                            Text="{Binding Altura}"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="FECHA DE NACIMIENTO"
+                                    FontSize="10"
+                                    TextColor="#7A8B7C"
+                                    FontAttributes="Bold"
+                                    Margin="10,0"/>
+                            <Frame BackgroundColor="#F9FAF9"
+                                    Padding="15,0"
+                                    CornerRadius="20"
+                                    HasShadow="False"
+                                    BorderColor="#EEF2EE">
+                                <DatePicker Date="{Binding FechaNacDate}"
+                                        TextColor="#2D3A2F"/>
                             </Frame>
                         </VerticalStackLayout>
-                    </Grid>
 
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="FECHA DE NACIMIENTO" FontSize="10" TextColor="#7A8B7C" FontAttributes="Bold" Margin="10,0"/>
-                        <Frame BackgroundColor="#F9FAF9" Padding="15,0" CornerRadius="20" HasShadow="False" BorderColor="#EEF2EE">
-                            <DatePicker Date="{Binding FechaNacDate}" TextColor="#2D3A2F"/>
-                        </Frame>
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="GÉNERO"
+                                    FontSize="10"
+                                    TextColor="#7A8B7C"
+                                    FontAttributes="Bold"
+                                    Margin="10,0"/>
+                            <Frame BackgroundColor="#F9FAF9"
+                                    Padding="15,0"
+                                    CornerRadius="20"
+                                    HasShadow="False"
+                                    BorderColor="#EEF2EE">
+                                <Picker Title="SELECCIONAR"
+                                        TextColor="#2D3A2F"
+                                        ItemsSource="{Binding ListaGeneros}"
+                                        SelectedItem="{Binding Genero}"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
                     </VerticalStackLayout>
+                </Frame>
 
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="GÉNERO" FontSize="10" TextColor="#7A8B7C" FontAttributes="Bold" Margin="10,0"/>
-                        <Frame BackgroundColor="#F9FAF9" Padding="15,0" CornerRadius="20" HasShadow="False" BorderColor="#EEF2EE">
-                            <Picker Title="SELECCIONAR" 
-                                    TextColor="#2D3A2F"
-                                    ItemsSource="{Binding ListaGeneros}" 
-                                    SelectedItem="{Binding Genero}"/>
-                        </Frame>
-                    </VerticalStackLayout>
+                <Button Text="CONTINUAR"
+                        BackgroundColor="#8EB497"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        CharacterSpacing="2.5"
+                        FontSize="16"
+                        CornerRadius="30"
+                        HeightRequest="65"
+                        Clicked="OnGuardarClicked"
+                        Margin="10,15,10,0">
+                    <Button.Shadow>
+                        <Shadow Brush="#8EB497"
+                                Offset="0,10"
+                                Radius="20"
+                                Opacity="0.4"/>
+                    </Button.Shadow>
+                </Button>
 
-                </VerticalStackLayout>
-            </Frame>
+                <Label Text="POWERED BY BLOOM HEALTH"
+                       FontSize="10"
+                       TextColor="#B0BDB2"
+                       HorizontalOptions="Center"
+                       Margin="0,15,0,0"
+                       CharacterSpacing="2"/>
 
-            <Button Text="CONTINUAR"
-                    BackgroundColor="#8EB497" 
-                    TextColor="White"
-                    FontAttributes="Bold"
-                    CharacterSpacing="2.5"
-                    FontSize="16"
-                    CornerRadius="30"
-                    HeightRequest="65"
-                    Clicked="OnGuardarClicked"
-                    Margin="10,15,10,0">
-                <Button.Shadow>
-                    <Shadow Brush="#8EB497" Offset="0,10" Radius="20" Opacity="0.4" />
-                </Button.Shadow>
-            </Button>
+            </VerticalStackLayout>
+        </ScrollView>
 
-            <Label Text="POWERED BY BLOOM HEALTH" 
-                   FontSize="10" 
-                   TextColor="#B0BDB2" 
-                   HorizontalOptions="Center" 
-                   Margin="0,15,0,0"
-                   CharacterSpacing="2"/>
+        <Frame Grid.Row="1"
+                     BackgroundColor="White"
+                     CornerRadius="0"
+                     Padding="15,10"
+                     HasShadow="False"
+                     BorderColor="#EEF2EE"
+                     VerticalOptions="End">
 
-        </VerticalStackLayout>
-    </ScrollView>
+                     <Grid ColumnDefinitions="*, *, *"
+                           MaximumWidthRequest="800"
+                           HorizontalOptions="FillAndExpand">
+
+                            <VerticalStackLayout Grid.Column="0"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="🏠"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#7A8B7C"/>
+                                   <Label Text="Inicio"
+                                          FontSize="11"
+                                          TextColor="#7A8B7C"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="🏆"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#7A8B7C"/>
+                                   <Label Text="Retos"
+                                          FontSize="11"
+                                          TextColor="#7A8B7C"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="👤"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#2D3A2F"/>
+                                   <Label Text="Perfil"
+                                          FontSize="11"
+                                          TextColor="#2D3A2F"
+                                          FontAttributes="Bold"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                     </Grid>
+              </Frame>
+    </Grid>
 </ContentPage>

@@ -10,6 +10,10 @@
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage"/>
+    <ShellContent
+        Title="Perfil"
+        ContentTemplate="{DataTemplate local:PerfilPage}"
+        Route="PerfilPage"/>
 
     <ShellContent
         Title="Crear Perfil"
@@ -19,10 +23,6 @@
         Title="RetosPage"
         ContentTemplate="{DataTemplate local:RetosPage}"
         Route="RetosPage"/>
-    <ShellContent
-        Title="Menstrual"
-        ContentTemplate="{DataTemplate local:MenstrualPage}"
-        Route="MenstrualPage"/>
     <ShellContent
         Title="Nutricion"
         ContentTemplate="{DataTemplate local:NutricionPage}"
@@ -39,5 +39,9 @@
         Title="Estado Anímico"
         ContentTemplate="{DataTemplate local:EstadoAnimicoPage}"
         Route="EstadoAnimicoPage"/>
+    <ShellContent
+        Title="Menú"
+        ContentTemplate="{DataTemplate local:Menu}"
+        Route="Menu"/>
 
 </Shell>

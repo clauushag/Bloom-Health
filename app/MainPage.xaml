@@ -5,267 +5,322 @@
              BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
 
-        <Grid>
-                <ScrollView>
-                        <VerticalStackLayout Spacing="30"
-                                             Padding="30,60,30,40"
-                                             MaximumWidthRequest="700"
-                                             HorizontalOptions="Center"
-                                             VerticalOptions="Start">
+       <Grid>
+              <ScrollView>
+                     <VerticalStackLayout Spacing="30"
+                                          Padding="30,60,30,40"
+                                          MaximumWidthRequest="700"
+                                          HorizontalOptions="Center"
+                                          VerticalOptions="Start">
 
-                                <VerticalStackLayout Spacing="8">
-                                        <Label Text="BLOOM HEALTH"
-                                               FontSize="28"
-                                               CharacterSpacing="4"
-                                               TextColor="#2D3A2F"
-                                               FontAttributes="Bold"
-                                               HorizontalOptions="Center"
-                                               FontFamily="OpenSansSemibold"/>
-                                        <Label Text="TU BIENESTAR ES LO PRIMERO"
-                                               FontSize="12"
-                                               CharacterSpacing="2"
-                                               TextColor="#7A8B7C"
-                                               FontAttributes="Bold"
-                                               HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
+                            <VerticalStackLayout Spacing="8">
+                                   <Label Text="BLOOM HEALTH"
+                                          FontSize="28"
+                                          CharacterSpacing="4"
+                                          TextColor="#2D3A2F"
+                                          FontAttributes="Bold"
+                                          HorizontalOptions="Center"
+                                          FontFamily="OpenSansSemibold"/>
+                                   <Label Text="TU BIENESTAR ES LO PRIMERO"
+                                          FontSize="12"
+                                          CharacterSpacing="2"
+                                          TextColor="#7A8B7C"
+                                          FontAttributes="Bold"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
 
-                                <Frame BackgroundColor="White"
-                                       CornerRadius="40"
-                                       HasShadow="False"
-                                       BorderColor="Transparent"
-                                       Padding="30,45">
-                                        <Frame.Shadow>
-                                                <Shadow Brush="#A0AF9E"
-                                                        Offset="0,20"
-                                                        Radius="40"
-                                                        Opacity="0.12"/>
-                                        </Frame.Shadow>
+                            <Frame BackgroundColor="White"
+                                   CornerRadius="40"
+                                   HasShadow="False"
+                                   BorderColor="Transparent"
+                                   Padding="30,45">
+                                   <Frame.Shadow>
+                                          <Shadow Brush="#A0AF9E"
+                                                  Offset="0,20"
+                                                  Radius="40"
+                                                  Opacity="0.12"/>
+                                   </Frame.Shadow>
 
-                                        <VerticalStackLayout Spacing="30">
-                                                <Border StrokeShape="RoundRectangle 20"
-                                                        StrokeThickness="0"
-                                                        HeightRequest="200"
-                                                        WidthRequest="200">
-                                                        <Image Source="plantafuerte.png"
-                                                               Aspect="AspectFill"/>
-                                                </Border>
+                                   <VerticalStackLayout Spacing="30">
+                                          <Border StrokeShape="RoundRectangle 20"
+                                                  StrokeThickness="0"
+                                                  HeightRequest="200"
+                                                  WidthRequest="200">
+                                                 <Image Source="plantafuerte.png"
+                                                        Aspect="AspectFill"/>
+                                          </Border>
 
-                                                <VerticalStackLayout Spacing="10">
-                                                        <Label Text="ESTADO ACTUAL"
-                                                               FontSize="11"
-                                                               CharacterSpacing="2"
-                                                               TextColor="#B0BDB2"
-                                                               FontAttributes="Bold"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label Text="¡TU PLANTA ESTÁ FLORECIENDO!"
-                                                               FontSize="18"
-                                                               TextColor="#2D3A2F"
-                                                               FontAttributes="Bold"
-                                                               HorizontalTextAlignment="Center"/>
-                                                </VerticalStackLayout>
+                                          <VerticalStackLayout Spacing="10">
+                                                 <Label Text="ESTADO ACTUAL"
+                                                        FontSize="11"
+                                                        CharacterSpacing="2"
+                                                        TextColor="#B0BDB2"
+                                                        FontAttributes="Bold"
+                                                        HorizontalOptions="Center"/>
+                                                 <Label Text="¡TU PLANTA ESTÁ FLORECIENDO!"
+                                                        FontSize="18"
+                                                        TextColor="#2D3A2F"
+                                                        FontAttributes="Bold"
+                                                        HorizontalTextAlignment="Center"/>
+                                          </VerticalStackLayout>
 
-                                                <VerticalStackLayout Spacing="12">
-                                                        <Grid ColumnDefinitions="*, Auto">
-                                                                <Label Text="ENERGÍA VITAL"
-                                                                       FontSize="10"
-                                                                       TextColor="#7A8B7C"
-                                                                       FontAttributes="Bold"
-                                                                       CharacterSpacing="1"/>
-                                                                <Label Grid.Column="1"
-                                                                       Text="85%"
-                                                                       FontSize="11"
-                                                                       TextColor="#2D3A2F"
-                                                                       FontAttributes="Bold"/>
-                                                        </Grid>
-                                                        <Border BackgroundColor="#E8F2E9"
-                                                                HeightRequest="14"
-                                                                StrokeShape="RoundRectangle 7"
-                                                                StrokeThickness="0">
-                                                                <ProgressBar Progress="0.85"
-                                                                             ProgressColor="#8EB497"
-                                                                             VerticalOptions="Center"
-                                                                             ScaleY="3"/>
-                                                        </Border>
-                                                </VerticalStackLayout>
-                                        </VerticalStackLayout>
-                                </Frame>
-
-                                <Frame BackgroundColor="#F1F5F1"
-                                       Padding="20"
-                                       CornerRadius="25"
-                                       HasShadow="False"
-                                       BorderColor="#E2EAE2">
-                                        <HorizontalStackLayout Spacing="15">
-                                                <Label Text="💡"
-                                                       VerticalOptions="Center"
-                                                       FontSize="22"/>
-                                                <VerticalStackLayout VerticalOptions="Center"
-                                                                     Spacing="2">
-                                                        <Label Text="TIP DEL DÍA"
+                                          <VerticalStackLayout Spacing="12">
+                                                 <Grid ColumnDefinitions="*, Auto">
+                                                        <Label Text="ENERGÍA VITAL"
                                                                FontSize="10"
                                                                TextColor="#7A8B7C"
                                                                FontAttributes="Bold"
                                                                CharacterSpacing="1"/>
-                                                        <Label Text="Beber agua regularmente ayuda a tu planta."
+                                                        <Label Grid.Column="1"
+                                                               Text="85%"
+                                                               FontSize="11"
                                                                TextColor="#2D3A2F"
-                                                               FontSize="14"
                                                                FontAttributes="Bold"/>
-                                                </VerticalStackLayout>
-                                        </HorizontalStackLayout>
-                                </Frame>
+                                                 </Grid>
+                                                 <Border BackgroundColor="#E8F2E9"
+                                                         HeightRequest="14"
+                                                         StrokeShape="RoundRectangle 7"
+                                                         StrokeThickness="0">
+                                                        <ProgressBar Progress="0.85"
+                                                                     ProgressColor="#8EB497"
+                                                                     VerticalOptions="Center"
+                                                                     ScaleY="3"/>
+                                                 </Border>
+                                          </VerticalStackLayout>
+                                   </VerticalStackLayout>
+                            </Frame>
 
-                                <VerticalStackLayout Spacing="15">
-                                        <Label Text="EVOLUCIÓN DEL AVATAR"
-                                               FontSize="11"
-                                               CharacterSpacing="2"
-                                               TextColor="#7A8B7C"
-                                               FontAttributes="Bold"
-                                               Margin="10,0"/>
+                            <Frame BackgroundColor="#F1F5F1"
+                                   Padding="20"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   BorderColor="#E2EAE2">
+                                   <HorizontalStackLayout Spacing="15">
+                                          <Label Text="💡"
+                                                 VerticalOptions="Center"
+                                                 FontSize="22"/>
+                                          <VerticalStackLayout VerticalOptions="Center"
+                                                               Spacing="2">
+                                                 <Label Text="TIP DEL DÍA"
+                                                        FontSize="10"
+                                                        TextColor="#7A8B7C"
+                                                        FontAttributes="Bold"
+                                                        CharacterSpacing="1"/>
+                                                 <Label Text="Beber agua regularmente ayuda a tu planta."
+                                                        TextColor="#2D3A2F"
+                                                        FontSize="14"
+                                                        FontAttributes="Bold"/>
+                                          </VerticalStackLayout>
+                                   </HorizontalStackLayout>
+                            </Frame>
 
-                                        <ScrollView Orientation="Horizontal"
-                                                    HorizontalScrollBarVisibility="Never">
-                                                <HorizontalStackLayout Spacing="18"
-                                                                       Padding="5,5,40,30">
+                            <VerticalStackLayout Spacing="15">
+                                   <Label Text="EVOLUCIÓN DEL AVATAR"
+                                          FontSize="11"
+                                          CharacterSpacing="2"
+                                          TextColor="#7A8B7C"
+                                          FontAttributes="Bold"
+                                          Margin="10,0"/>
 
-                                                        <Frame WidthRequest="160"
-                                                               BackgroundColor="White"
-                                                               CornerRadius="25"
-                                                               HasShadow="False"
-                                                               BorderColor="#EEF2EE"
-                                                               Padding="15">
-                                                                <Frame.Shadow>
-                                                                        <Shadow Brush="#A0AF9E"
-                                                                                Offset="0,8"
-                                                                                Radius="15"
-                                                                                Opacity="0.1"/>
-                                                                </Frame.Shadow>
-                                                                <VerticalStackLayout Spacing="10"
-                                                                                     HorizontalOptions="Center">
-                                                                        <Image Source="plantafuerte.png"
-                                                                               HeightRequest="70"
-                                                                               Opacity="0.4"/>
-                                                                        <Label Text="MARCHITA"
-                                                                               FontSize="11"
-                                                                               FontAttributes="Bold"
-                                                                               TextColor="#2D3A2F"
-                                                                               HorizontalOptions="Center"/>
-                                                                        <Label Text="0-25%"
-                                                                               FontSize="10"
-                                                                               TextColor="#7A8B7C"
-                                                                               HorizontalOptions="Center"/>
-                                                                </VerticalStackLayout>
-                                                        </Frame>
+                                   <ScrollView Orientation="Horizontal"
+                                               HorizontalScrollBarVisibility="Never">
+                                          <HorizontalStackLayout Spacing="18"
+                                                                 Padding="5,5,40,30">
 
-                                                        <Frame WidthRequest="160"
-                                                               BackgroundColor="White"
-                                                               CornerRadius="25"
-                                                               HasShadow="False"
-                                                               BorderColor="#EEF2EE"
-                                                               Padding="15">
-                                                                <Frame.Shadow>
-                                                                        <Shadow Brush="#A0AF9E"
-                                                                                Offset="0,8"
-                                                                                Radius="15"
-                                                                                Opacity="0.1"/>
-                                                                </Frame.Shadow>
-                                                                <VerticalStackLayout Spacing="10"
-                                                                                     HorizontalOptions="Center">
-                                                                        <Image Source="plantafuerte.png"
-                                                                               HeightRequest="70"
-                                                                               Opacity="0.6"/>
-                                                                        <Label Text="CRECIENDO"
-                                                                               FontSize="11"
-                                                                               FontAttributes="Bold"
-                                                                               TextColor="#2D3A2F"
-                                                                               HorizontalOptions="Center"/>
-                                                                        <Label Text="26-50%"
-                                                                               FontSize="10"
-                                                                               TextColor="#7A8B7C"
-                                                                               HorizontalOptions="Center"/>
-                                                                </VerticalStackLayout>
-                                                        </Frame>
+                                                 <Frame WidthRequest="160"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="25"
+                                                        HasShadow="False"
+                                                        BorderColor="#EEF2EE"
+                                                        Padding="15">
+                                                        <Frame.Shadow>
+                                                               <Shadow Brush="#A0AF9E"
+                                                                       Offset="0,8"
+                                                                       Radius="15"
+                                                                       Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="10"
+                                                                             HorizontalOptions="Center">
+                                                               <Image Source="plantafuerte.png"
+                                                                      HeightRequest="70"
+                                                                      Opacity="0.4"/>
+                                                               <Label Text="MARCHITA"
+                                                                      FontSize="11"
+                                                                      FontAttributes="Bold"
+                                                                      TextColor="#2D3A2F"
+                                                                      HorizontalOptions="Center"/>
+                                                               <Label Text="0-25%"
+                                                                      FontSize="10"
+                                                                      TextColor="#7A8B7C"
+                                                                      HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                 </Frame>
 
-                                                        <Frame WidthRequest="160"
-                                                               BackgroundColor="White"
-                                                               CornerRadius="25"
-                                                               HasShadow="False"
-                                                               BorderColor="#EEF2EE"
-                                                               Padding="15">
-                                                                <Frame.Shadow>
-                                                                        <Shadow Brush="#A0AF9E"
-                                                                                Offset="0,8"
-                                                                                Radius="15"
-                                                                                Opacity="0.1"/>
-                                                                </Frame.Shadow>
-                                                                <VerticalStackLayout Spacing="10"
-                                                                                     HorizontalOptions="Center">
-                                                                        <Image Source="plantafuerte.png"
-                                                                               HeightRequest="70"
-                                                                               Opacity="0.8"/>
-                                                                        <Label Text="FLORECIENDO"
-                                                                               FontSize="11"
-                                                                               FontAttributes="Bold"
-                                                                               TextColor="#2D3A2F"
-                                                                               HorizontalOptions="Center"/>
-                                                                        <Label Text="51-75%"
-                                                                               FontSize="10"
-                                                                               TextColor="#7A8B7C"
-                                                                               HorizontalOptions="Center"/>
-                                                                </VerticalStackLayout>
-                                                        </Frame>
+                                                 <Frame WidthRequest="160"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="25"
+                                                        HasShadow="False"
+                                                        BorderColor="#EEF2EE"
+                                                        Padding="15">
+                                                        <Frame.Shadow>
+                                                               <Shadow Brush="#A0AF9E"
+                                                                       Offset="0,8"
+                                                                       Radius="15"
+                                                                       Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="10"
+                                                                             HorizontalOptions="Center">
+                                                               <Image Source="plantafuerte.png"
+                                                                      HeightRequest="70"
+                                                                      Opacity="0.6"/>
+                                                               <Label Text="CRECIENDO"
+                                                                      FontSize="11"
+                                                                      FontAttributes="Bold"
+                                                                      TextColor="#2D3A2F"
+                                                                      HorizontalOptions="Center"/>
+                                                               <Label Text="26-50%"
+                                                                      FontSize="10"
+                                                                      TextColor="#7A8B7C"
+                                                                      HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                 </Frame>
 
-                                                        <Frame WidthRequest="160"
-                                                               BackgroundColor="White"
-                                                               CornerRadius="25"
-                                                               HasShadow="False"
-                                                               BorderColor="#EEF2EE"
-                                                               Padding="15">
-                                                                <Frame.Shadow>
-                                                                        <Shadow Brush="#A0AF9E"
-                                                                                Offset="0,8"
-                                                                                Radius="15"
-                                                                                Opacity="0.1"/>
-                                                                </Frame.Shadow>
-                                                                <VerticalStackLayout Spacing="10"
-                                                                                     HorizontalOptions="Center">
-                                                                        <Image Source="plantafuerte.png"
-                                                                               HeightRequest="70"/>
-                                                                        <Label Text="FUERTE"
-                                                                               FontSize="11"
-                                                                               FontAttributes="Bold"
-                                                                               TextColor="#2D3A2F"
-                                                                               HorizontalOptions="Center"/>
-                                                                        <Label Text="76-100%"
-                                                                               FontSize="10"
-                                                                               TextColor="#7A8B7C"
-                                                                               HorizontalOptions="Center"/>
-                                                                </VerticalStackLayout>
-                                                        </Frame>
+                                                 <Frame WidthRequest="160"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="25"
+                                                        HasShadow="False"
+                                                        BorderColor="#EEF2EE"
+                                                        Padding="15">
+                                                        <Frame.Shadow>
+                                                               <Shadow Brush="#A0AF9E"
+                                                                       Offset="0,8"
+                                                                       Radius="15"
+                                                                       Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="10"
+                                                                             HorizontalOptions="Center">
+                                                               <Image Source="plantafuerte.png"
+                                                                      HeightRequest="70"
+                                                                      Opacity="0.8"/>
+                                                               <Label Text="FLORECIENDO"
+                                                                      FontSize="11"
+                                                                      FontAttributes="Bold"
+                                                                      TextColor="#2D3A2F"
+                                                                      HorizontalOptions="Center"/>
+                                                               <Label Text="51-75%"
+                                                                      FontSize="10"
+                                                                      TextColor="#7A8B7C"
+                                                                      HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                 </Frame>
 
-                                                </HorizontalStackLayout>
-                                        </ScrollView>
-                                </VerticalStackLayout>
+                                                 <Frame WidthRequest="160"
+                                                        BackgroundColor="White"
+                                                        CornerRadius="25"
+                                                        HasShadow="False"
+                                                        BorderColor="#EEF2EE"
+                                                        Padding="15">
+                                                        <Frame.Shadow>
+                                                               <Shadow Brush="#A0AF9E"
+                                                                       Offset="0,8"
+                                                                       Radius="15"
+                                                                       Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="10"
+                                                                             HorizontalOptions="Center">
+                                                               <Image Source="plantafuerte.png"
+                                                                      HeightRequest="70"/>
+                                                               <Label Text="FUERTE"
+                                                                      FontSize="11"
+                                                                      FontAttributes="Bold"
+                                                                      TextColor="#2D3A2F"
+                                                                      HorizontalOptions="Center"/>
+                                                               <Label Text="76-100%"
+                                                                      FontSize="10"
+                                                                      TextColor="#7A8B7C"
+                                                                      HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                 </Frame>
 
-                        </VerticalStackLayout>
-                </ScrollView>
+                                          </HorizontalStackLayout>
+                                   </ScrollView>
+                            </VerticalStackLayout>
 
-                <Button Text="+"
-                        BackgroundColor="#8EB497"
-                        TextColor="White"
-                        FontSize="32"
-                        CornerRadius="35"
-                        HeightRequest="70"
-                        WidthRequest="70"
-                        HorizontalOptions="End"
-                        VerticalOptions="End"
-                        Margin="40"
-                        Clicked="OnAddClicked">
-                        <Button.Shadow>
-                                <Shadow Brush="#8EB497"
-                                        Offset="0,10"
-                                        Radius="20"
-                                        Opacity="0.4"/>
-                        </Button.Shadow>
-                </Button>
-        </Grid>
+                     </VerticalStackLayout>
+              </ScrollView>
+
+              <Button Text="+"
+                      BackgroundColor="#8EB497"
+                      TextColor="White"
+                      FontSize="32"
+                      CornerRadius="35"
+                      HeightRequest="70"
+                      WidthRequest="70"
+                      HorizontalOptions="End"
+                      VerticalOptions="End"
+                      Margin="40,0,40,110"
+                      Clicked="OnAddClicked">
+                     <Button.Shadow>
+                            <Shadow Brush="#8EB497"
+                                    Offset="0,10"
+                                    Radius="20"
+                                    Opacity="0.4"/>
+                     </Button.Shadow>
+              </Button>
+
+              <Frame Grid.Row="1"
+                     BackgroundColor="White"
+                     CornerRadius="0"
+                     Padding="15,10"
+                     HasShadow="False"
+                     BorderColor="#EEF2EE"
+                     VerticalOptions="End">
+
+                     <Grid ColumnDefinitions="*, *, *"
+                           MaximumWidthRequest="800"
+                           HorizontalOptions="FillAndExpand">
+
+                            <VerticalStackLayout Grid.Column="0"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="🏠"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#7A8B7C"/>
+                                   <Label Text="Inicio"
+                                          FontSize="11"
+                                          TextColor="#7A8B7C"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="1"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="🏆"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#7A8B7C"/>
+                                   <Label Text="Retos"
+                                          FontSize="11"
+                                          TextColor="#7A8B7C"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout Grid.Column="2"
+                                                 HorizontalOptions="Center"
+                                                 Spacing="2">
+                                   <Label Text="👤"
+                                          FontSize="22"
+                                          HorizontalOptions="Center"
+                                          TextColor="#2D3A2F"/>
+                                   <Label Text="Perfil"
+                                          FontSize="11"
+                                          TextColor="#2D3A2F"
+                                          FontAttributes="Bold"
+                                          HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+
+                     </Grid>
+              </Frame>
+       </Grid>
 </ContentPage>

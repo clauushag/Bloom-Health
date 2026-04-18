@@ -5,518 +5,573 @@
              BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
 
-    <Grid RowDefinitions="Auto, *">
+        <Grid RowDefinitions="Auto, *">
 
-        <Frame Grid.Row="0"
-               BackgroundColor="#F29EBB"
-               Padding="25,50,25,20"
-               CornerRadius="0"
-               HasShadow="False"
-               BorderColor="Transparent"
-               ZIndex="1">
-            <Grid ColumnDefinitions="Auto, *">
-                <Label Grid.Column="0"
-                       Text="←"
-                       FontSize="26"
-                       TextColor="White"
-                       VerticalOptions="Center"
-                       Margin="0,0,15,0">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer/>
-                    </Label.GestureRecognizers>
-                </Label>
-
-                <VerticalStackLayout Grid.Column="1"
-                        VerticalOptions="Center"
-                        Spacing="2">
-                    <Label Text="Ciclo Menstrual"
-                            FontSize="22"
-                            FontAttributes="Bold"
-                            TextColor="White"/>
-                    <Label Text="Registra tu periodo y síntomas"
-                            FontSize="12"
-                            TextColor="White"
-                            Opacity="0.9"/>
-                </VerticalStackLayout>
-            </Grid>
-        </Frame>
-
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Spacing="25"
-                    Padding="25,20,25,40">
-
-                <Frame BackgroundColor="#FCF0F4"
-                       CornerRadius="20"
+                <Frame Grid.Row="0"
+                       BackgroundColor="#F29EBB"
+                       Padding="25,50,25,20"
+                       CornerRadius="0"
                        HasShadow="False"
-                       BorderColor="#FDE3EA"
-                       Padding="20">
-                    <VerticalStackLayout Spacing="12">
+                       BorderColor="Transparent"
+                       ZIndex="1">
                         <Grid ColumnDefinitions="Auto, *">
-                            <Label Grid.Column="0"
-                                    Text="📅"
-                                    FontSize="20"
-                                    Margin="0,0,12,0"
-                                    VerticalOptions="Center"/>
-                            <VerticalStackLayout Grid.Column="1">
-                                <Label Text="Tu ciclo actual"
-                                        FontSize="14"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"/>
-                                <Label Text="Día 12 de 28"
-                                        FontSize="12"
-                                        TextColor="#7A8B7C"/>
-                            </VerticalStackLayout>
+                                <Label Grid.Column="0"
+                                       Text="←"
+                                       FontSize="26"
+                                       TextColor="White"
+                                       VerticalOptions="Center"
+                                       Margin="0,0,15,0">
+                                        <Label.GestureRecognizers>
+                                                <TapGestureRecognizer/>
+                                        </Label.GestureRecognizers>
+                                </Label>
+
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="2">
+                                        <Label Text="Ciclo Menstrual"
+                                               FontSize="22"
+                                               FontAttributes="Bold"
+                                               TextColor="White"/>
+                                        <Label Text="Registra tu periodo y síntomas"
+                                               FontSize="12"
+                                               TextColor="White"
+                                               Opacity="0.9"/>
+                                </VerticalStackLayout>
                         </Grid>
-
-                        <ProgressBar Progress="0.42"
-                                ProgressColor="#F29EBB"
-                                HeightRequest="10"
-                                BackgroundColor="#E8F2E9"
-                                Margin="0,5"/>
-
-                        <Label Text="Próximo periodo estimado: en 16 días"
-                                FontSize="11"
-                                TextColor="#7A8B7C"
-                                HorizontalOptions="Center"/>
-                    </VerticalStackLayout>
                 </Frame>
 
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="¿En qué fase estás?"
-                            FontSize="14"
-                            FontAttributes="Bold"
-                            TextColor="#7A8B7C"
-                            Margin="5,0"/>
+                <ScrollView Grid.Row="1">
+                        <VerticalStackLayout Spacing="25"
+                                             Padding="25,20,25,40">
 
-                    <Grid ColumnDefinitions="*, *"
-                            RowDefinitions="Auto, Auto"
-                            ColumnSpacing="15"
-                            RowSpacing="15">
+                                <Frame BackgroundColor="#FCF0F4"
+                                       CornerRadius="20"
+                                       HasShadow="False"
+                                       BorderColor="#FDE3EA"
+                                       Padding="20">
+                                        <VerticalStackLayout Spacing="12">
+                                                <Grid ColumnDefinitions="Auto, *">
+                                                        <Label Grid.Column="0"
+                                                               Text="📅"
+                                                               FontSize="20"
+                                                               Margin="0,0,12,0"
+                                                               VerticalOptions="Center"/>
+                                                        <VerticalStackLayout Grid.Column="1">
+                                                                <Label Text="Tu ciclo actual"
+                                                                       FontSize="14"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"/>
+                                                                <Label Text="Día 12 de 28"
+                                                                       FontSize="12"
+                                                                       TextColor="#7A8B7C"/>
+                                                        </VerticalStackLayout>
+                                                </Grid>
 
-                        <Frame Grid.Row="0"
-                                Grid.Column="0"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,5"
-                                        Radius="15"
-                                        Opacity="0.1"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="🩸"
-                                        FontSize="20"/>
-                                <Label Text="Menstruación"
-                                        FontSize="13"
+                                                <ProgressBar Progress="0.42"
+                                                             ProgressColor="#F29EBB"
+                                                             HeightRequest="10"
+                                                             BackgroundColor="#E8F2E9"
+                                                             Margin="0,5"/>
+
+                                                <Label Text="Próximo periodo estimado: en 16 días"
+                                                       FontSize="11"
+                                                       TextColor="#7A8B7C"
+                                                       HorizontalOptions="Center"/>
+                                        </VerticalStackLayout>
+                                </Frame>
+
+                                <VerticalStackLayout Spacing="15">
+                                        <Label Text="¿En qué fase estás?"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#7A8B7C"
+                                               Margin="5,0"/>
+
+                                        <Grid ColumnDefinitions="*, *"
+                                              RowDefinitions="Auto, Auto"
+                                              ColumnSpacing="15"
+                                              RowSpacing="15">
+
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,5"
+                                                                        Radius="15"
+                                                                        Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="5">
+                                                                <Label Text="🩸"
+                                                                       FontSize="20"/>
+                                                                <Label Text="Menstruación"
+                                                                       FontSize="13"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"/>
+                                                                <Label Text="Días 1-5"
+                                                                       FontSize="11"
+                                                                       TextColor="#7A8B7C"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,5"
+                                                                        Radius="15"
+                                                                        Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="5">
+                                                                <Label Text="⚡"
+                                                                       FontSize="20"/>
+                                                                <Label Text="Folicular"
+                                                                       FontSize="13"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"/>
+                                                                <Label Text="Días 6-13"
+                                                                       FontSize="11"
+                                                                       TextColor="#7A8B7C"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="1"
+                                                       Grid.Column="0"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,5"
+                                                                        Radius="15"
+                                                                        Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="5">
+                                                                <Label Text="🙂"
+                                                                       FontSize="20"/>
+                                                                <Label Text="Ovulación"
+                                                                       FontSize="13"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"/>
+                                                                <Label Text="Días 14-16"
+                                                                       FontSize="11"
+                                                                       TextColor="#7A8B7C"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="1"
+                                                       Grid.Column="1"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,5"
+                                                                        Radius="15"
+                                                                        Opacity="0.1"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout Spacing="5">
+                                                                <Label Text="🌙"
+                                                                       FontSize="20"/>
+                                                                <Label Text="Lútea"
+                                                                       FontSize="13"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"/>
+                                                                <Label Text="Días 17-28"
+                                                                       FontSize="11"
+                                                                       TextColor="#7A8B7C"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+                                        </Grid>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="15">
+                                        <Label Text="Síntomas (opcional)"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#7A8B7C"
+                                               Margin="5,0"/>
+
+                                        <Grid ColumnDefinitions="*, *, *"
+                                              RowDefinitions="Auto, Auto"
+                                              ColumnSpacing="12"
+                                              RowSpacing="12">
+
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="🤕"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Cólicos"
+                                                                       FontSize="11"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="🤯"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Dolor de cabeza"
+                                                                       FontSize="10"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"
+                                                                       HorizontalTextAlignment="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="0"
+                                                       Grid.Column="2"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="🎈"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Hinchazón"
+                                                                       FontSize="10"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="1"
+                                                       Grid.Column="0"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="🎭"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Cambios ánimo"
+                                                                       FontSize="10"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"
+                                                                       HorizontalTextAlignment="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="1"
+                                                       Grid.Column="1"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="😴"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Fatiga"
+                                                                       FontSize="11"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                                <Frame Grid.Row="1"
+                                                       Grid.Column="2"
+                                                       BackgroundColor="White"
+                                                       CornerRadius="20"
+                                                       HasShadow="True"
+                                                       BorderColor="Transparent"
+                                                       Padding="10,15">
+                                                        <Frame.Shadow>
+                                                                <Shadow Brush="#A0AF9E"
+                                                                        Offset="0,4"
+                                                                        Radius="10"
+                                                                        Opacity="0.08"/>
+                                                        </Frame.Shadow>
+                                                        <VerticalStackLayout HorizontalOptions="Center"
+                                                                             Spacing="8">
+                                                                <Label Text="🌋"
+                                                                       FontSize="26"
+                                                                       HorizontalOptions="Center"/>
+                                                                <Label Text="Acné"
+                                                                       FontSize="11"
+                                                                       FontAttributes="Bold"
+                                                                       TextColor="#2D3A2F"
+                                                                       HorizontalOptions="Center"/>
+                                                        </VerticalStackLayout>
+                                                </Frame>
+
+                                        </Grid>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="15">
+                                        <Label Text="¿Cómo te sientes hoy?"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#7A8B7C"
+                                               Margin="5,0"/>
+                                        <ScrollView Orientation="Horizontal"
+                                                    HorizontalScrollBarVisibility="Never">
+                                                <HorizontalStackLayout Spacing="12">
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="18"
+                                                               HasShadow="True"
+                                                               Padding="15,10"
+                                                               BorderColor="Transparent">
+                                                                <Frame.Shadow>
+                                                                        <Shadow Brush="#A0AF9E"
+                                                                                Offset="0,4"
+                                                                                Radius="10"
+                                                                                Opacity="0.1"/>
+                                                                </Frame.Shadow>
+                                                                <Label Text="😢"
+                                                                       FontSize="30"/>
+                                                        </Frame>
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="18"
+                                                               HasShadow="True"
+                                                               Padding="15,10"
+                                                               BorderColor="Transparent">
+                                                                <Frame.Shadow>
+                                                                        <Shadow Brush="#A0AF9E"
+                                                                                Offset="0,4"
+                                                                                Radius="10"
+                                                                                Opacity="0.1"/>
+                                                                </Frame.Shadow>
+                                                                <Label Text="😟"
+                                                                       FontSize="30"/>
+                                                        </Frame>
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="18"
+                                                               HasShadow="True"
+                                                               Padding="15,10"
+                                                               BorderColor="Transparent">
+                                                                <Frame.Shadow>
+                                                                        <Shadow Brush="#A0AF9E"
+                                                                                Offset="0,4"
+                                                                                Radius="10"
+                                                                                Opacity="0.1"/>
+                                                                </Frame.Shadow>
+                                                                <Label Text="😐"
+                                                                       FontSize="30"/>
+                                                        </Frame>
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="18"
+                                                               HasShadow="True"
+                                                               Padding="15,10"
+                                                               BorderColor="Transparent">
+                                                                <Frame.Shadow>
+                                                                        <Shadow Brush="#A0AF9E"
+                                                                                Offset="0,4"
+                                                                                Radius="10"
+                                                                                Opacity="0.1"/>
+                                                                </Frame.Shadow>
+                                                                <Label Text="🙂"
+                                                                       FontSize="30"/>
+                                                        </Frame>
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="18"
+                                                               HasShadow="True"
+                                                               Padding="15,10"
+                                                               BorderColor="Transparent">
+                                                                <Frame.Shadow>
+                                                                        <Shadow Brush="#A0AF9E"
+                                                                                Offset="0,4"
+                                                                                Radius="10"
+                                                                                Opacity="0.1"/>
+                                                                </Frame.Shadow>
+                                                                <Label Text="😁"
+                                                                       FontSize="30"/>
+                                                        </Frame>
+                                                </HorizontalStackLayout>
+                                        </ScrollView>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Spacing="10">
+                                        <Label Text="Notas personales"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#7A8B7C"
+                                               Margin="5,0"/>
+                                        <Frame BackgroundColor="White"
+                                               CornerRadius="20"
+                                               HasShadow="True"
+                                               BorderColor="Transparent"
+                                               Padding="15">
+                                                <Frame.Shadow>
+                                                        <Shadow Brush="#A0AF9E"
+                                                                Offset="0,6"
+                                                                Radius="15"
+                                                                Opacity="0.1"/>
+                                                </Frame.Shadow>
+                                                <Editor Placeholder="Escribe cómo te sientes o cualquier observación..."
+                                                        HeightRequest="80"
+                                                        TextColor="#2D3A2F"
+                                                        PlaceholderColor="#94A696"
+                                                        FontSize="14"
+                                                        BackgroundColor="Transparent"/>
+                                        </Frame>
+                                </VerticalStackLayout>
+
+                                <Button Text="Guardar Registro"
+                                        BackgroundColor="#F29EBB"
+                                        TextColor="White"
                                         FontAttributes="Bold"
-                                        TextColor="#2D3A2F"/>
-                                <Label Text="Días 1-5"
-                                        FontSize="11"
-                                        TextColor="#7A8B7C"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                                        FontSize="16"
+                                        CornerRadius="25"
+                                        HeightRequest="55"
+                                        Margin="0,10,0,0">
+                                        <Button.Shadow>
+                                                <Shadow Brush="#F29EBB"
+                                                        Offset="0,8"
+                                                        Radius="15"
+                                                        Opacity="0.4"/>
+                                        </Button.Shadow>
+                                </Button>
 
-                        <Frame Grid.Row="0"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,5"
-                                        Radius="15"
-                                        Opacity="0.1"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="⚡"
-                                        FontSize="20"/>
-                                <Label Text="Folicular"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"/>
-                                <Label Text="Días 6-13"
-                                        FontSize="11"
-                                        TextColor="#7A8B7C"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                                <Frame BackgroundColor="#FCF0F4"
+                                       CornerRadius="20"
+                                       HasShadow="False"
+                                       BorderColor="#FDE3EA"
+                                       Padding="20"
+                                       Margin="0,0,0,20">
+                                        <VerticalStackLayout Spacing="8">
+                                                <Label Text="💡 ¿Sabías que?"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#2D3A2F"/>
+                                                <Label Text="Registrar tu ciclo ayuda a entender mejor tu cuerpo y predecir cambios en tu energía vital. ¡Tu planta también se beneficia de estos datos!"
+                                                       FontSize="12"
+                                                       TextColor="#7A8B7C"
+                                                       LineHeight="1.3"/>
+                                        </VerticalStackLayout>
+                                </Frame>
 
-                        <Frame Grid.Row="1"
-                                Grid.Column="0"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,5"
-                                        Radius="15"
-                                        Opacity="0.1"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="🙂"
-                                        FontSize="20"/>
-                                <Label Text="Ovulación"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"/>
-                                <Label Text="Días 14-16"
-                                        FontSize="11"
-                                        TextColor="#7A8B7C"/>
-                            </VerticalStackLayout>
-                        </Frame>
+                        </VerticalStackLayout>
+                </ScrollView>
 
-                        <Frame Grid.Row="1"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,5"
-                                        Radius="15"
-                                        Opacity="0.1"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout Spacing="5">
-                                <Label Text="🌙"
-                                        FontSize="20"/>
-                                <Label Text="Lútea"
-                                        FontSize="13"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"/>
-                                <Label Text="Días 17-28"
-                                        FontSize="11"
-                                        TextColor="#7A8B7C"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                    </Grid>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="Síntomas (opcional)"
-                            FontSize="14"
-                            FontAttributes="Bold"
-                            TextColor="#7A8B7C"
-                            Margin="5,0"/>
-
-                    <Grid ColumnDefinitions="*, *, *"
-                            RowDefinitions="Auto, Auto"
-                            ColumnSpacing="12"
-                            RowSpacing="12">
-
-                        <Frame Grid.Row="0"
-                                Grid.Column="0"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="🤕"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Cólicos"
-                                        FontSize="11"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Row="0"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="🤯"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Dolor de cabeza"
-                                        FontSize="10"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Row="0"
-                                Grid.Column="2"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="🎈"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Hinchazón"
-                                        FontSize="10"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Row="1"
-                                Grid.Column="0"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="🎭"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Cambios ánimo"
-                                        FontSize="10"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Row="1"
-                                Grid.Column="1"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="😴"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Fatiga"
-                                        FontSize="11"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Grid.Row="1"
-                                Grid.Column="2"
-                                BackgroundColor="White"
-                                CornerRadius="20"
-                                HasShadow="True"
-                                BorderColor="Transparent"
-                                Padding="10,15">
-                            <Frame.Shadow>
-                                <Shadow Brush="#A0AF9E"
-                                        Offset="0,4"
-                                        Radius="10"
-                                        Opacity="0.08"/>
-                            </Frame.Shadow>
-                            <VerticalStackLayout HorizontalOptions="Center"
-                                    Spacing="8">
-                                <Label Text="🌋"
-                                        FontSize="26"
-                                        HorizontalOptions="Center"/>
-                                <Label Text="Acné"
-                                        FontSize="11"
-                                        FontAttributes="Bold"
-                                        TextColor="#2D3A2F"
-                                        HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                    </Grid>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Spacing="15">
-                    <Label Text="¿Cómo te sientes hoy?"
-                            FontSize="14"
-                            FontAttributes="Bold"
-                            TextColor="#7A8B7C"
-                            Margin="5,0"/>
-                    <ScrollView Orientation="Horizontal"
-                            HorizontalScrollBarVisibility="Never">
-                        <HorizontalStackLayout Spacing="12">
-                            <Frame BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HasShadow="True"
-                                    Padding="15,10"
-                                    BorderColor="Transparent">
-                                <Frame.Shadow>
-                                    <Shadow Brush="#A0AF9E"
-                                            Offset="0,4"
-                                            Radius="10"
-                                            Opacity="0.1"/>
-                                </Frame.Shadow>
-                                <Label Text="😢"
-                                        FontSize="30"/>
-                            </Frame>
-                            <Frame BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HasShadow="True"
-                                    Padding="15,10"
-                                    BorderColor="Transparent">
-                                <Frame.Shadow>
-                                    <Shadow Brush="#A0AF9E"
-                                            Offset="0,4"
-                                            Radius="10"
-                                            Opacity="0.1"/>
-                                </Frame.Shadow>
-                                <Label Text="😟"
-                                        FontSize="30"/>
-                            </Frame>
-                            <Frame BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HasShadow="True"
-                                    Padding="15,10"
-                                    BorderColor="Transparent">
-                                <Frame.Shadow>
-                                    <Shadow Brush="#A0AF9E"
-                                            Offset="0,4"
-                                            Radius="10"
-                                            Opacity="0.1"/>
-                                </Frame.Shadow>
-                                <Label Text="😐"
-                                        FontSize="30"/>
-                            </Frame>
-                            <Frame BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HasShadow="True"
-                                    Padding="15,10"
-                                    BorderColor="Transparent">
-                                <Frame.Shadow>
-                                    <Shadow Brush="#A0AF9E"
-                                            Offset="0,4"
-                                            Radius="10"
-                                            Opacity="0.1"/>
-                                </Frame.Shadow>
-                                <Label Text="🙂"
-                                        FontSize="30"/>
-                            </Frame>
-                            <Frame BackgroundColor="White"
-                                    CornerRadius="18"
-                                    HasShadow="True"
-                                    Padding="15,10"
-                                    BorderColor="Transparent">
-                                <Frame.Shadow>
-                                    <Shadow Brush="#A0AF9E"
-                                            Offset="0,4"
-                                            Radius="10"
-                                            Opacity="0.1"/>
-                                </Frame.Shadow>
-                                <Label Text="😁"
-                                        FontSize="30"/>
-                            </Frame>
-                        </HorizontalStackLayout>
-                    </ScrollView>
-                </VerticalStackLayout>
-
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="Notas personales"
-                            FontSize="14"
-                            FontAttributes="Bold"
-                            TextColor="#7A8B7C"
-                            Margin="5,0"/>
-                    <Frame BackgroundColor="White"
-                            CornerRadius="20"
-                            HasShadow="True"
-                            BorderColor="Transparent"
-                            Padding="15">
-                        <Frame.Shadow>
-                            <Shadow Brush="#A0AF9E"
-                                    Offset="0,6"
-                                    Radius="15"
-                                    Opacity="0.1"/>
-                        </Frame.Shadow>
-                        <Editor Placeholder="Escribe cómo te sientes o cualquier observación..."
-                                HeightRequest="80"
-                                TextColor="#2D3A2F"
-                                PlaceholderColor="#94A696"
-                                FontSize="14"
-                                BackgroundColor="Transparent"/>
-                    </Frame>
-                </VerticalStackLayout>
-
-                <Button Text="Guardar Registro"
-                        BackgroundColor="#F29EBB"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        FontSize="16"
-                        CornerRadius="25"
-                        HeightRequest="55"
-                        Margin="0,10,0,0">
-                    <Button.Shadow>
-                        <Shadow Brush="#F29EBB"
-                                Offset="0,8"
-                                Radius="15"
-                                Opacity="0.4"/>
-                    </Button.Shadow>
-                </Button>
-
-                <Frame BackgroundColor="#FCF0F4"
-                       CornerRadius="20"
+                <Frame Grid.Row="1"
+                       BackgroundColor="White"
+                       CornerRadius="0"
+                       Padding="15,10"
                        HasShadow="False"
-                       BorderColor="#FDE3EA"
-                       Padding="20"
-                       Margin="0,0,0,20">
-                    <VerticalStackLayout Spacing="8">
-                        <Label Text="💡 ¿Sabías que?"
-                                FontSize="14"
-                                FontAttributes="Bold"
-                                TextColor="#2D3A2F"/>
-                        <Label Text="Registrar tu ciclo ayuda a entender mejor tu cuerpo y predecir cambios en tu energía vital. ¡Tu planta también se beneficia de estos datos!"
-                               FontSize="12"
-                               TextColor="#7A8B7C"
-                               LineHeight="1.3"/>
-                    </VerticalStackLayout>
-                </Frame>
+                       BorderColor="#EEF2EE"
+                       VerticalOptions="End">
 
-            </VerticalStackLayout>
-        </ScrollView>
-    </Grid>
+                        <Grid ColumnDefinitions="*, *, *"
+                              MaximumWidthRequest="800"
+                              HorizontalOptions="FillAndExpand">
+
+                                <VerticalStackLayout Grid.Column="0"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="2">
+                                        <Label Text="🏠"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"
+                                               TextColor="#7A8B7C"/>
+                                        <Label Text="Inicio"
+                                               FontSize="11"
+                                               TextColor="#7A8B7C"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="1"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="2">
+                                        <Label Text="🏆"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"
+                                               TextColor="#7A8B7C"/>
+                                        <Label Text="Retos"
+                                               FontSize="11"
+                                               TextColor="#7A8B7C"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+
+                                <VerticalStackLayout Grid.Column="2"
+                                                     HorizontalOptions="Center"
+                                                     Spacing="2">
+                                        <Label Text="👤"
+                                               FontSize="22"
+                                               HorizontalOptions="Center"
+                                               TextColor="#2D3A2F"/>
+                                        <Label Text="Perfil"
+                                               FontSize="11"
+                                               TextColor="#2D3A2F"
+                                               FontAttributes="Bold"
+                                               HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+
+                        </Grid>
+                </Frame>
+        </Grid>
 
 </ContentPage>
