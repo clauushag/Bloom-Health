@@ -34,7 +34,15 @@ public class SaludDatabase
         return await _conexion.Table<Usuario>()
                                .FirstOrDefaultAsync();
     }
-
+    public async Task<int> InsertarRegistroAsync(RegistroDiario registro)
+    {
+        await _conexion.InsertAsync(registro);
+        return registro.ID_Registro; // Devolvemos el ID generado
+    }
+    public async Task InsertarFisicoAsync(Fisico fisico)
+    {
+        await _conexion.InsertAsync(fisico);
+    }
 
     //encatgado de crear todas las tablas de la BBDD
     private async Task InicializarBBDD()
@@ -103,6 +111,7 @@ public class SaludDatabase
             CREATE TABLE IF NOT EXISTS Fisico (
                 ID_Registro INTEGER PRIMARY KEY,
                 Distancia INTEGER NOT NULL,
+                Tipo_Actividad TEXT NOT NULL,
                 Kcal_Quemadas REAL NOT NULL,
                 Tiempo_Ejercicio REAL NOT NULL,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)

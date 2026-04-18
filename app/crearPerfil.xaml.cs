@@ -30,7 +30,7 @@ public partial class crearPerfil : ContentPage
         Console.WriteLine($"Fecha de Nacimiento: {UsuarioActual.GetFechaNacimiento()}");
         if (UsuarioActual.EsValido()){
             await _database.InsertarUsuarioAsync(UsuarioActual);
-            await Shell.Current.GoToAsync("//HomePage");
+            await Shell.Current.GoToAsync("//MainPage");
         }
         else
         {

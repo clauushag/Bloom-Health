@@ -163,7 +163,9 @@
                     <Label Text="Duración (minutos)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
                     <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15,0">
                         <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                        <Entry Text="30" Keyboard="Numeric" TextColor="#2D3A2F" FontSize="14"/>
+                        <Entry Text="{Binding Tiempo_Ejercicio}"
+                                Keyboard="Numeric" TextColor="#2D3A2F" FontSize="14"
+                                />
                     </Frame>
                 </VerticalStackLayout>
 
@@ -171,11 +173,12 @@
                     <Label Text="Notas (opcional)" FontSize="12" TextColor="#7A8B7C" FontAttributes="Bold" Margin="5,0"/>
                     <Frame BackgroundColor="White" CornerRadius="20" HasShadow="True" BorderColor="Transparent" Padding="15">
                         <Frame.Shadow><Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/></Frame.Shadow>
-                        <Editor Placeholder="¿Cómo te sentiste?" HeightRequest="80" TextColor="#2D3A2F" PlaceholderColor="#94A696" FontSize="14" BackgroundColor="Transparent"/>
+                        <Entry Placeholder="¿Cómo te sentiste?"  TextColor="#2D3A2F" PlaceholderColor="#94A696" FontSize="14" BackgroundColor="Transparent"/>
                     </Frame>
                 </VerticalStackLayout>
 
-                <Button Text="Guardar Actividad" BackgroundColor="#8EB497" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="25" HeightRequest="55" Margin="0,10,0,10">
+                <Button Text="Guardar Actividad" BackgroundColor="#8EB497" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="25" HeightRequest="55" Margin="0,10,0,10"
+                        Clicked="OnGuardarClicked">
                     <Button.Shadow><Shadow Brush="#8EB497" Offset="0,8" Radius="15" Opacity="0.3" /></Button.Shadow>
                 </Button>
             </VerticalStackLayout>

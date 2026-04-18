@@ -1,13 +1,21 @@
+using app.Data;
+using app.Models;
 namespace app;
 
 public partial class RegistroActividadPage : ContentPage
 {
     // Variable para recordar cuál fue la última tarjeta que tocamos
     private Frame _frameSeleccionadoAnteriormente;
-
-    public RegistroActividadPage()
+    private SaludDatabase _database;
+    public Fisico fisico {get; set;}
+    public RegistroDiario registro {get; set;}
+    public RegistroActividadPage(SaludDatabase database)
     {
         InitializeComponent();
+        _database = database;
+        fisico = new Fisico();
+        registro = new RegistroDiario();
+        BindingContext = fisico;
     }
 
     private void OnActividadTapped(object sender, TappedEventArgs e)
@@ -43,4 +51,29 @@ public partial class RegistroActividadPage : ContentPage
     {
         await Navigation.PopAsync();
     }
+    private async void OnGuardarClicked(object sender, EventArgs e)
+    {
+        registro.SetFecha(DateTime.Now);
+        registro.ID_Usuario = 1; // Aquí deberías poner el ID del usuario actual, esto es solo un ejemplo
+
+
+        fisico.Tipo_Actividad = fisico.TiposActividad[0];
+        fisico.Distancia = 5;
+        fisico.Kcal_Quemadas = 300;
+        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(fisico));
+        if (fisico.EsValido())
+        {
+            int id=await _database.InsertarRegistroAsync(registro);
+            fisico.ID_Registro = id;
+            await DisplayAlert("Error", $"Registro guardado con éxito. ID: {id}", "OK");
+            await DisplayAlert("Error", $"Fisico: {id}, Distancia: {fisico.Distancia}, Kcal: {fisico.Kcal_Quemadas}, Tipo: {fisico.Tipo_Actividad}", "OK");
+            await _database.InsertarFisicoAsync(fisico);
+            await Shell.Current.GoToAsync("//MainPage");
+        }
+        else
+        {
+            await DisplayAlert("Error", "Rellena todos los campos", "OK");
+        }
+    }
+
 }
