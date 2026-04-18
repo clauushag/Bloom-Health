@@ -182,4 +182,15 @@ public class SaludDatabase
         // Inserción masiva
         await _conexion.InsertAllAsync(retos);
     }
+
+    public async Task CrearAvatarAsync()
+    {
+        Avatar avatar = new Avatar
+        {
+            ID_Usuario = 1, // Aquí deberías poner el ID del usuario actual
+            Nivel_Evolucion = 1,
+            Estado_Salud = Avatar.Tipos_Estados_Salud[8] // "Estable"
+        };
+        await _conexion.InsertAsync(avatar);
+    }
 }

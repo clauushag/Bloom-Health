@@ -21,7 +21,7 @@
                                                FontAttributes="Bold"
                                                HorizontalOptions="Center"
                                                FontFamily="OpenSansSemibold"/>
-                                        <Label Text="TU BIENESTAR ES LO PRIMERO"
+                                        <Label Text="{Binding Nombre, StringFormat='Hola {0}, ¿Como te encuentra hoy?'}" 
                                                FontSize="12"
                                                CharacterSpacing="2"
                                                TextColor="#7A8B7C"
