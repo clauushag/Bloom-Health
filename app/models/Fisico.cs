@@ -2,7 +2,7 @@ using SQLite;
 
 namespace app.Models
 {
-    public class Fisico : RegistroDiario
+    public class Fisico
     {
 
         public int Distancia { get; set; }
@@ -11,5 +11,6 @@ namespace app.Models
 
         public int Tiempo_Ejercicio { get; set; }
 
+        public int ID_Registro { get; set; }
     }
 }

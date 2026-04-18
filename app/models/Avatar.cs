@@ -1,4 +1,4 @@
-/*using SQLite;
+using SQLite;
 
 namespace app.Models
 {
@@ -9,6 +9,9 @@ namespace app.Models
 
         public int Nivel_Evolucion { get; set; }
 
-        //public string Estado
+        public int ID_Usuario { get; set; }
+
+        public string Estado_Salud { get; set; }
+
     }
-    }*/
+    }

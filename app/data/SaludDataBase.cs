@@ -17,30 +17,12 @@ public class SaludDatabase
     {
         if (_isInitialized) return;
         await InicializarBBDD();
-        await _conexion.CreateTableAsync<Paciente>();
         await InsertarCategoriasIniciales();
         await InsertarRetosIniciales();
         _isInitialized = true;
     }
 
 
-
-
-
-
-    public Task<List<Paciente>> ObtenerPacientesAsync()
-    {
-        return _conexion.Table<Paciente>().ToListAsync();
-
-    }
-
-    public Task<int> GuardarPacienteAsync(Paciente paciente)
-    {
-        if (paciente.Id != 0)
-            return _conexion.UpdateAsync(paciente);
-        else
-            return _conexion.InsertAsync(paciente);
-    }
     public async Task InsertarUsuarioAsync(Usuario usuario)
     {
         await _conexion.InsertAsync(usuario);
@@ -120,7 +102,7 @@ public class SaludDatabase
         await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS Fisico (
                 ID_Registro INTEGER PRIMARY KEY,
-                Pasos INTEGER NOT NULL,
+                Distancia INTEGER NOT NULL,
                 Kcal_Quemadas REAL NOT NULL,
                 Tiempo_Ejercicio REAL NOT NULL,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
