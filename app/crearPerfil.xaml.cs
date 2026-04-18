@@ -13,13 +13,13 @@ public partial class crearPerfil : ContentPage
     {
         InitializeComponent();
         _database = database;
-        UsuarioActual=new Usuario();
+        UsuarioActual = new Usuario();
         BindingContext = UsuarioActual;
     }
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        
+
         await _database.InicializarAsync(); // Aseguramos que la base de datos esté inicializada antes de usarla
 
 
@@ -28,9 +28,10 @@ public partial class crearPerfil : ContentPage
     {
         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(UsuarioActual));
         Console.WriteLine($"Fecha de Nacimiento: {UsuarioActual.GetFechaNacimiento()}");
-        if (UsuarioActual.EsValido()){
+        if (UsuarioActual.EsValido())
+        {
             await _database.InsertarUsuarioAsync(UsuarioActual);
-            await Shell.Current.GoToAsync("//HomePage");
+            await Shell.Current.GoToAsync("//MainPage");
         }
         else
         {
