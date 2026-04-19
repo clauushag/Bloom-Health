@@ -123,20 +123,17 @@
                                                        FontSize="18"
                                                        VerticalOptions="Center"
                                                        Margin="5,0,15,0"/>
-                                                <VerticalStackLayout Grid.Column="1"
-                                                                     VerticalOptions="Center">
-                                                        <Label Text="Modo Oscuro"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"/>
-                                                        <Label Text="Desactivado"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"/>
-                                                </VerticalStackLayout>
-                                                <Switch Grid.Column="2"
+                                                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                                        <Label Text="Modo Oscuro" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#2D3A2F, Dark=White}"/>
+                                                        <Label x:Name="LblEstadoModoOscuro" Text="Desactivado" FontSize="12" TextColor="#7A8B7C"/>
+                                                 </VerticalStackLayout>
+
+                                                 <Switch x:Name="SwitchModoOscuro" 
+                                                        Grid.Column="2"
                                                         OnColor="#8EB497"
                                                         ThumbColor="White"
-                                                        VerticalOptions="Center"/>
+                                                        VerticalOptions="Center"
+                                                        Toggled="OnModoOscuroToggled"/>
                                         </Grid>
                                 </Frame>
 

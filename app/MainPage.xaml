@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app.MainPage"
-             BackgroundColor="#F7F9F7"
+             BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#121212}"
              Shell.NavBarIsVisible="False">
 
        <Grid>
@@ -17,22 +17,22 @@
                                    <Label Text="BLOOM HEALTH"
                                           FontSize="28"
                                           CharacterSpacing="4"
-                                          TextColor="#2D3A2F"
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                           FontAttributes="Bold"
                                           HorizontalOptions="Center"
                                           FontFamily="OpenSansSemibold"/>
                                    <Label Text="TU BIENESTAR ES LO PRIMERO"
                                           FontSize="12"
                                           CharacterSpacing="2"
-                                          TextColor="#7A8B7C"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                           FontAttributes="Bold"
                                           HorizontalOptions="Center"/>
                             </VerticalStackLayout>
 
-                            <Frame BackgroundColor="White"
+                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                    CornerRadius="40"
                                    HasShadow="False"
-                                   BorderColor="Transparent"
+                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                                    Padding="30,45">
                                    <Frame.Shadow>
                                           <Shadow Brush="#A0AF9E"
@@ -54,12 +54,12 @@
                                                  <Label Text="ESTADO ACTUAL"
                                                         FontSize="11"
                                                         CharacterSpacing="2"
-                                                        TextColor="#B0BDB2"
+                                                        TextColor="{AppThemeBinding Light=#B0BDB2, Dark=#1E1E1E}"
                                                         FontAttributes="Bold"
                                                         HorizontalOptions="Center"/>
                                                  <Label Text="¡TU PLANTA ESTÁ FLORECIENDO!"
                                                         FontSize="18"
-                                                        TextColor="#2D3A2F"
+                                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                         FontAttributes="Bold"
                                                         HorizontalTextAlignment="Center"/>
                                           </VerticalStackLayout>
@@ -68,16 +68,16 @@
                                                  <Grid ColumnDefinitions="*, Auto">
                                                         <Label Text="ENERGÍA VITAL"
                                                                FontSize="10"
-                                                               TextColor="#7A8B7C"
+                                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                                FontAttributes="Bold"
                                                                CharacterSpacing="1"/>
                                                         <Label Grid.Column="1"
                                                                Text="85%"
                                                                FontSize="11"
-                                                               TextColor="#2D3A2F"
+                                                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                FontAttributes="Bold"/>
                                                  </Grid>
-                                                 <Border BackgroundColor="#E8F2E9"
+                                                 <Border BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#2C2C2C}"
                                                          HeightRequest="14"
                                                          StrokeShape="RoundRectangle 7"
                                                          StrokeThickness="0">
@@ -90,11 +90,11 @@
                                    </VerticalStackLayout>
                             </Frame>
 
-                            <Frame BackgroundColor="#F1F5F1"
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#1E1E1E}"
                                    Padding="20"
                                    CornerRadius="25"
                                    HasShadow="False"
-                                   BorderColor="#E2EAE2">
+                                   BorderColor="{AppThemeBinding Light=#E2EAE2, Dark=#3C3C3C}">
                                    <HorizontalStackLayout Spacing="15">
                                           <Label Text="💡"
                                                  VerticalOptions="Center"
@@ -103,11 +103,11 @@
                                                                Spacing="2">
                                                  <Label Text="TIP DEL DÍA"
                                                         FontSize="10"
-                                                        TextColor="#7A8B7C"
+                                                        TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                         FontAttributes="Bold"
                                                         CharacterSpacing="1"/>
                                                  <Label Text="Beber agua regularmente ayuda a tu planta."
-                                                        TextColor="#2D3A2F"
+                                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                         FontSize="14"
                                                         FontAttributes="Bold"/>
                                           </VerticalStackLayout>
@@ -118,7 +118,7 @@
                                    <Label Text="EVOLUCIÓN DEL AVATAR"
                                           FontSize="11"
                                           CharacterSpacing="2"
-                                          TextColor="#7A8B7C"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                           FontAttributes="Bold"
                                           Margin="10,0"/>
 
@@ -128,10 +128,10 @@
                                                                  Padding="5,5,40,30">
 
                                                  <Frame WidthRequest="160"
-                                                        BackgroundColor="White"
+                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                                         CornerRadius="25"
                                                         HasShadow="False"
-                                                        BorderColor="#EEF2EE"
+                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                                                         Padding="15">
                                                         <Frame.Shadow>
                                                                <Shadow Brush="#A0AF9E"
@@ -147,20 +147,20 @@
                                                                <Label Text="MARCHITA"
                                                                       FontSize="11"
                                                                       FontAttributes="Bold"
-                                                                      TextColor="#2D3A2F"
+                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                       HorizontalOptions="Center"/>
                                                                <Label Text="0-25%"
                                                                       FontSize="10"
-                                                                      TextColor="#7A8B7C"
+                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                                       HorizontalOptions="Center"/>
                                                         </VerticalStackLayout>
                                                  </Frame>
 
                                                  <Frame WidthRequest="160"
-                                                        BackgroundColor="White"
+                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                                         CornerRadius="25"
                                                         HasShadow="False"
-                                                        BorderColor="#EEF2EE"
+                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                                                         Padding="15">
                                                         <Frame.Shadow>
                                                                <Shadow Brush="#A0AF9E"
@@ -176,20 +176,20 @@
                                                                <Label Text="CRECIENDO"
                                                                       FontSize="11"
                                                                       FontAttributes="Bold"
-                                                                      TextColor="#2D3A2F"
+                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                       HorizontalOptions="Center"/>
                                                                <Label Text="26-50%"
                                                                       FontSize="10"
-                                                                      TextColor="#7A8B7C"
+                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                                       HorizontalOptions="Center"/>
                                                         </VerticalStackLayout>
                                                  </Frame>
 
                                                  <Frame WidthRequest="160"
-                                                        BackgroundColor="White"
+                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                                         CornerRadius="25"
                                                         HasShadow="False"
-                                                        BorderColor="#EEF2EE"
+                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                                                         Padding="15">
                                                         <Frame.Shadow>
                                                                <Shadow Brush="#A0AF9E"
@@ -205,20 +205,20 @@
                                                                <Label Text="FLORECIENDO"
                                                                       FontSize="11"
                                                                       FontAttributes="Bold"
-                                                                      TextColor="#2D3A2F"
+                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                       HorizontalOptions="Center"/>
                                                                <Label Text="51-75%"
                                                                       FontSize="10"
-                                                                      TextColor="#7A8B7C"
+                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                                       HorizontalOptions="Center"/>
                                                         </VerticalStackLayout>
                                                  </Frame>
 
                                                  <Frame WidthRequest="160"
-                                                        BackgroundColor="White"
+                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                                         CornerRadius="25"
                                                         HasShadow="False"
-                                                        BorderColor="#EEF2EE"
+                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                                                         Padding="15">
                                                         <Frame.Shadow>
                                                                <Shadow Brush="#A0AF9E"
@@ -233,11 +233,11 @@
                                                                <Label Text="FUERTE"
                                                                       FontSize="11"
                                                                       FontAttributes="Bold"
-                                                                      TextColor="#2D3A2F"
+                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                       HorizontalOptions="Center"/>
                                                                <Label Text="76-100%"
                                                                       FontSize="10"
-                                                                      TextColor="#7A8B7C"
+                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                                                       HorizontalOptions="Center"/>
                                                         </VerticalStackLayout>
                                                  </Frame>
@@ -250,8 +250,8 @@
               </ScrollView>
 
               <Button Text="+"
-                      BackgroundColor="#8EB497"
-                      TextColor="White"
+                      BackgroundColor="{AppThemeBinding Light=#8EB497, Dark=#1E1E1E}"
+                      TextColor="#F7F9F7"
                       FontSize="32"
                       CornerRadius="35"
                       HeightRequest="70"
@@ -269,11 +269,11 @@
               </Button>
 
               <Frame Grid.Row="1"
-                     BackgroundColor="White"
+                     BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                      CornerRadius="0"
                      Padding="15,10"
                      HasShadow="False"
-                     BorderColor="#EEF2EE"
+                     BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                      VerticalOptions="End">
 
                      <Grid ColumnDefinitions="*, *, *"
@@ -286,10 +286,10 @@
                                    <Label Text="🏠"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#7A8B7C"/>
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Inicio"
                                           FontSize="11"
-                                          TextColor="#7A8B7C"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                           HorizontalOptions="Center"/>
                             </VerticalStackLayout>
 
@@ -299,10 +299,10 @@
                                    <Label Text="🏆"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#7A8B7C"/>
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Retos"
                                           FontSize="11"
-                                          TextColor="#7A8B7C"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                           HorizontalOptions="Center"/>
                             </VerticalStackLayout>
 
@@ -312,10 +312,10 @@
                                    <Label Text="👤"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#2D3A2F"/>
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
                                    <Label Text="Perfil"
                                           FontSize="11"
-                                          TextColor="#2D3A2F"
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                           FontAttributes="Bold"
                                           HorizontalOptions="Center"/>
                             </VerticalStackLayout>
