@@ -21,7 +21,7 @@
                                           FontAttributes="Bold"
                                           HorizontalOptions="Center"
                                           FontFamily="OpenSansSemibold"/>
-                                   <Label Text="TU BIENESTAR ES LO PRIMERO"
+                                   <Label Text="{Binding UsuarioActual.Nombre, StringFormat='Hola {0}, ¿KLK con la vida, salimos de party?'}" 
                                           FontSize="12"
                                           CharacterSpacing="2"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
@@ -57,7 +57,7 @@
                                                         TextColor="{AppThemeBinding Light=#B0BDB2, Dark=#1E1E1E}"
                                                         FontAttributes="Bold"
                                                         HorizontalOptions="Center"/>
-                                                 <Label Text="¡TU PLANTA ESTÁ FLORECIENDO!"
+                                                 <Label Text="{Binding AvatarActual.Estado_Salud, StringFormat='Tu planta está {0}'}"
                                                         FontSize="18"
                                                         TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                         FontAttributes="Bold"
@@ -72,7 +72,7 @@
                                                                FontAttributes="Bold"
                                                                CharacterSpacing="1"/>
                                                         <Label Grid.Column="1"
-                                                               Text="85%"
+                                                               Text="{Binding AvatarActual.XP, StringFormat='{0}%'}"
                                                                FontSize="11"
                                                                TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                                                FontAttributes="Bold"/>
@@ -81,7 +81,7 @@
                                                          HeightRequest="14"
                                                          StrokeShape="RoundRectangle 7"
                                                          StrokeThickness="0">
-                                                        <ProgressBar Progress="0.85"
+                                                        <ProgressBar Progress="{Binding ProgresoXP}"
                                                                      ProgressColor="#8EB497"
                                                                      VerticalOptions="Center"
                                                                      ScaleY="3"/>

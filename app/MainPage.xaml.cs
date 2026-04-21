@@ -32,9 +32,9 @@ namespace app
             
            
         }
-        private void OnAddClicked(object sender, EventArgs e)
+        private async void OnAddClicked(object sender, EventArgs e)
         {
-            // Aquí irá la lógica para abrir el menú
+            await Shell.Current.GoToAsync(nameof(Menu));
         }
     }
 }
