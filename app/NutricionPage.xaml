@@ -40,6 +40,9 @@
                                    HasShadow="True"
                                    BorderColor="Transparent"
                                    Padding="20,40">
+                                   <Frame.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnAbrirScannerTapped" />
+                                   </Frame.GestureRecognizers>
                                    <Frame.Shadow>
                                           <Shadow Brush="#8EB497"
                                                   Offset="0,12"
