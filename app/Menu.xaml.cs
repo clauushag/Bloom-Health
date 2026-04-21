@@ -17,22 +17,22 @@ namespace app
 
         private async void OnActividadTapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(RegistroActividadPage));
+            await Shell.Current.GoToAsync("//RegistroActividadPage");
         }
 
         private async Task OnComidaTapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(NutricionPage));
+            await Shell.Current.GoToAsync("//NutricionPage");
         }
 
         private async Task OnEstadoTapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(EstadoAnimicoPage));
+            await Shell.Current.GoToAsync("//EstadoAnimoPage");
         }
 
         private async Task OnSaludMenstrualTapped(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync(nameof(MenstrualPage));
+            await Shell.Current.GoToAsync("//MenstrualPage");
         }
     }
 }
