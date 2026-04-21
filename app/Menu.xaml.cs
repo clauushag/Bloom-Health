@@ -12,27 +12,27 @@ namespace app
 
         private async void OnBackClicked(object sender, EventArgs e)
         {
-            await Navigation.PopModalAsync();
+            await Shell.Current.GoToAsync("..");
         }
 
-        private void OnActividadTapped(object sender, EventArgs e)
+        private async void OnActividadTapped(object sender, EventArgs e)
         {
-            // Lógica para Actividad
+            await Shell.Current.GoToAsync(nameof(RegistroActividadPage));
         }
 
-        private void OnComidaTapped(object sender, EventArgs e)
+        private async Task OnComidaTapped(object sender, EventArgs e)
         {
-            // Lógica para Comida
+            await Shell.Current.GoToAsync(nameof(NutricionPage));
         }
 
-        private void OnEstadoTapped(object sender, EventArgs e)
+        private async Task OnEstadoTapped(object sender, EventArgs e)
         {
-            // Lógica para Estado Anímico
+            await Shell.Current.GoToAsync(nameof(EstadoAnimicoPage));
         }
 
-        private void OnSaludMenstrualTapped(object sender, EventArgs e)
+        private async Task OnSaludMenstrualTapped(object sender, EventArgs e)
         {
-            // Lógica para el registro de salud menstrual
+            await Shell.Current.GoToAsync(nameof(MenstrualPage));
         }
     }
 }
