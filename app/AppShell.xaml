@@ -43,5 +43,8 @@
         Title="Menú"
         ContentTemplate="{DataTemplate local:Menu}"
         Route="Menu"/>
-
+    <ShellContent
+        Title="Escaner"
+        ContentTemplate="{DataTemplate local:ScannerPage}"
+        Route="ScannerPage"/>
 </Shell>

@@ -28,6 +28,8 @@ public static class MauiProgram
 
         // 3. Registramos la página principal para poder inyectarle la base de datos
         builder.Services.AddTransient<MainPage>();
+		builder.Services.AddTransient<Menu>();          
+		builder.Services.AddTransient<NutricionPage>(); 
 
 #if DEBUG
 		builder.Logging.AddDebug();
