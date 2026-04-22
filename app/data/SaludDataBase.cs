@@ -6,11 +6,11 @@ namespace app.Data;
 public class SaludDatabase
 {
     private SQLiteAsyncConnection _conexion;
-    private bool _isInitialized = false; 
+    private bool _isInitialized = false;
     public SaludDatabase(string rutaBD)
     {
         _conexion = new SQLiteAsyncConnection(rutaBD);
-        
+
     }
 
     public async Task InicializarAsync()
@@ -89,7 +89,7 @@ public class SaludDatabase
                 FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
-            await _conexion.ExecuteAsync(@"
+        await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS Avatar (
                 ID_Avatar INTEGER PRIMARY KEY AUTOINCREMENT,
                 ID_Usuario INTEGER NOT NULL UNIQUE,
@@ -192,7 +192,7 @@ public class SaludDatabase
             ID_Usuario = 1, // Aquí deberías poner el ID del usuario actual
             Nivel_Evolucion = 1,
             XP = 0,
-            Estado_Salud = Avatar.Tipos_Estados_Salud[8] // "Estable"
+            Estado_Salud = Avatar.Tipos_Estados_Salud[2] // "Brotando"
         };
         await _conexion.InsertAsync(avatar);
     }
