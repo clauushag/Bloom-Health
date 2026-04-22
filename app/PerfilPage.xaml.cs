@@ -1,13 +1,20 @@
 using System;
 using Microsoft.Maui.Controls;
+using app.Data;
+using app.Models;
 
 namespace app
 {
     public partial class PerfilPage : ContentPage
     {
-        public PerfilPage()
+        private SaludDatabase _database;
+        public PerfilViewModel ViewModel { get; set; }
+        public PerfilPage(SaludDatabase database)
         {
             InitializeComponent();
+            _database = database;
+            ViewModel = new PerfilViewModel();
+            BindingContext = ViewModel;
 
             // Al abrir la página, comprobamos si el modo oscuro ya está activo
             // para poner el Switch en la posición correcta
@@ -19,6 +26,23 @@ namespace app
         }
 
         // Este es el nuevo evento que se ejecuta al tocar el Switch
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await _database.InicializarAsync();
+            Usuario usuario = await _database.ObtenerUsuarioAsync();
+            if (usuario == null)
+            {
+                await Shell.Current.GoToAsync("//crearPerfil");
+            }
+            else
+            {
+                ViewModel.UsuarioActual = usuario;
+                ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
+            }
+         
+
+        }
         private void OnModoOscuroToggled(object sender, ToggledEventArgs e)
         {
             if (e.Value) // Si el switch se enciende (true)
