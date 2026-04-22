@@ -45,11 +45,11 @@
                                                  </Border>
                                                  <VerticalStackLayout Grid.Column="1"
                                                                       VerticalOptions="Center">
-                                                        <Label Text="María García"
+                                                        <Label Text="{Binding UsuarioActual.Nombre, StringFormat='{0}.'}"
                                                                FontSize="20"
                                                                FontAttributes="Bold"
                                                                TextColor="White"/>
-                                                        <Label Text="Miembro desde Marzo 2026"
+                                                        <Label Text="{Binding UsuarioActual.FechaNacimiento}"
                                                                FontSize="12"
                                                                TextColor="#E1EFE3"/>
                                                  </VerticalStackLayout>
@@ -78,7 +78,7 @@
                                                                FontSize="11"
                                                                TextColor="#E1EFE3"
                                                                HorizontalOptions="Center"/>
-                                                        <Label Text="1,240"
+                                                        <Label Text="{Binding AvatarActual.XP}"
                                                                FontSize="18"
                                                                FontAttributes="Bold"
                                                                TextColor="White"
@@ -90,7 +90,7 @@
                                                                FontSize="11"
                                                                TextColor="#E1EFE3"
                                                                HorizontalOptions="Center"/>
-                                                        <Label Text="12"
+                                                        <Label Text="{Binding AvatarActual.Nivel_Evolucion}"
                                                                FontSize="18"
                                                                FontAttributes="Bold"
                                                                TextColor="White"
