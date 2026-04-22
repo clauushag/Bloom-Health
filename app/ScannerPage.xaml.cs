@@ -34,13 +34,13 @@ public partial class ScannerPage : ContentPage
                 await DisplayAlert("¡Escaneado!", $"El código es: {codigoEscaneado}", "OK");
 
                 // Volvemos a la página de Nutrición
-                await Navigation.PopModalAsync();
+                await Shell.Current.GoToAsync("//NutricionPage");
             });
         }
     }
 
     private async void OnCancelarClicked(object sender, EventArgs e)
     {
-        await Navigation.PopModalAsync();
+        await Shell.Current.GoToAsync("//NutricionPage");
     }
 }

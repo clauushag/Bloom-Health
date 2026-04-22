@@ -16,5 +16,6 @@
                 BackgroundColor="#2D3A2F"
                 TextColor="White"
                 Clicked="OnCancelarClicked"/>
+        
     </Grid>
 </ContentPage>

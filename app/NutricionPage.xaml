@@ -41,7 +41,7 @@
                                    BorderColor="Transparent"
                                    Padding="20,40">
                                    <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnAbrirScannerTapped" />
+                                          <TapGestureRecognizer Tapped="OnAbrirScannerTapped"/>
                                    </Frame.GestureRecognizers>
                                    <Frame.Shadow>
                                           <Shadow Brush="#8EB497"
@@ -249,44 +249,56 @@
                            MaximumWidthRequest="800"
                            HorizontalOptions="FillAndExpand">
 
+                            <!-- Inicio -->
                             <VerticalStackLayout Grid.Column="0"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
+                                   <VerticalStackLayout.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnInicioTapped"/>
+                                   </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="🏠"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#7A8B7C"/>
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
                                    <Label Text="Inicio"
                                           FontSize="11"
-                                          TextColor="#7A8B7C"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                          FontAttributes="Bold"/>
                             </VerticalStackLayout>
 
+                            <!-- Retos -->
                             <VerticalStackLayout Grid.Column="1"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
+                                   <VerticalStackLayout.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnRetosTapped"/>
+                                   </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="🏆"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#7A8B7C"/>
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Retos"
                                           FontSize="11"
-                                          TextColor="#7A8B7C"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
 
+                            <!-- Perfil -->
                             <VerticalStackLayout Grid.Column="2"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
+                                   <VerticalStackLayout.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnPerfilTapped"/>
+                                   </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="👤"
                                           FontSize="22"
                                           HorizontalOptions="Center"
-                                          TextColor="#2D3A2F"/>
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Perfil"
                                           FontSize="11"
-                                          TextColor="#2D3A2F"
-                                          FontAttributes="Bold"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
 
                      </Grid>

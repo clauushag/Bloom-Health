@@ -1,7 +1,7 @@
 ﻿using app.Data;
 using app.Models;
 
-namespace app 
+namespace app
 {
     public partial class MainPage : ContentPage
     {
@@ -12,7 +12,7 @@ namespace app
             InitializeComponent();
             _database = database;
             ViewModel = new PerfilViewModel();
-            BindingContext = ViewModel; 
+            BindingContext = ViewModel;
         }
         protected override async void OnAppearing()
         {
@@ -29,13 +29,27 @@ namespace app
                 ViewModel.UsuarioActual = usuario;
                 ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
             }
-            
-           
+
+
         }
         private async void OnAddClicked(object sender, EventArgs e)
         {
-           await Shell.Current.GoToAsync("//ScannerPage");
-            
+            await Shell.Current.GoToAsync("//ScannerPage");
+
+        }
+        private async void OnInicioTapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//MainPage");
+        }
+
+        private async void OnRetosTapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//RetosPage");
+        }
+
+        private async void OnPerfilTapped(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//PerfilPage");
         }
     }
 }
