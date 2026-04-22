@@ -7,8 +7,8 @@ public partial class RegistroActividadPage : ContentPage
     // Variable para recordar cuál fue la última tarjeta que tocamos
     private Frame _frameSeleccionadoAnteriormente;
     private SaludDatabase _database;
-    public Fisico fisico {get; set;}
-    public RegistroDiario registro {get; set;}
+    public Fisico fisico { get; set; }
+    public RegistroDiario registro { get; set; }
     public RegistroActividadPage(SaludDatabase database)
     {
         InitializeComponent();
@@ -31,15 +31,15 @@ public partial class RegistroActividadPage : ContentPage
         var frameActual = (Frame)sender;
 
         // 3. Pintamos la tarjeta tocada de verde
-        frameActual.BackgroundColor = Color.FromArgb("#F0F5F1"); 
-        frameActual.BorderColor = Color.FromArgb("#8EB497");     
+        frameActual.BackgroundColor = Color.FromArgb("#F0F5F1");
+        frameActual.BorderColor = Color.FromArgb("#8EB497");
 
         // 4. Guardamos esta tarjeta en la memoria para "deseleccionarla" la próxima vez
         _frameSeleccionadoAnteriormente = frameActual;
 
         // 5. Mostramos el formulario de abajo
         ContenedorFormulario.IsVisible = true;
-        
+
         // 6. Cambiamos el título del formulario
         if (e.Parameter != null)
         {
@@ -63,7 +63,7 @@ public partial class RegistroActividadPage : ContentPage
         Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(fisico));
         if (fisico.EsValido())
         {
-            int id=await _database.InsertarRegistroAsync(registro);
+            int id = await _database.InsertarRegistroAsync(registro);
             fisico.ID_Registro = id;
             await DisplayAlert("Error", $"Registro guardado con éxito. ID: {id}", "OK");
             await DisplayAlert("Error", $"Fisico: {id}, Distancia: {fisico.Distancia}, Kcal: {fisico.Kcal_Quemadas}, Tipo: {fisico.Tipo_Actividad}", "OK");
@@ -74,6 +74,20 @@ public partial class RegistroActividadPage : ContentPage
         {
             await DisplayAlert("Error", "Rellena todos los campos", "OK");
         }
+    }
+    private async void OnInicioTapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//MainPage");
+    }
+
+    private async void OnRetosTapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//RetosPage");
+    }
+
+    private async void OnPerfilTapped(object sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync("//PerfilPage");
     }
 
 }

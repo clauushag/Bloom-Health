@@ -249,6 +249,17 @@
                      </VerticalStackLayout>
               </ScrollView>
 
+              <!-- Fondo oscuro semitransparente (tap para cerrar) -->
+              <BoxView x:Name="MenuOverlay"
+                       BackgroundColor="#80000000"
+                       IsVisible="False"
+                       Grid.RowSpan="2">
+                     <BoxView.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnCerrarMenuTapped"/>
+                     </BoxView.GestureRecognizers>
+              </BoxView>
+
+              <!-- Botón + -->
               <Button Text="+"
                       BackgroundColor="{AppThemeBinding Light=#8EB497, Dark=#1E1E1E}"
                       TextColor="#F7F9F7"
@@ -262,16 +273,132 @@
                       Clicked="OnAddClicked">
                      <Button.Shadow>
                             <Shadow Brush="#8EB497"
-                                    Offset="0,10"
-                                    Radius="20"
-                                    Opacity="0.4"/>
+                                          Offset="0,10"
+                                          Radius="20"
+                                          Opacity="0.4"/>
                      </Button.Shadow>
               </Button>
+
+              <!-- Panel del menú (oculto por defecto) -->
+              <Frame x:Name="MenuPanel"
+                     BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                     CornerRadius="40"
+                     Padding="30,40"
+                     Margin="0"
+                     HasShadow="True"
+                     BorderColor="Transparent"
+                     VerticalOptions="End"
+                     IsVisible="False">
+                     <VerticalStackLayout Spacing="18">
+
+                            <Grid ColumnDefinitions="*, Auto"
+                                          Margin="0,0,0,5">
+                                   <Label Text="AÑADIR REGISTRO"
+                                          FontSize="18"
+                                          FontAttributes="Bold"
+                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                          CharacterSpacing="1"/>
+                                   <Button Grid.Column="1"
+                                           Text="✕"
+                                           TextColor="#7A8B7C"
+                                           BackgroundColor="Transparent"
+                                           Clicked="OnCerrarMenuTapped"
+                                           FontSize="20"/>
+                            </Grid>
+
+                            <Frame BackgroundColor="#8EBC8F"
+                                          Padding="18"
+                                          CornerRadius="20"
+                                          HasShadow="False"
+                                          BorderColor="Transparent">
+                                   <Frame.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnActividadTapped"/>
+                                   </Frame.GestureRecognizers>
+                                   <HorizontalStackLayout Spacing="20">
+                                          <Label Text="🏃"
+                                                        FontSize="24"
+                                                        VerticalOptions="Center"/>
+                                          <Label Text="ACTIVIDAD"
+                                                        TextColor="White"
+                                                        FontAttributes="Bold"
+                                                        VerticalOptions="Center"
+                                                        FontSize="15"
+                                                        CharacterSpacing="1.5"/>
+                                   </HorizontalStackLayout>
+                            </Frame>
+
+                            <Frame BackgroundColor="#D9A673"
+                                          Padding="18"
+                                          CornerRadius="20"
+                                          HasShadow="False"
+                                          BorderColor="Transparent">
+                                   <Frame.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnComidaTapped"/>
+                                   </Frame.GestureRecognizers>
+                                   <HorizontalStackLayout Spacing="20">
+                                          <Label Text="🍎"
+                                                        FontSize="24"
+                                                        VerticalOptions="Center"/>
+                                          <Label Text="COMIDA"
+                                                        TextColor="White"
+                                                        FontAttributes="Bold"
+                                                        VerticalOptions="Center"
+                                                        FontSize="15"
+                                                        CharacterSpacing="1.5"/>
+                                   </HorizontalStackLayout>
+                            </Frame>
+
+                            <Frame BackgroundColor="#5E8D5E"
+                                          Padding="18"
+                                          CornerRadius="20"
+                                          HasShadow="False"
+                                          BorderColor="Transparent">
+                                   <Frame.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnEstadoTapped"/>
+                                   </Frame.GestureRecognizers>
+                                   <HorizontalStackLayout Spacing="20">
+                                          <Label Text="🧠"
+                                                        FontSize="24"
+                                                        VerticalOptions="Center"/>
+                                          <Label Text="ESTADO ANÍMICO"
+                                                        TextColor="White"
+                                                        FontAttributes="Bold"
+                                                        VerticalOptions="Center"
+                                                        FontSize="15"
+                                                        CharacterSpacing="1.5"/>
+                                   </HorizontalStackLayout>
+                            </Frame>
+
+                            <Frame BackgroundColor="#F2A7B5"
+                                          Padding="18"
+                                          CornerRadius="20"
+                                          HasShadow="False"
+                                          BorderColor="Transparent"
+                                          Margin="0,0,0,10">
+                                   <Frame.GestureRecognizers>
+                                          <TapGestureRecognizer Tapped="OnMenstrualTapped"/>
+                                   </Frame.GestureRecognizers>
+                                   <HorizontalStackLayout Spacing="20">
+                                          <Label Text="📅"
+                                                        FontSize="24"
+                                                        VerticalOptions="Center"/>
+                                          <Label Text="SALUD MENSTRUAL"
+                                                        TextColor="White"
+                                                        FontAttributes="Bold"
+                                                        VerticalOptions="Center"
+                                                        FontSize="15"
+                                                        CharacterSpacing="1.5"/>
+                                   </HorizontalStackLayout>
+                            </Frame>
+
+                     </VerticalStackLayout>
+              </Frame>
+
 
               <Frame Grid.Row="1"
                      BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                      CornerRadius="0"
-                     Padding="15,10"
+                     Padding="10,6"
                      HasShadow="False"
                      BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
                      VerticalOptions="End">
@@ -288,12 +415,12 @@
                                           <TapGestureRecognizer Tapped="OnInicioTapped"/>
                                    </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="🏠"
-                                                 FontSize="22"
-                                                 HorizontalOptions="Center"
+                                          FontSize="20"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
                                    <Label Text="Inicio"
-                                                 FontSize="11"
-                                                 HorizontalOptions="Center"
+                                          FontSize="11"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                           FontAttributes="Bold"/>
                             </VerticalStackLayout>
@@ -306,12 +433,12 @@
                                           <TapGestureRecognizer Tapped="OnRetosTapped"/>
                                    </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="🏆"
-                                                 FontSize="22"
-                                                 HorizontalOptions="Center"
+                                          FontSize="20"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Retos"
-                                                 FontSize="11"
-                                                 HorizontalOptions="Center"
+                                          FontSize="11"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
 
@@ -323,12 +450,12 @@
                                           <TapGestureRecognizer Tapped="OnPerfilTapped"/>
                                    </VerticalStackLayout.GestureRecognizers>
                                    <Label Text="👤"
-                                                 FontSize="22"
-                                                 HorizontalOptions="Center"
+                                          FontSize="20"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                                    <Label Text="Perfil"
-                                                 FontSize="11"
-                                                 HorizontalOptions="Center"
+                                          FontSize="11"
+                                          HorizontalOptions="Center"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
 

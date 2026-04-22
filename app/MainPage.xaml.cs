@@ -32,10 +32,47 @@ namespace app
 
 
         }
-        private async void OnAddClicked(object sender, EventArgs e)
+        // Abre el menú
+        private void OnAddClicked(object sender, EventArgs e)
         {
-            await Shell.Current.GoToAsync("//ScannerPage");
+            MenuOverlay.IsVisible = true;
+            MenuPanel.IsVisible = true;
+        }
 
+        // Cierra el menú (botón X o fondo)
+        private void OnCerrarMenuTapped(object sender, EventArgs e)
+        {
+            MenuOverlay.IsVisible = false;
+            MenuPanel.IsVisible = false;
+        }
+
+        // Navegaciones desde el menú
+        private async void OnActividadTapped(object sender, EventArgs e)
+        {
+            MenuOverlay.IsVisible = false;
+            MenuPanel.IsVisible = false;
+            await Shell.Current.GoToAsync("//RegistroActividadPage");
+        }
+
+        private async void OnComidaTapped(object sender, EventArgs e)
+        {
+            MenuOverlay.IsVisible = false;
+            MenuPanel.IsVisible = false;
+            await Shell.Current.GoToAsync("//NutricionPage");
+        }
+
+        private async void OnEstadoTapped(object sender, EventArgs e)
+        {
+            MenuOverlay.IsVisible = false;
+            MenuPanel.IsVisible = false;
+            await Shell.Current.GoToAsync("//EstadoAnimicoPage");
+        }
+
+        private async void OnMenstrualTapped(object sender, EventArgs e)
+        {
+            MenuOverlay.IsVisible = false;
+            MenuPanel.IsVisible = false;
+            await Shell.Current.GoToAsync("//MenstrualPage");
         }
         private async void OnInicioTapped(object sender, EventArgs e)
         {
