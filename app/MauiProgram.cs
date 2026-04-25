@@ -30,6 +30,8 @@ public static class MauiProgram
         builder.Services.AddTransient<MainPage>();
 		builder.Services.AddTransient<Menu>();          
 		builder.Services.AddTransient<NutricionPage>(); 
+		builder.Services.AddTransient<RegistroActividadPage>();
+		builder.Services.AddTransient<PerfilPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

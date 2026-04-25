@@ -21,7 +21,7 @@
                                           FontAttributes="Bold"
                                           HorizontalOptions="Center"
                                           FontFamily="OpenSansSemibold"/>
-                                   <Label Text="{Binding UsuarioActual.Nombre, StringFormat='Hola {0}, ¿KLK con la vida, salimos de party?'}"
+                                   <Label Text="{Binding UsuarioActual.Nombre, StringFormat='Bienvenido {0}, ¿qué tal estás?'}"
                                           FontSize="12"
                                           CharacterSpacing="2"
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"

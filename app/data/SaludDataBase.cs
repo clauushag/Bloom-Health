@@ -6,11 +6,11 @@ namespace app.Data;
 public class SaludDatabase
 {
     private SQLiteAsyncConnection _conexion;
-    private bool _isInitialized = false; 
+    private bool _isInitialized = false;
     public SaludDatabase(string rutaBD)
     {
         _conexion = new SQLiteAsyncConnection(rutaBD);
-        
+
     }
 
     public async Task InicializarAsync()
@@ -89,7 +89,7 @@ public class SaludDatabase
                 FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
-            await _conexion.ExecuteAsync(@"
+        await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS Avatar (
                 ID_Avatar INTEGER PRIMARY KEY AUTOINCREMENT,
                 ID_Usuario INTEGER NOT NULL UNIQUE,
@@ -123,8 +123,14 @@ public class SaludDatabase
             CREATE TABLE IF NOT EXISTS Nutricional (
                 ID_Registro INTEGER PRIMARY KEY,
                 Comida TEXT NOT NULL,
-                Kcal_Ingeridos REAL NOT NULL,
-                Vasos_Agua INTEGER NOT NULL,
+                Kcal REAL NOT NULL,
+                Nombre TEXT NOT NULL,
+                Marca TEXT NOT NULL,
+                Proteinas REAL NOT NULL,
+                Carbos REAL NOT NULL,
+                Grasas REAL NOT NULL,
+                Fibra REAL NOT NULL,
+                Imagen TEXT,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
             );");
 
@@ -147,6 +153,34 @@ public class SaludDatabase
             );");
 
     }
+
+    public async Task InsertarNutricionalAsync(Nutricional nutricional)
+    {
+        await _conexion.InsertAsync(nutricional);
+    }
+
+    public async Task<List<Nutricional>> ObtenerHistorialNutricionalAsync(int idUsuario)
+    {
+        // Une RegistroDiario con Nutricional para obtener solo los del usuario actual
+        return await _conexion.QueryAsync<Nutricional>(
+            @"SELECT n.* FROM Nutricional n
+          INNER JOIN RegistroDiario r ON n.ID_Registro = r.ID_Registro
+          WHERE r.ID_Usuario = ?
+          ORDER BY r.ID_Registro DESC
+          LIMIT 20", idUsuario);
+    }
+
+    public async Task<double> ObtenerKcalHoyAsync(int idUsuario)
+    {
+        var hoy = DateTime.Now.ToString("yyyy-MM-dd");
+        var resultado = await _conexion.QueryAsync<Nutricional>(
+            @"SELECT n.* FROM Nutricional n
+          INNER JOIN RegistroDiario r ON n.ID_Registro = r.ID_Registro
+          WHERE r.ID_Usuario = ? AND r.Fecha LIKE ?",
+            idUsuario, hoy + "%");
+        return resultado.Sum(n => n.Kcal);
+    }
+
     //categorias por defecto
     private async Task InsertarCategoriasIniciales()
     {

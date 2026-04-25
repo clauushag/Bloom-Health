@@ -9,6 +9,6 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(crearPerfil), typeof(crearPerfil));
 		Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
 		Routing.RegisterRoute(nameof(PerfilPage), typeof(PerfilPage));
-		
+		Routing.RegisterRoute(nameof(ScannerPage), typeof(ScannerPage));
 	}
 }
