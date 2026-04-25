@@ -62,15 +62,26 @@ public partial class NutricionPage : ContentPage
         ResultadoCard.IsVisible = true;
     }
 
+    // EDIT: CargarHistorial y OnAppearing - paralelizar consultas BD y mover trabajo pesado fuera del hilo principal
+
     private async Task CargarHistorial()
     {
-        var usuario = await _database.ObtenerUsuarioAsync();
+        Usuario usuario = await Task.Run(() => _database.ObtenerUsuarioAsync());
         if (usuario == null) return;
 
-        var historial = await _database.ObtenerHistorialNutricionalAsync(usuario.ID_Usuario);
-        HistorialCollectionView.ItemsSource = historial;
+        // Las dos consultas son independientes entre sí → se lanzan en paralelo
+        var (historial, kcalHoy) = await Task.Run(async () =>
+        {
+            Task<List<Nutricional>> historialTask = _database.ObtenerHistorialNutricionalAsync(usuario.ID_Usuario);
+            Task<double> kcalTask = _database.ObtenerKcalHoyAsync(usuario.ID_Usuario);
 
-        var kcalHoy = await _database.ObtenerKcalHoyAsync(usuario.ID_Usuario);
+            await Task.WhenAll(historialTask, kcalTask);
+
+            return (historialTask.Result, kcalTask.Result);
+        });
+
+        // Solo tocamos la UI una vez, en el hilo principal
+        HistorialCollectionView.ItemsSource = historial;
         KcalHoyLabel.Text = $"{kcalHoy:F0} kcal ingeridas hoy";
     }
 
@@ -84,15 +95,15 @@ public partial class NutricionPage : ContentPage
             double.TryParse(Grasas, NumberStyles.Any, CultureInfo.InvariantCulture, out double grasas);
             double.TryParse(Fibra, NumberStyles.Any, CultureInfo.InvariantCulture, out double fibra);
 
-            var usuario = await _database.ObtenerUsuarioAsync();
+            Usuario usuario = await _database.ObtenerUsuarioAsync();
 
             // Creamos primero el RegistroDiario
-            var registro = new RegistroDiario { ID_Usuario = usuario.ID_Usuario };
+            RegistroDiario registro = new RegistroDiario { ID_Usuario = usuario.ID_Usuario };
             registro.SetFecha(DateTime.Now);
             int idRegistro = await _database.InsertarRegistroAsync(registro);
 
             // Luego el Nutricional vinculado
-            var nutricional = new Nutricional
+            Nutricional nutricional = new Nutricional
             {
                 ID_Registro = idRegistro,
                 Nombre = Nombre,
@@ -118,6 +129,67 @@ public partial class NutricionPage : ContentPage
         }
     }
 
+    private async void OnGuardarManualClicked(object sender, EventArgs e)
+    {
+        try
+        {
+            string nombre = ManualNombreEntry.Text?.Trim() ?? "";
+            if (string.IsNullOrEmpty(nombre))
+            {
+                await DisplayAlert("Campo requerido", "El nombre del alimento es obligatorio.", "OK");
+                return;
+            }
+
+            double.TryParse(ManualKcalEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double kcal);
+            double.TryParse(ManualProteinasEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double proteinas);
+            double.TryParse(ManualCarbosEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double carbos);
+            double.TryParse(ManualGrasasEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double grasas);
+            double.TryParse(ManualFibraEntry.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out double fibra);
+
+            if (kcal <= 0)
+            {
+                await DisplayAlert("Campo requerido", "Introduce un valor válido para las calorías.", "OK");
+                return;
+            }
+
+            Usuario usuario = await _database.ObtenerUsuarioAsync();
+
+            RegistroDiario registro = new RegistroDiario { ID_Usuario = usuario.ID_Usuario };
+            registro.SetFecha(DateTime.Now);
+            int idRegistro = await _database.InsertarRegistroAsync(registro);
+
+            Nutricional nutricional = new Nutricional
+            {
+                ID_Registro = idRegistro,
+                Nombre = nombre,
+                Marca = ManualMarcaEntry.Text?.Trim() ?? "",
+                Kcal = kcal,
+                Proteinas = proteinas,
+                Carbos = carbos,
+                Grasas = grasas,
+                Fibra = fibra,
+                Imagen = ""
+            };
+            await _database.InsertarNutricionalAsync(nutricional);
+
+            // Limpiar formulario
+            ManualNombreEntry.Text = "";
+            ManualMarcaEntry.Text = "";
+            ManualKcalEntry.Text = "";
+            ManualProteinasEntry.Text = "";
+            ManualCarbosEntry.Text = "";
+            ManualGrasasEntry.Text = "";
+            ManualFibraEntry.Text = "";
+
+            await CargarHistorial();
+            await DisplayAlert("✅ Guardado", $"'{nombre}' añadido a tu registro.", "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Error", ex.Message, "OK");
+        }
+    }
+
     private void OnCloseCardClicked(object sender, EventArgs e)
     {
         ResultadoCard.IsVisible = false;
@@ -126,7 +198,7 @@ public partial class NutricionPage : ContentPage
 
     private async void OnAbrirScannerClicked(object sender, EventArgs e)
     {
-        var status = await Permissions.CheckStatusAsync<Permissions.Camera>();
+        PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.Camera>();
         if (status != PermissionStatus.Granted)
             status = await Permissions.RequestAsync<Permissions.Camera>();
 
