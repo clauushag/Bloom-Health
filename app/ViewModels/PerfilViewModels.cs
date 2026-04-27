@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 public class PerfilViewModel : INotifyPropertyChanged
 {
-   
+
     private Usuario _usuarioActual;
     public Usuario UsuarioActual
     {
@@ -24,18 +24,28 @@ public class PerfilViewModel : INotifyPropertyChanged
         set
         {
             _avatarActual = value;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(AvatarActual));
+            OnPropertyChanged(nameof(ProgresoXP));   // ← actualiza la barra
+            OnPropertyChanged(nameof(ImagenPlanta)); // ← actualiza la imagen
         }
     }
-    
-    public double ProgresoXP
+
+    // Añade estas dos propiedades si no las tienes ya
+    public double ProgresoXP => AvatarActual != null ? Math.Min(AvatarActual.XP / 1000.0, 1.0) : 0;
+
+    public string ImagenPlanta
     {
         get
         {
-            if (AvatarActual == null)
-                return 0;
-
-            return AvatarActual.XP / 100.0;
+            if (AvatarActual == null) return "planta_marchita.png";
+            return AvatarActual.XP switch
+            {
+                < 100 => "planta_marchita.png",
+                < 250 => "planta_debil.png",
+                < 500 => "planta_normal.png",
+                < 800 => "plantafuerte.png",
+                _ => "planta_radiante.png"
+            };
         }
     }
 
@@ -47,10 +57,12 @@ public class PerfilViewModel : INotifyPropertyChanged
     }
     public event PropertyChangedEventHandler PropertyChanged;
 
-    
+
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+
+
 
 }

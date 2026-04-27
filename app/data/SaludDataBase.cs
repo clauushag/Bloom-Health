@@ -235,4 +235,11 @@ public class SaludDatabase
         return await _conexion.Table<Avatar>()
                                .FirstOrDefaultAsync(a => a.ID_Usuario == idUsuario);
     }
+
+    public async Task SumarXPAsync(int idUsuario, int xpGanado)
+    {
+        await _conexion.ExecuteAsync(
+            "UPDATE Avatar SET XP = XP + ? WHERE ID_Usuario = ?",
+            xpGanado, idUsuario);
+    }
 }

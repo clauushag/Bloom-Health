@@ -68,6 +68,7 @@ public partial class RegistroActividadPage : ContentPage
             await DisplayAlert("Error", $"Registro guardado con éxito. ID: {id}", "OK");
             await DisplayAlert("Error", $"Fisico: {id}, Distancia: {fisico.Distancia}, Kcal: {fisico.Kcal_Quemadas}, Tipo: {fisico.Tipo_Actividad}", "OK");
             await _database.InsertarFisicoAsync(fisico);
+            await _database.SumarXPAsync(registro.ID_Usuario, 25); // +25 XP por actividad física
             await Shell.Current.GoToAsync("//MainPage");
         }
         else
