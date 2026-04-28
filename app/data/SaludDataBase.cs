@@ -242,4 +242,11 @@ public class SaludDatabase
             "UPDATE Avatar SET XP = XP + ? WHERE ID_Usuario = ?",
             xpGanado, idUsuario);
     }
+    public async Task GuardarRegistroAsync(Mental registro)
+    {
+        
+        await _conexion.InsertAsync(registro);
+    }
+
+
 }
