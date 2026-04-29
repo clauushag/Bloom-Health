@@ -17,7 +17,7 @@
     <Nullable>enable</Nullable>
 
     <!-- App info -->
-    <ApplicationTitle>app</ApplicationTitle>
+    <ApplicationTitle>Bloom Health</ApplicationTitle>
     <ApplicationId>com.companyname.app</ApplicationId>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
@@ -50,9 +50,7 @@
   <!-- RECURSOS  -->
   <!-- ========== -->
   <ItemGroup>
-    <MauiIcon Include="Resources\AppIcon\appicon.svg"
-              ForegroundFile="Resources\AppIcon\appiconfg.svg"
-              Color="#512BD4" />
+    <MauiIcon Include="Resources\AppIcon\image.png" Color="#FFFFFF" />
 
     <MauiSplashScreen Include="Resources\Splash\splash.svg"
                       Color="#512BD4"
