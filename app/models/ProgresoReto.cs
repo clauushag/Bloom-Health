@@ -10,10 +10,10 @@ namespace app.Models
         //Fk a Usuario
         public int ID_Usuario {get;set;}
         //FK a retos
-        public int ID_Retos {get;set;}
+        public int ID_Reto {get;set;}
 
-        private string FechaInicio;
-        private string FechaFin;
+        public string FechaInicio {get;set;}
+        public string FechaFin {get;set;}
         public int progreso {get;set;}
         
         public string Estado {get;set;}

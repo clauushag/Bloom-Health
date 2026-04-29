@@ -19,7 +19,7 @@
                                           TextColor="#2D3A2F"
                                           VerticalOptions="Center">
                                           <Label.GestureRecognizers>
-                                                 <TapGestureRecognizer/>
+                                                 <TapGestureRecognizer Tapped="OnVolverClicked"/>
                                           </Label.GestureRecognizers>
                                    </Label>
 

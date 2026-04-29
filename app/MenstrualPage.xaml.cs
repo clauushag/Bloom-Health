@@ -22,4 +22,7 @@ public partial class MenstrualPage : ContentPage
         await Shell.Current.GoToAsync("//PerfilPage");
     }
 
+    private async void OnVolverClicked(object sender, EventArgs e) =>
+        await Shell.Current.GoToAsync("//MainPage");
+
 }

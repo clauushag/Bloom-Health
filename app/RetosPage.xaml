@@ -4,292 +4,166 @@
              x:Class="app.RetosPage"
              BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
-        <Grid>
-                <ScrollView>
-                        <VerticalStackLayout Spacing="20"
-                                             Padding="30,60,30,40"
-                                             VerticalOptions="Start">
 
-                                <Label Text="RETOS DIARIOS"
-                                       FontSize="24"
-                                       CharacterSpacing="3"
-                                       TextColor="#2D3A2F"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       FontFamily="OpenSansSemibold"
-                                       Margin="0,0,0,0"/>
+    <Grid RowDefinitions="*, 70">
 
-                                <Label Text="COMPLETA RETOS PARA DAR ENERGÍA"
-                                       FontSize="10"
-                                       CharacterSpacing="1.5"
-                                       TextColor="#7A8B7C"
-                                       FontAttributes="Bold"
-                                       HorizontalOptions="Center"
-                                       Margin="0,0,0,10"/>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20" Padding="25,50,25,20">
 
-                                <Frame BackgroundColor="#8EB497"
-                                       CornerRadius="30"
-                                       HasShadow="True"
-                                       BorderColor="Transparent"
-                                       Padding="25,30">
-                                        <Frame.Shadow>
-                                                <Shadow Brush="#8EB497"
-                                                        Offset="0,10"
-                                                        Radius="20"
-                                                        Opacity="0.4"/>
-                                        </Frame.Shadow>
+                <!-- CABECERA -->
+                <Label Text="Retos"
+                       FontSize="24" FontAttributes="Bold" TextColor="#2D3A2F"/>
+                <Label Text="Acepta retos y completa tus objetivos"
+                       FontSize="13" TextColor="#7A8B7C" Margin="0,-15,0,0"/>
 
-                                        <Grid ColumnDefinitions="*,*">
-                                                <VerticalStackLayout Grid.Column="0"
-                                                                     Spacing="5">
-                                                        <Label Text="ENERGÍA HOY"
-                                                               TextColor="White"
-                                                               FontSize="10"
-                                                               CharacterSpacing="1"
-                                                               FontAttributes="Bold"
-                                                               Opacity="0.9"/>
-                                                        <Label Text="30 XP"
-                                                               TextColor="White"
-                                                               FontSize="28"
-                                                               FontAttributes="Bold"/>
-                                                </VerticalStackLayout>
-
-                                                <VerticalStackLayout Grid.Column="1"
-                                                                     HorizontalOptions="End"
-                                                                     Spacing="5">
-                                                        <Label Text="COMPLETADOS"
-                                                               TextColor="White"
-                                                               FontSize="10"
-                                                               CharacterSpacing="1"
-                                                               FontAttributes="Bold"
-                                                               HorizontalOptions="End"
-                                                               Opacity="0.9"/>
-                                                        <Label Text="1/3"
-                                                               TextColor="White"
-                                                               FontSize="28"
-                                                               FontAttributes="Bold"
-                                                               HorizontalOptions="End"/>
-                                                </VerticalStackLayout>
-                                        </Grid>
-                                </Frame>
-
-                                <VerticalStackLayout Spacing="15">
-
-                                        <Frame BackgroundColor="White"
-                                               CornerRadius="25"
-                                               HasShadow="True"
-                                               BorderColor="Transparent"
-                                               Padding="15,20">
-                                                <Frame.Shadow>
-                                                        <Shadow Brush="#A0AF9E"
-                                                                Offset="0,10"
-                                                                Radius="20"
-                                                                Opacity="0.15"/>
-                                                </Frame.Shadow>
-
-                                                <Grid ColumnDefinitions="Auto, *, Auto"
-                                                      ColumnSpacing="15">
-                                                        <Frame Grid.Column="0"
-                                                               BackgroundColor="#F7F9F7"
-                                                               CornerRadius="20"
-                                                               HeightRequest="45"
-                                                               WidthRequest="45"
-                                                               HasShadow="False"
-                                                               Padding="0"
-                                                               VerticalOptions="Center">
-                                                                <Label Text="🌙"
-                                                                       HorizontalOptions="Center"
-                                                                       VerticalOptions="Center"
-                                                                       FontSize="20"/>
-                                                        </Frame>
-                                                        <VerticalStackLayout Grid.Column="1"
-                                                                             VerticalOptions="Center"
-                                                                             Spacing="2">
-                                                                <Label Text="Dormir 8 horas"
-                                                                       FontSize="15"
-                                                                       FontAttributes="Bold"
-                                                                       TextColor="#2D3A2F"/>
-                                                                <Label Text="Descansa bien para recargar energía"
-                                                                       FontSize="11"
-                                                                       TextColor="#7A8B7C"/>
-                                                                <Label Text="✨ +25 XP"
-                                                                       FontSize="12"
-                                                                       TextColor="#8EB497"
-                                                                       FontAttributes="Bold"
-                                                                       Margin="0,4,0,0"/>
-                                                        </VerticalStackLayout>
-                                                </Grid>
-                                        </Frame>
-
-                                        <Frame BackgroundColor="#E8F2E9"
-                                               CornerRadius="25"
-                                               HasShadow="False"
-                                               BorderColor="#D1E2D4"
-                                               Padding="15,20">
-                                                <Grid ColumnDefinitions="Auto, *, Auto"
-                                                      ColumnSpacing="15">
-                                                        <Frame Grid.Column="0"
-                                                               BackgroundColor="White"
-                                                               CornerRadius="20"
-                                                               HeightRequest="45"
-                                                               WidthRequest="45"
-                                                               HasShadow="False"
-                                                               Padding="0"
-                                                               VerticalOptions="Center">
-                                                                <Label Text="💨"
-                                                                       HorizontalOptions="Center"
-                                                                       VerticalOptions="Center"
-                                                                       FontSize="20"/>
-                                                        </Frame>
-                                                        <VerticalStackLayout Grid.Column="1"
-                                                                             VerticalOptions="Center"
-                                                                             Spacing="2">
-                                                                <Label Text="Hacer Yoga"
-                                                                       FontSize="15"
-                                                                       FontAttributes="Bold"
-                                                                       TextColor="#2D3A2F"/>
-                                                                <Label Text="20 minutos de estiramiento"
-                                                                       FontSize="11"
-                                                                       TextColor="#7A8B7C"/>
-                                                                <Label Text="✨ +30 XP"
-                                                                       FontSize="12"
-                                                                       TextColor="#8EB497"
-                                                                       FontAttributes="Bold"
-                                                                       Margin="0,4,0,0"/>
-                                                        </VerticalStackLayout>
-                                                        <Frame Grid.Column="2"
-                                                               BackgroundColor="#8EB497"
-                                                               CornerRadius="12"
-                                                               HeightRequest="24"
-                                                               WidthRequest="24"
-                                                               HasShadow="False"
-                                                               Padding="0"
-                                                               VerticalOptions="Center">
-                                                                <Label Text="✓"
-                                                                       HorizontalOptions="Center"
-                                                                       VerticalOptions="Center"
-                                                                       TextColor="White"
-                                                                       FontSize="12"
-                                                                       FontAttributes="Bold"/>
-                                                        </Frame>
-                                                </Grid>
-                                        </Frame>
-
-                                        <Frame BackgroundColor="White"
-                                               CornerRadius="25"
-                                               HasShadow="True"
-                                               BorderColor="Transparent"
-                                               Padding="15,20">
-                                                <Frame.Shadow>
-                                                        <Shadow Brush="#A0AF9E"
-                                                                Offset="0,10"
-                                                                Radius="20"
-                                                                Opacity="0.15"/>
-                                                </Frame.Shadow>
-
-                                                <Grid ColumnDefinitions="Auto, *, Auto"
-                                                      ColumnSpacing="15">
-                                                        <Frame Grid.Column="0"
-                                                               BackgroundColor="#F7F9F7"
-                                                               CornerRadius="20"
-                                                               HeightRequest="45"
-                                                               WidthRequest="45"
-                                                               HasShadow="False"
-                                                               Padding="0"
-                                                               VerticalOptions="Center">
-                                                                <Label Text="💧"
-                                                                       HorizontalOptions="Center"
-                                                                       VerticalOptions="Center"
-                                                                       FontSize="20"/>
-                                                        </Frame>
-                                                        <VerticalStackLayout Grid.Column="1"
-                                                                             VerticalOptions="Center"
-                                                                             Spacing="2">
-                                                                <Label Text="Beber 2L de agua"
-                                                                       FontSize="15"
-                                                                       FontAttributes="Bold"
-                                                                       TextColor="#2D3A2F"/>
-                                                                <Label Text="Mantén tu cuerpo hidratado"
-                                                                       FontSize="11"
-                                                                       TextColor="#7A8B7C"/>
-                                                                <Label Text="✨ +20 XP"
-                                                                       FontSize="12"
-                                                                       TextColor="#8EB497"
-                                                                       FontAttributes="Bold"
-                                                                       Margin="0,4,0,0"/>
-                                                        </VerticalStackLayout>
-                                                </Grid>
-                                        </Frame>
-
-                                </VerticalStackLayout>
+                <!-- RESUMEN -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                    <Frame Grid.Column="0" BackgroundColor="#E8F2E9" CornerRadius="16"
+                           HasShadow="False" BorderColor="Transparent" Padding="10,12">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                            <Label Text="✅" FontSize="18" HorizontalOptions="Center"/>
+                            <Label x:Name="LabelCompletados" Text="0"
+                                   FontSize="20" FontAttributes="Bold"
+                                   TextColor="#8EB497" HorizontalOptions="Center"/>
+                            <Label Text="Completados" FontSize="10"
+                                   TextColor="#7A8B7C" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
-                </ScrollView>
+                    </Frame>
+                    <Frame Grid.Column="1" BackgroundColor="#FFF8E1" CornerRadius="16"
+                           HasShadow="False" BorderColor="Transparent" Padding="10,12">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                            <Label Text="⚡" FontSize="18" HorizontalOptions="Center"/>
+                            <Label x:Name="LabelEnProgreso" Text="0"
+                                   FontSize="20" FontAttributes="Bold"
+                                   TextColor="#F5C842" HorizontalOptions="Center"/>
+                            <Label Text="En progreso" FontSize="10"
+                                   TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Frame Grid.Column="2" BackgroundColor="#F5F5F5" CornerRadius="16"
+                           HasShadow="False" BorderColor="Transparent" Padding="10,12">
+                        <VerticalStackLayout HorizontalOptions="Center" Spacing="2">
+                            <Label Text="🔒" FontSize="18" HorizontalOptions="Center"/>
+                            <Label x:Name="LabelPendientes" Text="0"
+                                   FontSize="20" FontAttributes="Bold"
+                                   TextColor="#9E9E9E" HorizontalOptions="Center"/>
+                            <Label Text="Pendientes" FontSize="10"
+                                   TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
 
-                <Frame Grid.Row="1"
-                       BackgroundColor="White"
-                       CornerRadius="0"
-                       Padding="15,10"
-                       HasShadow="False"
-                       BorderColor="#EEF2EE"
-                       VerticalOptions="End">
+                <!-- LISTA DE RETOS -->
+                <!-- RemainingItemsThreshold=3 → cuando quedan 3 items dispara el evento
+                     para cargar la siguiente página. Así el scroll nunca para. -->
+                <CollectionView x:Name="RetosCollectionView"
+                                RemainingItemsThreshold="3"
+                                RemainingItemsThresholdReached="OnRetosThresholdReached">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="White" CornerRadius="16"
+                                   HasShadow="True" BorderColor="Transparent"
+                                   Padding="15" Margin="0,0,0,10">
+                                <Frame.Shadow>
+                                    <Shadow Brush="#A0AF9E" Offset="0,4"
+                                            Radius="10" Opacity="0.08"/>
+                                </Frame.Shadow>
+                                <VerticalStackLayout Spacing="8">
 
-                        <Grid ColumnDefinitions="*, *, *"
-                              MaximumWidthRequest="800"
-                              HorizontalOptions="FillAndExpand">
+                                    <!-- Fila superior: emoji + nombre + puntos -->
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding EmojiCategoria}"
+                                               FontSize="24" VerticalOptions="Center"/>
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             VerticalOptions="Center" Spacing="2">
+                                            <Label Text="{Binding Nombre}"
+                                                   FontSize="14" FontAttributes="Bold"
+                                                   TextColor="#2D3A2F"/>
+                                            <Label Text="{Binding NombreCategoria}"
+                                                   FontSize="11" TextColor="#7A8B7C"/>
+                                        </VerticalStackLayout>
+                                        <Frame Grid.Column="2"
+                                               BackgroundColor="#E8F2E9" CornerRadius="12"
+                                               HasShadow="False" BorderColor="Transparent"
+                                               Padding="8,4" VerticalOptions="Center">
+                                            <Label Text="{Binding Puntos_Recompensa,
+                                                          StringFormat='+{0} XP'}"
+                                                   FontSize="11" FontAttributes="Bold"
+                                                   TextColor="#8EB497"/>
+                                        </Frame>
+                                    </Grid>
 
-                                <!-- Inicio -->
-                                <VerticalStackLayout Grid.Column="0"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="2">
-                                        <VerticalStackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnInicioTapped"/>
-                                        </VerticalStackLayout.GestureRecognizers>
-                                        <Label Text="🏠"
-                                               FontSize="22"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                                        <Label Text="Inicio"
-                                               FontSize="11"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                               FontAttributes="Bold"/>
+                                    <!-- Descripción -->
+                                    <Label Text="{Binding Descripcion}"
+                                           FontSize="12" TextColor="#7A8B7C"/>
+
+                                    <!-- Barra de progreso -->
+                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                        <ProgressBar Grid.Column="0"
+                                                     Progress="{Binding PorcentajeProgreso}"
+                                                     ProgressColor="#8EB497"
+                                                     BackgroundColor="#E8F2E9"
+                                                     VerticalOptions="Center"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding TextoProgreso}"
+                                               FontSize="10" TextColor="#7A8B7C"
+                                               VerticalOptions="Center"/>
+                                    </Grid>
+
+                                    <!-- Botón acción -->
+                                    <Button Text="{Binding TextoBoton}"
+                                            Clicked="OnAceptarRetoClicked"
+                                            BackgroundColor="{Binding ColorEstado}"
+                                            TextColor="White"
+                                            FontSize="13" FontAttributes="Bold"
+                                            CornerRadius="20" HeightRequest="38"
+                                            IsEnabled="{Binding EstaPendiente}"/>
+
                                 </VerticalStackLayout>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-                                <!-- Retos -->
-                                <VerticalStackLayout Grid.Column="1"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="2">
-                                        <VerticalStackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnRetosTapped"/>
-                                        </VerticalStackLayout.GestureRecognizers>
-                                        <Label Text="🏆"
-                                               FontSize="22"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                        <Label Text="Retos"
-                                               FontSize="11"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                                <!-- Perfil -->
-                                <VerticalStackLayout Grid.Column="2"
-                                                     HorizontalOptions="Center"
-                                                     Spacing="2">
-                                        <VerticalStackLayout.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="OnPerfilTapped"/>
-                                        </VerticalStackLayout.GestureRecognizers>
-                                        <Label Text="👤"
-                                               FontSize="22"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                        <Label Text="Perfil"
-                                               FontSize="11"
-                                               HorizontalOptions="Center"
-                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                </VerticalStackLayout>
+        <!-- BARRA NAVEGACIÓN -->
+        <Frame Grid.Row="1" BackgroundColor="White" CornerRadius="0"
+               Padding="10,6" HasShadow="False" BorderColor="#EEF2EE">
+            <Grid ColumnDefinitions="*, *, *"
+                  MaximumWidthRequest="800" HorizontalOptions="FillAndExpand">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnInicioTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏠" FontSize="20" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRetosTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏆" FontSize="20" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
+                    <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           FontAttributes="Bold"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPerfilTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="👤" FontSize="20" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
 
-                        </Grid>
-                </Frame>
-        </Grid>
+    </Grid>
 </ContentPage>
