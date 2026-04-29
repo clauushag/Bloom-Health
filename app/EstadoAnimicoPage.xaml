@@ -5,309 +5,324 @@
              BackgroundColor="#F7F9F7"
              Shell.NavBarIsVisible="False">
 
-    <Grid>
-       <ScrollView Grid.Row="0" Padding="0,0,0,10">
-              <VerticalStackLayout Spacing="0" Padding="20,24,20,10">
+    <Grid RowDefinitions="*, Auto">
 
-              <!-- Cabecera -->
-              <Label Text="¿Cómo estás hoy?"
-                     FontSize="28"
-                     FontAttributes="Bold"
-                     TextColor="#2D3A2F"
-                     HorizontalOptions="Start"
-                     Margin="0,0,0,4"/>
-              <Label Text="Registra tu estado anímico diario"
-                     FontSize="14"
-                     TextColor="#7A8B7C"
-                     Margin="0,0,0,28"/>
+        <ScrollView Grid.Row="0" Padding="0,0,0,10">
+            <VerticalStackLayout Spacing="0" Padding="20,24,20,10">
 
-              <!-- === ESTADO DE ÁNIMO === -->
-              <Label Text="Estado de ánimo"
-                     FontSize="15"
-                     FontAttributes="Bold"
-                     TextColor="#2D3A2F"
-                     Margin="0,0,0,12"/>
+                <!-- Cabecera (siempre visible) -->
+                <Label Text="¿Cómo estás hoy?"
+                       FontSize="28"
+                       FontAttributes="Bold"
+                       TextColor="#2D3A2F"
+                       HorizontalOptions="Start"
+                       Margin="0,0,0,4"/>
+                <Label Text="Registra tu estado anímico diario"
+                       FontSize="14"
+                       TextColor="#7A8B7C"
+                       Margin="0,0,0,28"/>
 
-              <!-- Emojis de estado -->
-              <Grid ColumnDefinitions="*, *, *, *, *"
-                     ColumnSpacing="8"
-                     Margin="0,0,0,28">
+                <!-- ═══════════════════════════════════════════════ -->
+                <!-- VISTA A: FORMULARIO (si no ha registrado hoy)  -->
+                <!-- ═══════════════════════════════════════════════ -->
+                <VerticalStackLayout x:Name="FormularioLayout" IsVisible="True" Spacing="0">
 
-              <!-- Muy mal -->
-              <Border Grid.Column="0"
-                     x:Name="BtnMuyMal"
-                     BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="2"
-                     Padding="6,10">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Muy mal"/>
-                     </Border.GestureRecognizers>
-                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                     <Label Text="😞" FontSize="26" HorizontalOptions="Center"/>
-                     <Label Text="Muy mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                     </VerticalStackLayout>
-              </Border>
+                    <!-- Estado de ánimo -->
+                    <Label Text="Estado de ánimo"
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           TextColor="#2D3A2F"
+                           Margin="0,0,0,12"/>
 
-              <!-- Mal -->
-              <Border Grid.Column="1"
-                     x:Name="BtnMal"
-                     BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="2"
-                     Padding="6,10">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Mal"/>
-                     </Border.GestureRecognizers>
-                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                     <Label Text="😕" FontSize="26" HorizontalOptions="Center"/>
-                     <Label Text="Mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                     </VerticalStackLayout>
-              </Border>
+                    <Grid ColumnDefinitions="*, *, *, *, *"
+                          ColumnSpacing="8"
+                          Margin="0,0,0,28">
 
-              <!-- Regular -->
-              <Border Grid.Column="2"
-                     x:Name="BtnRegular"
-                     BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="2"
-                     Padding="6,10">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Regular"/>
-                     </Border.GestureRecognizers>
-                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                     <Label Text="😐" FontSize="26" HorizontalOptions="Center"/>
-                     <Label Text="Regular" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                     </VerticalStackLayout>
-              </Border>
+                        <Border Grid.Column="0" x:Name="BtnMuyMal"
+                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Muy mal"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="😞" FontSize="26" HorizontalOptions="Center"/>
+                                <Label Text="Muy mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-              <!-- Bien -->
-              <Border Grid.Column="3"
-                     x:Name="BtnBien"
-                     BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="2"
-                     Padding="6,10">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Bien"/>
-                     </Border.GestureRecognizers>
-                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                     <Label Text="🙂" FontSize="26" HorizontalOptions="Center"/>
-                     <Label Text="Bien" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                     </VerticalStackLayout>
-              </Border>
+                        <Border Grid.Column="1" x:Name="BtnMal"
+                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Mal"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="😕" FontSize="26" HorizontalOptions="Center"/>
+                                <Label Text="Mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-              <!-- Genial -->
-              <Border Grid.Column="4"
-                     x:Name="BtnGenial"
-                     BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="2"
-                     Padding="6,10">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Genial"/>
-                     </Border.GestureRecognizers>
-                     <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                     <Label Text="😄" FontSize="26" HorizontalOptions="Center"/>
-                     <Label Text="Genial" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
-                     </VerticalStackLayout>
-              </Border>
-              </Grid>
+                        <Border Grid.Column="2" x:Name="BtnRegular"
+                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Regular"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="😐" FontSize="26" HorizontalOptions="Center"/>
+                                <Label Text="Regular" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-              <!-- === HORAS DE SUEÑO === -->
-              <Label Text="Horas de sueño"
-                     FontSize="15"
-                     FontAttributes="Bold"
-                     TextColor="#2D3A2F"
-                     Margin="0,0,0,6"/>
+                        <Border Grid.Column="3" x:Name="BtnBien"
+                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Bien"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="🙂" FontSize="26" HorizontalOptions="Center"/>
+                                <Label Text="Bien" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
 
-              <Grid ColumnDefinitions="Auto, *, Auto"
-                     ColumnSpacing="12"
-                     VerticalOptions="Center"
-                     Margin="0,0,0,4">
-              <!-- Botón menos -->
-              <Border Grid.Column="0"
-                     BackgroundColor="#E8F0E9"
-                     StrokeShape="RoundRectangle 12"
-                     Stroke="Transparent"
-                     Padding="0"
-                     WidthRequest="40"
-                     HeightRequest="40">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnMenosHoras"/>
-                     </Border.GestureRecognizers>
-                     <Label Text="−" FontSize="22" FontAttributes="Bold"
-                            TextColor="#2D3A2F"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
-              </Border>
+                        <Border Grid.Column="4" x:Name="BtnGenial"
+                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Genial"/>
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                <Label Text="😄" FontSize="26" HorizontalOptions="Center"/>
+                                <Label Text="Genial" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
 
-              <!-- Slider -->
-              <Slider Grid.Column="1"
-                     x:Name="SliderSueno"
-                     Minimum="0"
-                     Maximum="12"
-                     Value="7"
-                     MinimumTrackColor="#4CAF72"
-                     MaximumTrackColor="#D8E8DA"
-                     ThumbColor="#2D3A2F"
-                     ValueChanged="OnSliderSuenoChanged"
-                     VerticalOptions="Center"/>
+                    <!-- Horas de sueño -->
+                    <Label Text="Horas de sueño"
+                           FontSize="15" FontAttributes="Bold"
+                           TextColor="#2D3A2F" Margin="0,0,0,6"/>
 
-              <!-- Botón más -->
-              <Border Grid.Column="2"
-                     BackgroundColor="#E8F0E9"
-                     StrokeShape="RoundRectangle 12"
-                     Stroke="Transparent"
-                     Padding="0"
-                     WidthRequest="40"
-                     HeightRequest="40">
-                     <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnMasHoras"/>
-                     </Border.GestureRecognizers>
-                     <Label Text="+" FontSize="22" FontAttributes="Bold"
-                            TextColor="#2D3A2F"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center"/>
-              </Border>
-              </Grid>
+                    <Grid ColumnDefinitions="Auto, *, Auto"
+                          ColumnSpacing="12" VerticalOptions="Center" Margin="0,0,0,4">
+                        <Border Grid.Column="0" BackgroundColor="#E8F0E9"
+                                StrokeShape="RoundRectangle 12" Stroke="Transparent"
+                                Padding="0" WidthRequest="40" HeightRequest="40">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMenosHoras"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="−" FontSize="22" FontAttributes="Bold"
+                                   TextColor="#2D3A2F"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
 
-              <!-- Indicador de horas -->
-              <Border BackgroundColor="#E8F0E9"
-                     StrokeShape="RoundRectangle 12"
-                     Stroke="Transparent"
-                     Padding="14,10"
-                     HorizontalOptions="Center"
-                     Margin="0,0,0,28">
-              <Label x:Name="LblHoras"
-                     Text="7 horas"
-                     FontSize="18"
-                     FontAttributes="Bold"
-                     TextColor="#2D3A2F"
-                     HorizontalOptions="Center"/>
-              </Border>
+                        <Slider Grid.Column="1" x:Name="SliderSueno"
+                                Minimum="0" Maximum="12" Value="7"
+                                MinimumTrackColor="#4CAF72" MaximumTrackColor="#D8E8DA"
+                                ThumbColor="#2D3A2F" ValueChanged="OnSliderSuenoChanged"
+                                VerticalOptions="Center"/>
 
-              <!-- === NOTAS DEL DIARIO === -->
-              <Label Text="Notas del día"
-                     FontSize="15"
-                     FontAttributes="Bold"
-                     TextColor="#2D3A2F"
-                     Margin="0,0,0,10"/>
+                        <Border Grid.Column="2" BackgroundColor="#E8F0E9"
+                                StrokeShape="RoundRectangle 12" Stroke="Transparent"
+                                Padding="0" WidthRequest="40" HeightRequest="40">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnMasHoras"/>
+                            </Border.GestureRecognizers>
+                            <Label Text="+" FontSize="22" FontAttributes="Bold"
+                                   TextColor="#2D3A2F"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                    </Grid>
 
-              <Border BackgroundColor="White"
-                     StrokeShape="RoundRectangle 16"
-                     Stroke="#EEF2EE"
-                     StrokeThickness="1.5"
-                     Padding="14,10"
-                     Margin="0,0,0,28">
-              <Editor x:Name="EditorNotas"
-                     Placeholder="¿Cómo ha ido el día? ¿Algo que destacar?..."
-                     PlaceholderColor="#ADBDAF"
-                     TextColor="#2D3A2F"
-                     FontSize="14"
-                     HeightRequest="120"
-                     AutoSize="TextChanges"
-                     BackgroundColor="Transparent"/>
-              </Border>
+                    <Border BackgroundColor="#E8F0E9" StrokeShape="RoundRectangle 12"
+                            Stroke="Transparent" Padding="14,10"
+                            HorizontalOptions="Center" Margin="0,0,0,28">
+                        <Label x:Name="LblHoras" Text="7 horas"
+                               FontSize="18" FontAttributes="Bold"
+                               TextColor="#2D3A2F" HorizontalOptions="Center"/>
+                    </Border>
 
-              <!-- === BOTÓN GUARDAR === -->
-              <Border BackgroundColor="#2D3A2F"
-                     StrokeShape="RoundRectangle 18"
-                     Stroke="Transparent"
-                     Padding="0,16"
-                     Margin="0,0,0,8">
-              <Border.GestureRecognizers>
-                     <TapGestureRecognizer Tapped="OnGuardarTapped"/>
-              </Border.GestureRecognizers>
-              <Label Text="Guardar registro"
-                     FontSize="16"
-                     FontAttributes="Bold"
-                     TextColor="White"
-                     HorizontalOptions="Center"/>
-              </Border>
+                    <!-- Notas -->
+                    <Label Text="Notas del día" FontSize="15" FontAttributes="Bold"
+                           TextColor="#2D3A2F" Margin="0,0,0,10"/>
 
-              <!-- Mensaje de confirmación (oculto por defecto) -->
-              <Label x:Name="LblConfirmacion"
-                     Text="✅ Registro guardado correctamente"
-                     FontSize="13"
-                     TextColor="#4CAF72"
-                     HorizontalOptions="Center"
-                     IsVisible="False"
-                     Margin="0,4,0,0"/>
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 16"
+                            Stroke="#EEF2EE" StrokeThickness="1.5"
+                            Padding="14,10" Margin="0,0,0,28">
+                        <Editor x:Name="EditorNotas"
+                                Placeholder="¿Cómo ha ido el día? ¿Algo que destacar?..."
+                                PlaceholderColor="#ADBDAF" TextColor="#2D3A2F"
+                                FontSize="14" HeightRequest="120"
+                                AutoSize="TextChanges" BackgroundColor="Transparent"/>
+                    </Border>
 
-       </VerticalStackLayout>
-       </ScrollView>
+                    <!-- Botón guardar -->
+                    <Border BackgroundColor="#2D3A2F" StrokeShape="RoundRectangle 18"
+                            Stroke="Transparent" Padding="0,16" Margin="0,0,0,8">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnGuardarTapped"/>
+                        </Border.GestureRecognizers>
+                        <Label Text="Guardar registro" FontSize="16" FontAttributes="Bold"
+                               TextColor="White" HorizontalOptions="Center"/>
+                    </Border>
 
-       <Frame Grid.Row="1"
-               BackgroundColor="White"
-               CornerRadius="0"
-               Padding="15,10"
-               HasShadow="False"
-               BorderColor="#EEF2EE"
-               VerticalOptions="End">
+                    <Label x:Name="LblConfirmacion"
+                           Text="✅ Registro guardado correctamente"
+                           FontSize="13" TextColor="#4CAF72"
+                           HorizontalOptions="Center" IsVisible="False" Margin="0,4,0,0"/>
+
+                </VerticalStackLayout>
+
+                <!-- ═══════════════════════════════════════════════════════ -->
+                <!-- VISTA B: RESUMEN DEL DÍA (si ya ha registrado hoy)    -->
+                <!-- ═══════════════════════════════════════════════════════ -->
+                <VerticalStackLayout x:Name="ResumenLayout" IsVisible="False" Spacing="0">
+
+                    <!-- Tarjeta resumen de hoy -->
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+                            Stroke="#EEF2EE" StrokeThickness="1.5"
+                            Padding="20,18" Margin="0,0,0,16">
+                        <VerticalStackLayout Spacing="12">
+
+                            <!-- Emoji grande del estado -->
+                            <Label x:Name="LblEmojiHoy"
+                                   Text="😄"
+                                   FontSize="52"
+                                   HorizontalOptions="Center"/>
+
+                            <Label x:Name="LblEstadoHoy"
+                                   Text="Hoy te sientes: Genial"
+                                   FontSize="18" FontAttributes="Bold"
+                                   TextColor="#2D3A2F"
+                                   HorizontalOptions="Center"/>
+
+                            <!-- Separador -->
+                            <BoxView HeightRequest="1" Color="#EEF2EE" Margin="0,4"/>
+
+                            <!-- Sueño -->
+                            <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10">
+                                <Label Grid.Column="0" Text="🌙" FontSize="18" VerticalOptions="Center"/>
+                                <VerticalStackLayout Grid.Column="1" Spacing="0">
+                                    <Label Text="Horas de sueño"
+                                           FontSize="12" TextColor="#7A8B7C"/>
+                                    <Label x:Name="LblSuenoHoy"
+                                           Text="7 horas"
+                                           FontSize="15" FontAttributes="Bold"
+                                           TextColor="#2D3A2F"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                            <!-- Notas (solo si hay) -->
+                            <Grid x:Name="GridNotasHoy" ColumnDefinitions="Auto, *" ColumnSpacing="10">
+                                <Label Grid.Column="0" Text="📝" FontSize="18" VerticalOptions="Start"/>
+                                <VerticalStackLayout Grid.Column="1" Spacing="0">
+                                    <Label Text="Notas del día"
+                                           FontSize="12" TextColor="#7A8B7C"/>
+                                    <Label x:Name="LblNotasHoy"
+                                           Text=""
+                                           FontSize="14" TextColor="#2D3A2F"
+                                           LineBreakMode="WordWrap"/>
+                                </VerticalStackLayout>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <!-- Gráfica de la semana -->
+                    <Label Text="Tu semana"
+                           FontSize="15" FontAttributes="Bold"
+                           TextColor="#2D3A2F" Margin="0,0,0,12"/>
+
+                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
+                            Stroke="#EEF2EE" StrokeThickness="1.5"
+                            Padding="16,20" Margin="0,0,0,16">
+                        <VerticalStackLayout Spacing="16">
+
+                            <!-- Barras de estado de ánimo -->
+                            <Label Text="Estado de ánimo"
+                                   FontSize="12" TextColor="#7A8B7C"/>
+
+                            <!-- Contenedor de barras (se rellena desde code-behind) -->
+                            <Grid x:Name="GraficaEstados"
+                                  ColumnDefinitions="*, *, *, *, *, *, *"
+                                  ColumnSpacing="6"
+                                  HeightRequest="100">
+                                <!-- Las 7 columnas se generan dinámicamente desde code-behind -->
+                            </Grid>
+
+                            <!-- Leyenda días -->
+                            <Grid x:Name="GraficaDias"
+                                  ColumnDefinitions="*, *, *, *, *, *, *"
+                                  ColumnSpacing="6">
+                                <!-- Los labels de día se generan dinámicamente -->
+                            </Grid>
+
+                            <!-- Separador -->
+                            <BoxView HeightRequest="1" Color="#EEF2EE"/>
+
+                            <!-- Barras de sueño -->
+                            <Label Text="Horas de sueño"
+                                   FontSize="12" TextColor="#7A8B7C"/>
+
+                            <Grid x:Name="GraficaSueno"
+                                  ColumnDefinitions="*, *, *, *, *, *, *"
+                                  ColumnSpacing="6"
+                                  HeightRequest="80">
+                                <!-- Se genera dinámicamente -->
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Barra de navegación inferior -->
+        <Frame Grid.Row="1"
+               BackgroundColor="White" CornerRadius="0"
+               Padding="15,10" HasShadow="False"
+               BorderColor="#EEF2EE" VerticalOptions="End">
 
             <Grid ColumnDefinitions="*, *, *"
                   MaximumWidthRequest="800"
                   HorizontalOptions="FillAndExpand">
 
-                <!-- Inicio -->
-                <VerticalStackLayout Grid.Column="0"
-                                     HorizontalOptions="Center"
-                                     Spacing="2">
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnInicioTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🏠"
-                           FontSize="22"
-                           HorizontalOptions="Center"
+                    <Label Text="🏠" FontSize="22" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                    <Label Text="Inicio"
-                           FontSize="11"
-                           HorizontalOptions="Center"
+                    <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                            FontAttributes="Bold"/>
                 </VerticalStackLayout>
 
-                <!-- Retos -->
-                <VerticalStackLayout Grid.Column="1"
-                                     HorizontalOptions="Center"
-                                     Spacing="2">
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnRetosTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🏆"
-                           FontSize="22"
-                           HorizontalOptions="Center"
+                    <Label Text="🏆" FontSize="22" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                    <Label Text="Retos"
-                           FontSize="11"
-                           HorizontalOptions="Center"
+                    <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
 
-                <!-- Perfil -->
-                <VerticalStackLayout Grid.Column="2"
-                                     HorizontalOptions="Center"
-                                     Spacing="2">
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPerfilTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="👤"
-                           FontSize="22"
-                           HorizontalOptions="Center"
+                    <Label Text="👤" FontSize="22" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                    <Label Text="Perfil"
-                           FontSize="11"
-                           HorizontalOptions="Center"
+                    <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
 
             </Grid>
         </Frame>
+
     </Grid>
 </ContentPage>

@@ -23,8 +23,14 @@ namespace app.Models
         {
 
             if (string.IsNullOrEmpty(Fecha))
-                return DateTime.Today; // Valor por defecto seguro
-            return DateTime.Parse(Fecha);
+                return DateTime.Today;
+
+            // Convierte "2026-04-29-10:43:53" → "2026-04-29 10:43:53"
+            var normalizado = Fecha.Length > 10
+                ? Fecha[..10] + " " + Fecha[11..]
+                : Fecha;
+
+            return DateTime.Parse(normalizado);
         }
         public void SetFecha(DateTime fecha)
         {

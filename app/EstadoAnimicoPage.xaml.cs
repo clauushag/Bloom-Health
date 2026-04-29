@@ -9,26 +9,167 @@ public partial class EstadoAnimicoPage : ContentPage
     private readonly SaludDatabase _database;
     private string _estadoSeleccionado = string.Empty;
     private Dictionary<string, Border> _botonesEstado = null!;
+    // Mapeo estado → emoji
+    private static readonly Dictionary<string, string> _emojis = new()
+    {
+        { "Muy mal", "😞" },
+        { "Mal",     "😕" },
+        { "Regular", "😐" },
+        { "Bien",    "🙂" },
+        { "Genial",  "😄" }
+    };
+
+    // Mapeo estado → valor numérico para la gráfica (0‒4)
+    private static readonly Dictionary<string, int> _valorEstado = new()
+    {
+        { "Muy mal", 0 },
+        { "Mal",     1 },
+        { "Regular", 2 },
+        { "Bien",    3 },
+        { "Genial",  4 }
+    };
     public EstadoAnimicoPage(SaludDatabase database)
     {
         InitializeComponent();
         _database = database;
         _botonesEstado = new Dictionary<string, Border>
         {
-            { "Muy mal", BtnMuyMal },
-            { "Mal",     BtnMal    },
-            { "Regular", BtnRegular},
-            { "Bien",    BtnBien   },
-            { "Genial",  BtnGenial }
+            { Mental.EstadosAnimo[0], BtnMuyMal },
+            { Mental.EstadosAnimo[1], BtnMal    },
+            { Mental.EstadosAnimo[2], BtnRegular},
+            { Mental.EstadosAnimo[3], BtnBien   },
+            { Mental.EstadosAnimo[4], BtnGenial }
         };
                 // Valor inicial del slider
         ActualizarLabelHoras(SliderSueno.Value);
     }
+    // ─── Ciclo de vida ───────────────────────────────────────────────────────────
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         _usuarioActual = await _database.ObtenerUsuarioAsync();
+
+        Mental registroHoy = await _database.ObtenerMentalHoyAsync(_usuarioActual.ID_Usuario);
+
+        if (registroHoy != null)
+        {
+            // Ya guardó hoy → ocultar formulario, mostrar resumen
+            MostrarResumenHoy(registroHoy);
+            var semana = await _database.ObtenerMentalSemanaAsync(_usuarioActual.ID_Usuario);
+            MostrarGraficaSemana(semana);
+        }
+        else
+        {
+            // No ha guardado → mostrar formulario normal
+            MostrarFormulario();
+        }
     }
+    // ─── Mostrar/ocultar vistas ──────────────────────────────────────────────────
+    private void MostrarFormulario()
+    {
+        FormularioLayout.IsVisible = true;
+        ResumenLayout.IsVisible    = false;
+    }
+
+    private void MostrarResumenHoy(Mental registro)
+    {
+        FormularioLayout.IsVisible = false;
+        ResumenLayout.IsVisible    = true;
+
+        LblEmojiHoy.Text   = _emojis.GetValueOrDefault(registro.Estado_Animo, "😐");
+        LblEstadoHoy.Text  = $"Hoy te sientes: {registro.Estado_Animo}";
+        LblSuenoHoy.Text   = registro.Horas_Sueno % 1 == 0
+                             ? $"{(int)registro.Horas_Sueno} horas"
+                             : $"{registro.Horas_Sueno:0.0} horas";
+
+        bool hayNotas = !string.IsNullOrWhiteSpace(registro.Notas_diario);
+        GridNotasHoy.IsVisible = hayNotas;
+        LblNotasHoy.Text       = registro.Notas_diario ?? string.Empty;
+    }
+ // ─── Gráfica semanal ─────────────────────────────────────────────────────────
+    private void MostrarGraficaSemana(List<SaludDatabase.MentalConFecha> semana)
+    {
+        // Construimos los 7 días (hoy inclusive) siempre en orden
+        var hoy     = DateTime.Today;
+        var colores = new[] { "#FF6B6B", "#FFA94D", "#FFD43B", "#69DB7C", "#4CAF72" };
+        var dias    = new[] { "L", "M", "X", "J", "V", "S", "D" };
+
+        // Limpiamos por si se repinta
+        GraficaEstados.Children.Clear();
+        GraficaDias.Children.Clear();
+        GraficaSueno.Children.Clear();
+
+        for (int col = 0; col < 7; col++)
+        {
+            var fecha    = hoy.AddDays(col - 6); // hace 6 días → hoy
+            var fechaStr = fecha.ToString("yyyy-MM-dd");
+            var reg      = semana.FirstOrDefault(r => r.Fecha == fechaStr);
+
+            // ── Barra de estado de ánimo ──────────────────────────────────────
+            int    nivel  = reg != null ? _valorEstado.GetValueOrDefault(reg.Estado_Animo, 0) : -1;
+            double altura = nivel >= 0 ? (nivel + 1) * 18.0 : 4; // 18‒90 px
+            string color  = nivel >= 0 ? colores[nivel] : "#EEF2EE";
+
+            var barraEstado = new Border
+            {
+                BackgroundColor = Color.FromArgb(color),
+                StrokeShape     = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(6, 6, 0, 0) },
+                Stroke          = Colors.Transparent,
+                HeightRequest   = altura,
+                VerticalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Fill
+            };
+            Grid.SetColumn(barraEstado, col);
+            GraficaEstados.Children.Add(barraEstado);
+
+            // Emoji encima de la barra
+            if (nivel >= 0)
+            {
+                var emoji = new Label
+                {
+                    Text              = _emojis.GetValueOrDefault(reg!.Estado_Animo, ""),
+                    FontSize          = 11,
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions   = LayoutOptions.End,
+                    Margin            = new Thickness(0, 0, 0, altura + 2)
+                };
+                Grid.SetColumn(emoji, col);
+                GraficaEstados.Children.Add(emoji);
+            }
+
+            // ── Label de día ─────────────────────────────────────────────────
+            bool esHoy  = fecha == hoy;
+            var lblDia  = new Label
+            {
+                Text              = dias[(int)fecha.DayOfWeek == 0 ? 6 : (int)fecha.DayOfWeek - 1],
+                FontSize          = 11,
+                FontAttributes    = esHoy ? FontAttributes.Bold : FontAttributes.None,
+                TextColor         = esHoy ? Color.FromArgb("#2D3A2F") : Color.FromArgb("#7A8B7C"),
+                HorizontalOptions = LayoutOptions.Center
+            };
+            Grid.SetColumn(lblDia, col);
+            GraficaDias.Children.Add(lblDia);
+
+            // ── Barra de sueño ────────────────────────────────────────────────
+            double horas       = reg?.Horas_Sueno ?? 0;
+            double alturaSueno = horas > 0 ? Math.Clamp(horas / 12.0 * 70, 4, 70) : 4;
+            string colorSueno  = horas >= 7 ? "#4CAF72" : horas >= 5 ? "#FFD43B" : "#FF6B6B";
+            if (horas == 0) colorSueno = "#EEF2EE";
+
+            var barraSueno = new Border
+            {
+                BackgroundColor   = Color.FromArgb(colorSueno),
+                StrokeShape       = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(6, 6, 0, 0) },
+                Stroke            = Colors.Transparent,
+                HeightRequest     = alturaSueno,
+                VerticalOptions   = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Fill
+            };
+            Grid.SetColumn(barraSueno, col);
+            GraficaSueno.Children.Add(barraSueno);
+        }
+    }
+// ─── Guardar registro ────────────────────────────────────────────────────────
     private async void OnGuardarTapped(object sender, TappedEventArgs e)
     {
         // Validaciones básicas
@@ -39,11 +180,9 @@ public partial class EstadoAnimicoPage : ContentPage
         }
 
         // 1. Crea y guarda el RegistroDiario
-        RegistroDiario registroDiario = new RegistroDiario
-        {
-            Fecha = DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss"),
-            ID_Usuario = _usuarioActual.ID_Usuario  // el que tengas en sesión
-        };
+        RegistroDiario registroDiario = new RegistroDiario();
+        registroDiario.SetFecha(DateTime.Now);  // en vez del ToString manual
+        registroDiario.ID_Usuario = _usuarioActual.ID_Usuario;
         int idRegistro = await _database.InsertarRegistroAsync(registroDiario);
         // Construye el objeto del modelo
         Mental registro = new Mental
@@ -77,8 +216,10 @@ public partial class EstadoAnimicoPage : ContentPage
         await Task.Delay(2500);
         LblConfirmacion.IsVisible = false;
 
-        // Reinicia el formulario
-        ResetearFormulario();
+        // Tras guardar, cambia directamente a la vista resumen
+        MostrarResumenHoy(registro);
+        var semana = await _database.ObtenerMentalSemanaAsync(_usuarioActual.ID_Usuario);
+        MostrarGraficaSemana(semana);
     }
     // ─── Selección de estado de ánimo ────────────────────────────────
     private void OnEstadoTapped(object sender, TappedEventArgs e)
@@ -140,7 +281,7 @@ public partial class EstadoAnimicoPage : ContentPage
     }
 
 
-    // Lógica para el botón de la flecha de atrás
+  // ─── Navegación ──────────────────────────────────────────────────────────────
     private async void OnVolverClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
