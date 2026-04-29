@@ -31,7 +31,7 @@ public class PerfilViewModel : INotifyPropertyChanged
     }
 
     // Añade estas dos propiedades si no las tienes ya
-    public double ProgresoXP => AvatarActual != null ? Math.Min(AvatarActual.XP / 1000.0, 1.0) : 0;
+    public double ProgresoXP => AvatarActual != null ? Math.Min(AvatarActual.XP / 100.0, 1.0) : 0;
 
     public string ImagenPlanta
     {

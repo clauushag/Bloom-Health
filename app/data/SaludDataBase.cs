@@ -741,10 +741,49 @@ public class SaludDatabase
           ORDER BY r.ID_Registro DESC
           LIMIT 10", idUsuario);
     }
+    //mental
     public async Task GuardarRegistroAsync(Mental registro)
     {
 
         await _conexion.InsertAsync(registro);
+    }
+    /// <summary>
+    /// Devuelve el registro Mental de hoy para el usuario, o null si no existe.
+    /// </summary>
+    public async Task<Mental?> ObtenerMentalHoyAsync(int idUsuario)
+    {
+        var hoy = DateTime.Now.ToString("yyyy-MM-dd");
+
+        var resultado = await _conexion.QueryAsync<Mental>(
+            @"SELECT m.* FROM Mental m
+            INNER JOIN RegistroDiario r ON m.ID_Registro = r.ID_Registro
+            WHERE r.ID_Usuario = ? AND r.Fecha LIKE ?",
+            idUsuario, hoy + "%");
+
+        return resultado.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Devuelve los registros Mental de los últimos 7 días con su fecha.
+    /// </summary>
+    public class MentalConFecha
+    {
+        public string Estado_Animo { get; set; } = "";
+        public double Horas_Sueno  { get; set; }
+        public string Fecha        { get; set; } = "";
+    }
+
+    public async Task<List<MentalConFecha>> ObtenerMentalSemanaAsync(int idUsuario)
+    {
+        var hace7dias = DateTime.Now.AddDays(-6).ToString("yyyy-MM-dd");
+
+        return await _conexion.QueryAsync<MentalConFecha>(
+            @"SELECT m.Estado_Animo, m.Horas_Sueno, substr(r.Fecha, 1, 10) AS Fecha
+            FROM Mental m
+            INNER JOIN RegistroDiario r ON m.ID_Registro = r.ID_Registro
+            WHERE r.ID_Usuario = ? AND r.Fecha >= ?
+            ORDER BY r.Fecha ASC",
+            idUsuario, hace7dias);
     }
 
 }
