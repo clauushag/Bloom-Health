@@ -1,8 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <!-- ===================== -->
-  <!-- CONFIGURACIÓN GENERAL -->
-  <!-- ===================== -->
   <PropertyGroup>
     <TargetFrameworks>net10.0-android;net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">
@@ -18,7 +15,7 @@
 
     <!-- App info -->
     <ApplicationTitle>Bloom Health</ApplicationTitle>
-    <ApplicationId>com.companyname.app</ApplicationId>
+    <ApplicationId>com.bloomhealth.app</ApplicationId>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <ApplicationVersion>1</ApplicationVersion>
 
@@ -33,42 +30,30 @@
     <TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
   </PropertyGroup>
 
-  <!-- ================= -->
-  <!-- FIX ANDROID FINAL -->
-  <!-- ================= -->
   <PropertyGroup Condition="'$(TargetFramework)' == 'net10.0-android'">
-    <!-- FUERZA ANDROID ESTABLE -->
     <AndroidTargetSdkVersion>34</AndroidTargetSdkVersion>
     <AndroidMinSdkVersion>24</AndroidMinSdkVersion>
-
-    <!-- SDK y licencias -->
     <AndroidSdkDirectory>C:\android-sdk</AndroidSdkDirectory>
     <AcceptAndroidSDKLicenses>true</AcceptAndroidSDKLicenses>
   </PropertyGroup>
-  <!-- ========== -->
-  <!-- RECURSOS  -->
-  <!-- ========== -->
+
   <ItemGroup>
     <MauiIcon Include="Resources\AppIcon\image.png" Color="#FFFFFF" />
-    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+    <MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#8EB497" BaseSize="128,128" />
     <MauiImage Include="Resources\Images\*" />
-    <MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
     <MauiFont Include="Resources\Fonts\*" />
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
-  <!-- ========== -->
-  <!-- PAQUETES -->
-  <!-- ========== -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0-rc.2.25502.107" />
-    <PackageReference Include="Plugin.LocalNotification" Version="14.1.0" />
+    <!-- Todas las versiones MAUI alineadas a la misma versión estable -->
+    <PackageReference Include="Microsoft.Maui.Controls" Version="10.0.51" />
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="10.0.51" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
     <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
     <PackageReference Include="ZXing.Net.Maui.Controls" Version="0.7.4" />
+    <PackageReference Include="Plugin.LocalNotification" Version="14.1.0" />
   </ItemGroup>
- 
 
 </Project>

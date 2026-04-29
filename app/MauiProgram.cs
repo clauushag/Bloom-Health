@@ -35,6 +35,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<RegistroActividadPage>();
 		builder.Services.AddTransient<PerfilPage>();
 		builder.Services.AddTransient<RetosPage>();
+		
 
 #if DEBUG
 		builder.Logging.AddDebug();
