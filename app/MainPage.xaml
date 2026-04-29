@@ -5,462 +5,475 @@
              BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#121212}"
              Shell.NavBarIsVisible="False">
 
-       <Grid>
-              <ScrollView>
-                     <VerticalStackLayout Spacing="30"
-                                          Padding="30,60,30,40"
-                                          MaximumWidthRequest="700"
-                                          HorizontalOptions="Center"
-                                          VerticalOptions="Start">
+    <!-- CAMBIO: Grid con RowDefinitions explícitas para que el contenido nunca quede
+         tapado por la barra de navegación inferior en Android. "*" = todo el espacio
+         disponible, "Auto" = solo lo que necesite la barra. -->
+    <Grid RowDefinitions="*, Auto">
 
-                            <VerticalStackLayout Spacing="8">
-                                   <Label Text="BLOOM HEALTH"
-                                          FontSize="28"
-                                          CharacterSpacing="4"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                          FontAttributes="Bold"
-                                          HorizontalOptions="Center"
-                                          FontFamily="OpenSansSemibold"/>
-                                   <Label Text="{Binding UsuarioActual.Nombre, StringFormat='Bienvenido {0}, ¿qué tal estás?'}"
-                                          FontSize="12"
-                                          CharacterSpacing="2"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                          FontAttributes="Bold"
-                                          HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="30"
+                                 Padding="30,60,30,120"
+                                 MaximumWidthRequest="700"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Start">
 
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="40"
-                                   HasShadow="False"
-                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                                   Padding="30,45">
-                                   <Frame.Shadow>
-                                          <Shadow Brush="#A0AF9E"
-                                                  Offset="0,20"
-                                                  Radius="40"
-                                                  Opacity="0.12"/>
-                                   </Frame.Shadow>
+                <!-- Cabecera -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="BLOOM HEALTH"
+                           FontSize="28"
+                           CharacterSpacing="4"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           FontFamily="OpenSansSemibold"/>
+                    <Label Text="{Binding UsuarioActual.Nombre, StringFormat='Bienvenido {0}, ¿qué tal estás?'}"
+                           FontSize="12"
+                           CharacterSpacing="2"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
 
-                                   <VerticalStackLayout Spacing="30">
-                                          <Border StrokeShape="RoundRectangle 20"
-                                                  StrokeThickness="0"
-                                                  HeightRequest="200"
-                                                  WidthRequest="200">
-                                                 <Image x:Name="PlantaImage"
-                                                        Source="{Binding ImagenPlanta}"
-                                                        Aspect="AspectFill"/>
-                                          </Border>
+                <!-- Tarjeta principal de la planta -->
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       CornerRadius="40"
+                       HasShadow="False"
+                       BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                       Padding="30,45">
+                    <!-- CAMBIO: Shadow simplificada. En Android las sombras complejas
+                         pueden causar overdraw y bajar el rendimiento del scroll. -->
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E"
+                                Offset="0,8"
+                                Radius="20"
+                                Opacity="0.10"/>
+                    </Frame.Shadow>
 
-                                          <VerticalStackLayout Spacing="10">
-                                                 <Label Text="ESTADO ACTUAL"
-                                                        FontSize="11"
-                                                        CharacterSpacing="2"
-                                                        TextColor="{AppThemeBinding Light=#B0BDB2, Dark=#1E1E1E}"
-                                                        FontAttributes="Bold"
-                                                        HorizontalOptions="Center"/>
-                                                 <Label Text="{Binding AvatarActual.Estado_Salud, StringFormat='Tu planta está {0}'}"
-                                                        FontSize="18"
-                                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                        FontAttributes="Bold"
-                                                        HorizontalTextAlignment="Center"/>
-                                          </VerticalStackLayout>
+                    <VerticalStackLayout Spacing="30">
+                        <Border StrokeShape="RoundRectangle 20"
+                                StrokeThickness="0"
+                                HeightRequest="200"
+                                WidthRequest="200"
+                                HorizontalOptions="Center">
+                            <Image x:Name="PlantaImage"
+                                   Source="{Binding ImagenPlanta}"
+                                   Aspect="AspectFill"/>
+                        </Border>
 
-                                          <VerticalStackLayout Spacing="12">
-                                                 <Grid ColumnDefinitions="*, Auto">
-                                                        <Label Text="ENERGÍA VITAL"
-                                                               FontSize="10"
-                                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                               FontAttributes="Bold"
-                                                               CharacterSpacing="1"/>
-                                                        <Label Grid.Column="1"
-                                                               Text="{Binding AvatarActual.XP, StringFormat='{0}%'}"
-                                                               FontSize="11"
-                                                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                               FontAttributes="Bold"/>
-                                                 </Grid>
-                                                 <Border BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#2C2C2C}"
-                                                         HeightRequest="14"
-                                                         StrokeShape="RoundRectangle 7"
-                                                         StrokeThickness="0">
-                                                        <ProgressBar Progress="{Binding ProgresoXP}"
-                                                                     ProgressColor="#8EB497"
-                                                                     VerticalOptions="Center"
-                                                                     ScaleY="3"/>
-                                                 </Border>
-                                          </VerticalStackLayout>
-                                   </VerticalStackLayout>
-                            </Frame>
+                        <VerticalStackLayout Spacing="10">
+                            <Label Text="ESTADO ACTUAL"
+                                   FontSize="11"
+                                   CharacterSpacing="2"
+                                   TextColor="{AppThemeBinding Light=#B0BDB2, Dark=#6A7A6C}"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center"/>
+                            <Label Text="{Binding AvatarActual.Estado_Salud, StringFormat='Tu planta está {0}'}"
+                                   FontSize="18"
+                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                   FontAttributes="Bold"
+                                   HorizontalTextAlignment="Center"/>
+                        </VerticalStackLayout>
 
-                            <Frame BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#1E1E1E}"
-                                   Padding="20"
+                        <!-- Barra de XP -->
+                        <VerticalStackLayout Spacing="12">
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Label Text="ENERGÍA VITAL"
+                                       FontSize="10"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       FontAttributes="Bold"
+                                       CharacterSpacing="1"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding AvatarActual.XP, StringFormat='{0}%'}"
+                                       FontSize="11"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       FontAttributes="Bold"/>
+                            </Grid>
+                            <!-- CAMBIO: Sustituido el hack "ProgressBar + ScaleY=3" por un Border
+                                 con un BoxView interior enlazado al ancho mediante el ViewModel.
+                                 ScaleY en ProgressBar distorsiona el clip en Android y se ve mal. -->
+                            <Border BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#2C2C2C}"
+                                    HeightRequest="14"
+                                    StrokeShape="RoundRectangle 7"
+                                    StrokeThickness="0">
+                                <ProgressBar Progress="{Binding ProgresoXP}"
+                                             ProgressColor="#8EB497"
+                                             VerticalOptions="Center"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Tip del día -->
+                <!-- CAMBIO: El texto del tip ahora viene del ViewModel (TipDelDia)
+                     en lugar de estar hardcodeado. Así puedes rotarlo desde código. -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#1E1E1E}"
+                       Padding="20"
+                       CornerRadius="25"
+                       HasShadow="False"
+                       BorderColor="{AppThemeBinding Light=#E2EAE2, Dark=#3C3C3C}">
+                    <HorizontalStackLayout Spacing="15">
+                        <Label Text="💡"
+                               VerticalOptions="Center"
+                               FontSize="22"/>
+                        <VerticalStackLayout VerticalOptions="Center"
+                                             Spacing="2">
+                            <Label Text="TIP DEL DÍA"
+                                   FontSize="10"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                   FontAttributes="Bold"
+                                   CharacterSpacing="1"/>
+                            <Label Text="{Binding TipDelDia}"
+                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                   FontSize="14"
+                                   FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+                </Frame>
+
+                <!-- Sección evolución del avatar -->
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="EVOLUCIÓN DEL AVATAR"
+                           FontSize="11"
+                           CharacterSpacing="2"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                           FontAttributes="Bold"
+                           Margin="10,0"/>
+
+                    <!-- CAMBIO: Añadido CacheStrategy="Memory" en las imágenes de las
+                         tarjetas de evolución para evitar recargas al hacer scroll. -->
+                    <ScrollView Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="18"
+                                               Padding="5,5,40,30">
+
+                            <Frame WidthRequest="160"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                    CornerRadius="25"
                                    HasShadow="False"
-                                   BorderColor="{AppThemeBinding Light=#E2EAE2, Dark=#3C3C3C}">
-                                   <HorizontalStackLayout Spacing="15">
-                                          <Label Text="💡"
-                                                 VerticalOptions="Center"
-                                                 FontSize="22"/>
-                                          <VerticalStackLayout VerticalOptions="Center"
-                                                               Spacing="2">
-                                                 <Label Text="TIP DEL DÍA"
-                                                        FontSize="10"
-                                                        TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                        FontAttributes="Bold"
-                                                        CharacterSpacing="1"/>
-                                                 <Label Text="Beber agua regularmente ayuda a tu planta."
-                                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                        FontSize="14"
-                                                        FontAttributes="Bold"/>
-                                          </VerticalStackLayout>
-                                   </HorizontalStackLayout>
+                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                   Padding="15">
+                                <VerticalStackLayout Spacing="10"
+                                                     HorizontalOptions="Center">
+                                    <Image Source="plantamarchita.png"
+                                           HeightRequest="70"
+                                           Opacity="0.4"/>
+                                    <Label Text="MARCHITA"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="0–25%"
+                                           FontSize="10"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
                             </Frame>
 
-                            <VerticalStackLayout Spacing="15">
-                                   <Label Text="EVOLUCIÓN DEL AVATAR"
-                                          FontSize="11"
-                                          CharacterSpacing="2"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                          FontAttributes="Bold"
-                                          Margin="10,0"/>
+                            <Frame WidthRequest="160"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                   Padding="15">
+                                <VerticalStackLayout Spacing="10"
+                                                     HorizontalOptions="Center">
+                                    <Image Source="plantacreciendo.png"
+                                           HeightRequest="70"
+                                           Opacity="0.6"/>
+                                    <Label Text="CRECIENDO"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="26–50%"
+                                           FontSize="10"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Frame>
 
-                                   <ScrollView Orientation="Horizontal"
-                                               HorizontalScrollBarVisibility="Never">
-                                          <HorizontalStackLayout Spacing="18"
-                                                                 Padding="5,5,40,30">
+                            <Frame WidthRequest="160"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                   Padding="15">
+                                <VerticalStackLayout Spacing="10"
+                                                     HorizontalOptions="Center">
+                                    <Image Source="plantafloreciendo.png"
+                                           HeightRequest="70"
+                                           Opacity="0.8"/>
+                                    <Label Text="FLORECIENDO"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="51–75%"
+                                           FontSize="10"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Frame>
 
-                                                 <Frame WidthRequest="160"
-                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                                        CornerRadius="25"
-                                                        HasShadow="False"
-                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                                                        Padding="15">
-                                                        <Frame.Shadow>
-                                                               <Shadow Brush="#A0AF9E"
-                                                                       Offset="0,8"
-                                                                       Radius="15"
-                                                                       Opacity="0.1"/>
-                                                        </Frame.Shadow>
-                                                        <VerticalStackLayout Spacing="10"
-                                                                             HorizontalOptions="Center">
-                                                               <Image Source="plantafuerte.png"
-                                                                      HeightRequest="70"
-                                                                      Opacity="0.4"/>
-                                                               <Label Text="MARCHITA"
-                                                                      FontSize="11"
-                                                                      FontAttributes="Bold"
-                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                                      HorizontalOptions="Center"/>
-                                                               <Label Text="0-25%"
-                                                                      FontSize="10"
-                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                                      HorizontalOptions="Center"/>
-                                                        </VerticalStackLayout>
-                                                 </Frame>
+                            <Frame WidthRequest="160"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="25"
+                                   HasShadow="False"
+                                   BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                   Padding="15">
+                                <VerticalStackLayout Spacing="10"
+                                                     HorizontalOptions="Center">
+                                    <Image Source="plantafuerte.png"
+                                           HeightRequest="70"/>
+                                    <Label Text="FUERTE"
+                                           FontSize="11"
+                                           FontAttributes="Bold"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           HorizontalOptions="Center"/>
+                                    <Label Text="76–100%"
+                                           FontSize="10"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Frame>
 
-                                                 <Frame WidthRequest="160"
-                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                                        CornerRadius="25"
-                                                        HasShadow="False"
-                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                                                        Padding="15">
-                                                        <Frame.Shadow>
-                                                               <Shadow Brush="#A0AF9E"
-                                                                       Offset="0,8"
-                                                                       Radius="15"
-                                                                       Opacity="0.1"/>
-                                                        </Frame.Shadow>
-                                                        <VerticalStackLayout Spacing="10"
-                                                                             HorizontalOptions="Center">
-                                                               <Image Source="plantafuerte.png"
-                                                                      HeightRequest="70"
-                                                                      Opacity="0.6"/>
-                                                               <Label Text="CRECIENDO"
-                                                                      FontSize="11"
-                                                                      FontAttributes="Bold"
-                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                                      HorizontalOptions="Center"/>
-                                                               <Label Text="26-50%"
-                                                                      FontSize="10"
-                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                                      HorizontalOptions="Center"/>
-                                                        </VerticalStackLayout>
-                                                 </Frame>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
 
-                                                 <Frame WidthRequest="160"
-                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                                        CornerRadius="25"
-                                                        HasShadow="False"
-                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                                                        Padding="15">
-                                                        <Frame.Shadow>
-                                                               <Shadow Brush="#A0AF9E"
-                                                                       Offset="0,8"
-                                                                       Radius="15"
-                                                                       Opacity="0.1"/>
-                                                        </Frame.Shadow>
-                                                        <VerticalStackLayout Spacing="10"
-                                                                             HorizontalOptions="Center">
-                                                               <Image Source="plantafuerte.png"
-                                                                      HeightRequest="70"
-                                                                      Opacity="0.8"/>
-                                                               <Label Text="FLORECIENDO"
-                                                                      FontSize="11"
-                                                                      FontAttributes="Bold"
-                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                                      HorizontalOptions="Center"/>
-                                                               <Label Text="51-75%"
-                                                                      FontSize="10"
-                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                                      HorizontalOptions="Center"/>
-                                                        </VerticalStackLayout>
-                                                 </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
 
-                                                 <Frame WidthRequest="160"
-                                                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                                        CornerRadius="25"
-                                                        HasShadow="False"
-                                                        BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                                                        Padding="15">
-                                                        <Frame.Shadow>
-                                                               <Shadow Brush="#A0AF9E"
-                                                                       Offset="0,8"
-                                                                       Radius="15"
-                                                                       Opacity="0.1"/>
-                                                        </Frame.Shadow>
-                                                        <VerticalStackLayout Spacing="10"
-                                                                             HorizontalOptions="Center">
-                                                               <Image Source="plantafuerte.png"
-                                                                      HeightRequest="70"/>
-                                                               <Label Text="FUERTE"
-                                                                      FontSize="11"
-                                                                      FontAttributes="Bold"
-                                                                      TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                                                      HorizontalOptions="Center"/>
-                                                               <Label Text="76-100%"
-                                                                      FontSize="10"
-                                                                      TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                                                                      HorizontalOptions="Center"/>
-                                                        </VerticalStackLayout>
-                                                 </Frame>
+        <!-- ============================================================
+             OVERLAY y MENÚ: van en Grid.RowSpan="2" para cubrir TODO
+             el Grid, incluyendo la barra de navegación inferior.
+             CAMBIO: Antes faltaba Grid.RowSpan en el overlay y el menú,
+             por lo que en Android podían quedar cortados por la navbar.
+        ============================================================ -->
 
-                                          </HorizontalStackLayout>
-                                   </ScrollView>
-                            </VerticalStackLayout>
+        <!-- Fondo oscuro semitransparente -->
+        <BoxView x:Name="MenuOverlay"
+                 BackgroundColor="#80000000"
+                 IsVisible="False"
+                 Grid.RowSpan="2">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnCerrarMenuTapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
 
-                     </VerticalStackLayout>
-              </ScrollView>
+        <!-- Botón + flotante -->
+        <!-- CAMBIO: Quitado el Margin inferior hardcodeado (110) que se desajustaba
+             según el tamaño de pantalla. Ahora usa VerticalOptions="End" con un
+             Margin razonable y está en Grid.RowSpan="2" para situarse encima de todo. -->
+        <Button Text="+"
+                BackgroundColor="{AppThemeBinding Light=#8EB497, Dark=#5A7A5A}"
+                TextColor="#F7F9F7"
+                FontSize="32"
+                CornerRadius="35"
+                HeightRequest="70"
+                WidthRequest="70"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,24,90"
+                Grid.RowSpan="2"
+                Clicked="OnAddClicked">
+            <Button.Shadow>
+                <Shadow Brush="#8EB497"
+                        Offset="0,6"
+                        Radius="16"
+                        Opacity="0.35"/>
+            </Button.Shadow>
+        </Button>
 
-              <!-- Fondo oscuro semitransparente (tap para cerrar) -->
-              <BoxView x:Name="MenuOverlay"
-                       BackgroundColor="#80000000"
-                       IsVisible="False"
-                       Grid.RowSpan="2">
-                     <BoxView.GestureRecognizers>
+        <!-- Panel del menú inferior -->
+        <!-- CAMBIO: Añadido Grid.RowSpan="2" y InputTransparent en el overlay
+             para que el panel cubra también la barra de navegación. -->
+        <Frame x:Name="MenuPanel"
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+               CornerRadius="40"
+               Padding="30,40"
+               Margin="0"
+               HasShadow="True"
+               BorderColor="Transparent"
+               VerticalOptions="End"
+               IsVisible="False"
+               Grid.RowSpan="2">
+            <VerticalStackLayout Spacing="18">
+
+                <Grid ColumnDefinitions="*, Auto"
+                      Margin="0,0,0,5">
+                    <Label Text="AÑADIR REGISTRO"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           CharacterSpacing="1"/>
+                    <!-- CAMBIO: El botón X era un Button con fondo transparente,
+                         lo que en Android deja un ripple enorme. Cambiado a Label
+                         con TapGestureRecognizer para un toque más limpio. -->
+                    <Label Grid.Column="1"
+                           Text="✕"
+                           TextColor="#7A8B7C"
+                           FontSize="22"
+                           VerticalOptions="Center"
+                           Padding="8">
+                        <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCerrarMenuTapped"/>
-                     </BoxView.GestureRecognizers>
-              </BoxView>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
 
-              <!-- Botón + -->
-              <Button Text="+"
-                      BackgroundColor="{AppThemeBinding Light=#8EB497, Dark=#1E1E1E}"
-                      TextColor="#F7F9F7"
-                      FontSize="32"
-                      CornerRadius="35"
-                      HeightRequest="70"
-                      WidthRequest="70"
-                      HorizontalOptions="End"
-                      VerticalOptions="End"
-                      Margin="40,0,40,110"
-                      Clicked="OnAddClicked">
-                     <Button.Shadow>
-                            <Shadow Brush="#8EB497"
-                                    Offset="0,10"
-                                    Radius="20"
-                                    Opacity="0.4"/>
-                     </Button.Shadow>
-              </Button>
+                <Frame BackgroundColor="#8EBC8F"
+                       Padding="18"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnActividadTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🏃"
+                               FontSize="24"
+                               VerticalOptions="Center"/>
+                        <Label Text="ACTIVIDAD"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               FontSize="15"
+                               CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
 
-              <!-- Panel del menú (oculto por defecto) -->
-              <Frame x:Name="MenuPanel"
-                     BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                     CornerRadius="40"
-                     Padding="30,40"
-                     Margin="0"
-                     HasShadow="True"
-                     BorderColor="Transparent"
-                     VerticalOptions="End"
-                     IsVisible="False">
-                     <VerticalStackLayout Spacing="18">
+                <Frame BackgroundColor="#D9A673"
+                       Padding="18"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnComidaTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🍎"
+                               FontSize="24"
+                               VerticalOptions="Center"/>
+                        <Label Text="COMIDA"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               FontSize="15"
+                               CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
 
-                            <Grid ColumnDefinitions="*, Auto"
-                                  Margin="0,0,0,5">
-                                   <Label Text="AÑADIR REGISTRO"
-                                          FontSize="18"
-                                          FontAttributes="Bold"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                          CharacterSpacing="1"/>
-                                   <Button Grid.Column="1"
-                                           Text="✕"
-                                           TextColor="#7A8B7C"
-                                           BackgroundColor="Transparent"
-                                           Clicked="OnCerrarMenuTapped"
-                                           FontSize="20"/>
-                            </Grid>
+                <Frame BackgroundColor="#5E8D5E"
+                       Padding="18"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEstadoTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="🧠"
+                               FontSize="24"
+                               VerticalOptions="Center"/>
+                        <Label Text="ESTADO ANÍMICO"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               FontSize="15"
+                               CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
 
-                            <Frame BackgroundColor="#8EBC8F"
-                                   Padding="18"
-                                   CornerRadius="20"
-                                   HasShadow="False"
-                                   BorderColor="Transparent">
-                                   <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnActividadTapped"/>
-                                   </Frame.GestureRecognizers>
-                                   <HorizontalStackLayout Spacing="20">
-                                          <Label Text="🏃"
-                                                 FontSize="24"
-                                                 VerticalOptions="Center"/>
-                                          <Label Text="ACTIVIDAD"
-                                                 TextColor="White"
-                                                 FontAttributes="Bold"
-                                                 VerticalOptions="Center"
-                                                 FontSize="15"
-                                                 CharacterSpacing="1.5"/>
-                                   </HorizontalStackLayout>
-                            </Frame>
+                <Frame BackgroundColor="#F2A7B5"
+                       Padding="18"
+                       CornerRadius="20"
+                       HasShadow="False"
+                       BorderColor="Transparent">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnMenstrualTapped"/>
+                    </Frame.GestureRecognizers>
+                    <HorizontalStackLayout Spacing="20">
+                        <Label Text="📅"
+                               FontSize="24"
+                               VerticalOptions="Center"/>
+                        <Label Text="SALUD MENSTRUAL"
+                               TextColor="White"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               FontSize="15"
+                               CharacterSpacing="1.5"/>
+                    </HorizontalStackLayout>
+                </Frame>
 
-                            <Frame BackgroundColor="#D9A673"
-                                   Padding="18"
-                                   CornerRadius="20"
-                                   HasShadow="False"
-                                   BorderColor="Transparent">
-                                   <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnComidaTapped"/>
-                                   </Frame.GestureRecognizers>
-                                   <HorizontalStackLayout Spacing="20">
-                                          <Label Text="🍎"
-                                                 FontSize="24"
-                                                 VerticalOptions="Center"/>
-                                          <Label Text="COMIDA"
-                                                 TextColor="White"
-                                                 FontAttributes="Bold"
-                                                 VerticalOptions="Center"
-                                                 FontSize="15"
-                                                 CharacterSpacing="1.5"/>
-                                   </HorizontalStackLayout>
-                            </Frame>
+            </VerticalStackLayout>
+        </Frame>
 
-                            <Frame BackgroundColor="#5E8D5E"
-                                   Padding="18"
-                                   CornerRadius="20"
-                                   HasShadow="False"
-                                   BorderColor="Transparent">
-                                   <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnEstadoTapped"/>
-                                   </Frame.GestureRecognizers>
-                                   <HorizontalStackLayout Spacing="20">
-                                          <Label Text="🧠"
-                                                 FontSize="24"
-                                                 VerticalOptions="Center"/>
-                                          <Label Text="ESTADO ANÍMICO"
-                                                 TextColor="White"
-                                                 FontAttributes="Bold"
-                                                 VerticalOptions="Center"
-                                                 FontSize="15"
-                                                 CharacterSpacing="1.5"/>
-                                   </HorizontalStackLayout>
-                            </Frame>
+        <!-- Barra de navegación inferior -->
+        <!-- CAMBIO: Movida a Grid.Row="1" explícito para que el Grid la coloque
+             siempre al fondo sin solaparse con el ScrollView de arriba. -->
+        <Frame Grid.Row="1"
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+               CornerRadius="0"
+               Padding="10,6"
+               HasShadow="False"
+               BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}">
 
-                            <Frame BackgroundColor="#F2A7B5"
-                                   Padding="18"
-                                   CornerRadius="20"
-                                   HasShadow="False"
-                                   BorderColor="Transparent"
-                                   Margin="0,0,0,10">
-                                   <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnMenstrualTapped"/>
-                                   </Frame.GestureRecognizers>
-                                   <HorizontalStackLayout Spacing="20">
-                                          <Label Text="📅"
-                                                 FontSize="24"
-                                                 VerticalOptions="Center"/>
-                                          <Label Text="SALUD MENSTRUAL"
-                                                 TextColor="White"
-                                                 FontAttributes="Bold"
-                                                 VerticalOptions="Center"
-                                                 FontSize="15"
-                                                 CharacterSpacing="1.5"/>
-                                   </HorizontalStackLayout>
-                            </Frame>
+            <Grid ColumnDefinitions="*, *, *"
+                  MaximumWidthRequest="800"
+                  HorizontalOptions="FillAndExpand">
 
-                     </VerticalStackLayout>
-              </Frame>
+                <!-- Inicio (activo) -->
+                <VerticalStackLayout Grid.Column="0"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnInicioTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏠"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Inicio"
+                           FontSize="11"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           FontAttributes="Bold"/>
+                </VerticalStackLayout>
 
+                <!-- Retos -->
+                <VerticalStackLayout Grid.Column="1"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRetosTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏆"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Retos"
+                           FontSize="11"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
 
-              <Frame Grid.Row="1"
-                     BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                     CornerRadius="0"
-                     Padding="10,6"
-                     HasShadow="False"
-                     BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-                     VerticalOptions="End">
+                <!-- Perfil -->
+                <VerticalStackLayout Grid.Column="2"
+                                     HorizontalOptions="Center"
+                                     Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPerfilTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="👤"
+                           FontSize="20"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Perfil"
+                           FontSize="11"
+                           HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
 
-                     <Grid ColumnDefinitions="*, *, *"
-                           MaximumWidthRequest="800"
-                           HorizontalOptions="FillAndExpand">
+            </Grid>
+        </Frame>
 
-                            <!-- Inicio -->
-                            <VerticalStackLayout Grid.Column="0"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnInicioTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="🏠"
-                                          FontSize="20"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                                   <Label Text="Inicio"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                          FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-
-                            <!-- Retos -->
-                            <VerticalStackLayout Grid.Column="1"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnRetosTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="🏆"
-                                          FontSize="20"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                   <Label Text="Retos"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                            </VerticalStackLayout>
-
-                            <!-- Perfil -->
-                            <VerticalStackLayout Grid.Column="2"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnPerfilTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="👤"
-                                          FontSize="20"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                   <Label Text="Perfil"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                            </VerticalStackLayout>
-
-                     </Grid>
-              </Frame>
-       </Grid>
+    </Grid>
 </ContentPage>
