@@ -1,14 +1,19 @@
 using app.Data;
 using app.Models;
+using System.Globalization;
+
 namespace app;
 
 public partial class RegistroActividadPage : ContentPage
 {
-    // Variable para recordar cuál fue la última tarjeta que tocamos
     private Frame _frameSeleccionadoAnteriormente;
     private SaludDatabase _database;
+    private Usuario _usuarioActual;
+
+    // Objetos que se rellenan con los datos del formulario
     public Fisico fisico { get; set; }
     public RegistroDiario registro { get; set; }
+
     public RegistroActividadPage(SaludDatabase database)
     {
         InitializeComponent();
@@ -18,77 +23,218 @@ public partial class RegistroActividadPage : ContentPage
         BindingContext = fisico;
     }
 
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        await _database.InicializarAsync();
+
+        // Obtenemos el usuario real de la BD — ya no hay ID hardcodeado
+        _usuarioActual = await _database.ObtenerUsuarioAsync();
+        if (_usuarioActual == null)
+        {
+            await Shell.Current.GoToAsync("//crearPerfil");
+            return;
+        }
+
+        // Cargamos las estadísticas de hoy para mostrarlas al entrar
+        await ActualizarResumenAsync();
+    }
+
+    // ── Selección de actividad ───────────────────────────────────────────────
+
     private void OnActividadTapped(object sender, TappedEventArgs e)
     {
-        // 1. Si ya había una tarjeta seleccionada antes, la volvemos a poner blanca
+        // Deseleccionamos la tarjeta anterior
         if (_frameSeleccionadoAnteriormente != null)
         {
             _frameSeleccionadoAnteriormente.BackgroundColor = Colors.White;
             _frameSeleccionadoAnteriormente.BorderColor = Colors.Transparent;
         }
 
-        // 2. Obtenemos la tarjeta (Frame) exacta que acabas de tocar ahora mismo
         var frameActual = (Frame)sender;
-
-        // 3. Pintamos la tarjeta tocada de verde
         frameActual.BackgroundColor = Color.FromArgb("#F0F5F1");
         frameActual.BorderColor = Color.FromArgb("#8EB497");
-
-        // 4. Guardamos esta tarjeta en la memoria para "deseleccionarla" la próxima vez
         _frameSeleccionadoAnteriormente = frameActual;
 
-        // 5. Mostramos el formulario de abajo
-        ContenedorFormulario.IsVisible = true;
-
-        // 6. Cambiamos el título del formulario
+        // Guardamos el tipo de actividad en el modelo
         if (e.Parameter != null)
         {
-            LabelActividadSeleccionada.Text = "Registrar " + e.Parameter.ToString();
+            fisico.Tipo_Actividad = e.Parameter.ToString();
+            LabelActividadSeleccionada.Text = "Registrar " + fisico.Tipo_Actividad;
         }
+
+        ContenedorFormulario.IsVisible = true;
+
+        // Mostramos u ocultamos el campo distancia según la actividad
+        // (Yoga y Gimnasio no necesitan distancia — viene de RequiereDistancia en Fisico.cs)
+        ContenedorDistancia.IsVisible = fisico.RequiereDistancia;
     }
 
-    private async void OnVolverClicked(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
-    }
+    // ── Guardar ──────────────────────────────────────────────────────────────
+
     private async void OnGuardarClicked(object sender, EventArgs e)
     {
-        registro.SetFecha(DateTime.Now);
-        registro.ID_Usuario = 1; // Aquí deberías poner el ID del usuario actual, esto es solo un ejemplo
+        // Leemos los campos del formulario y los metemos en el modelo
+        if (!LeerFormulario())
+            return; // LeerFormulario ya muestra el alert de error si falla
 
-
-        fisico.Tipo_Actividad = fisico.TiposActividad[0];
-        fisico.Distancia = 5;
-        fisico.Kcal_Quemadas = 300;
-        Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(fisico));
-        if (fisico.EsValido())
+        // Validación del modelo (EsValido() en Fisico.cs)
+        if (!fisico.EsValido())
         {
-            int id = await _database.InsertarRegistroAsync(registro);
-            fisico.ID_Registro = id;
-            await DisplayAlert("Error", $"Registro guardado con éxito. ID: {id}", "OK");
-            await DisplayAlert("Error", $"Fisico: {id}, Distancia: {fisico.Distancia}, Kcal: {fisico.Kcal_Quemadas}, Tipo: {fisico.Tipo_Actividad}", "OK");
+            await DisplayAlert("Campos incompletos", "Rellena todos los campos obligatorios.", "OK");
+            return;
+        }
+
+        try
+        {
+            // Calculamos el XP según la duración antes de guardar
+            fisico.XP = fisico.CalcularXP();
+
+            // Creamos el RegistroDiario con el usuario real
+            registro.SetFecha(DateTime.Now);
+            registro.ID_Usuario = _usuarioActual.ID_Usuario;
+
+            // Insertamos primero el registro padre y luego el hijo Fisico
+            int idRegistro = await _database.InsertarRegistroAsync(registro);
+            fisico.ID_Registro = idRegistro;
             await _database.InsertarFisicoAsync(fisico);
-            await _database.SumarXPAsync(registro.ID_Usuario, 25); // +25 XP por actividad física
-            await Shell.Current.GoToAsync("//MainPage");
+
+            // Sumamos XP al avatar
+            await _database.SumarXPAsync(_usuarioActual.ID_Usuario, fisico.XP);
+
+            // Actualizamos el resumen de hoy en pantalla
+            await ActualizarResumenAsync();
+
+            // Mostramos feedback al usuario con los datos de la sesión
+            await MostrarResumenSesionAsync(fisico);
+
+            // Reseteamos el formulario para permitir añadir otra actividad
+            ResetearFormulario();
         }
-        else
+        catch (Exception ex)
         {
-            await DisplayAlert("Error", "Rellena todos los campos", "OK");
+            await DisplayAlert("Error", $"No se pudo guardar: {ex.Message}", "OK");
         }
     }
-    private async void OnInicioTapped(object sender, EventArgs e)
+
+    // ── Métodos auxiliares ───────────────────────────────────────────────────
+
+    /// <summary>
+    /// Lee los Entry del formulario XAML y los mete en el objeto fisico.
+    /// Devuelve false y muestra un alert si algún campo tiene formato incorrecto.
+    /// </summary>
+    private bool LeerFormulario()
     {
+        // Tiempo — obligatorio siempre
+        if (!int.TryParse(EntryTiempo.Text, out int tiempo) || tiempo <= 0)
+        {
+            DisplayAlert("Campo inválido", "Introduce una duración válida en minutos.", "OK");
+            return false;
+        }
+        fisico.Tiempo_Ejercicio = tiempo;
+
+        // Kcal — obligatorio siempre
+        if (!double.TryParse(EntryKcal.Text, NumberStyles.Any,
+                CultureInfo.InvariantCulture, out double kcal) || kcal <= 0)
+        {
+            DisplayAlert("Campo inválido", "Introduce unas calorías quemadas válidas.", "OK");
+            return false;
+        }
+        fisico.Kcal_Quemadas = kcal;
+
+        // Distancia — solo obligatorio si la actividad lo requiere
+        if (fisico.RequiereDistancia)
+        {
+            if (!double.TryParse(EntryDistancia.Text, NumberStyles.Any,
+                    CultureInfo.InvariantCulture, out double distancia) || distancia <= 0)
+            {
+                DisplayAlert("Campo inválido", "Introduce una distancia válida en km.", "OK");
+                return false;
+            }
+            fisico.Distancia = distancia;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Consulta la BD y actualiza las etiquetas de resumen de hoy:
+    /// kcal quemadas, minutos totales, XP ganado y racha de días.
+    /// </summary>
+    private async Task ActualizarResumenAsync()
+    {
+        // Lanzamos las dos consultas en paralelo — son independientes
+        var resumenTask = _database.ObtenerResumenActividadHoyAsync(_usuarioActual.ID_Usuario);
+        var rachaTask = _database.ObtenerRachaAsync(_usuarioActual.ID_Usuario);
+        await Task.WhenAll(resumenTask, rachaTask);
+
+        var resumen = resumenTask.Result;
+        int racha = rachaTask.Result;
+
+        // Actualizamos las etiquetas del XAML
+        LabelKcalHoy.Text = $"{resumen.KcalQuemadas:F0} kcal quemadas hoy";
+        LabelMinutosHoy.Text = $"{resumen.MinutosTotales} min de actividad hoy";
+        LabelXpHoy.Text = $"+{resumen.XpGanado} XP ganados hoy";
+        LabelRacha.Text = racha == 0
+                                    ? "Sin racha aún — ¡empieza hoy!"
+                                    : $"🔥 {racha} día{(racha > 1 ? "s" : "")} de racha";
+        var historial = await _database.ObtenerHistorialFisicoAsync(_usuarioActual.ID_Usuario);
+        HistorialCollectionView.ItemsSource = historial;
+    }
+
+    /// <summary>
+    /// Muestra un alert con el resumen de la sesión recién guardada.
+    /// </summary>
+    private async Task MostrarResumenSesionAsync(Fisico f)
+    {
+        string distanciaLinea = f.RequiereDistancia
+            ? $"\n📍 Distancia: {f.Distancia:F1} km"
+            : "";
+
+        await DisplayAlert(
+            "✅ ¡Actividad registrada!",
+            $"🏃 {f.Tipo_Actividad}" +
+            $"\n⏱ Duración: {f.Tiempo_Ejercicio} min" +
+            $"\n🔥 Kcal quemadas: {f.Kcal_Quemadas:F0}" +
+            distanciaLinea +
+            $"\n⭐ XP ganado: +{f.XP}",
+            "¡Genial!");
+    }
+
+    /// <summary>
+    /// Limpia el formulario y oculta el contenedor para poder registrar otra actividad.
+    /// </summary>
+    private void ResetearFormulario()
+    {
+        fisico = new Fisico();
+        BindingContext = fisico;
+
+        EntryTiempo.Text = "";
+        EntryKcal.Text = "";
+        EntryDistancia.Text = "";
+
+        if (_frameSeleccionadoAnteriormente != null)
+        {
+            _frameSeleccionadoAnteriormente.BackgroundColor = Colors.White;
+            _frameSeleccionadoAnteriormente.BorderColor = Colors.Transparent;
+            _frameSeleccionadoAnteriormente = null;
+        }
+
+        ContenedorFormulario.IsVisible = false;
+    }
+
+    // ── Navegación ───────────────────────────────────────────────────────────
+
+    private async void OnVolverClicked(object sender, EventArgs e) =>
+        await Navigation.PopAsync();
+
+    private async void OnInicioTapped(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync("//MainPage");
-    }
 
-    private async void OnRetosTapped(object sender, EventArgs e)
-    {
+    private async void OnRetosTapped(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync("//RetosPage");
-    }
 
-    private async void OnPerfilTapped(object sender, EventArgs e)
-    {
+    private async void OnPerfilTapped(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync("//PerfilPage");
-    }
-
 }

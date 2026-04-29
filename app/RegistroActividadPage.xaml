@@ -10,6 +10,7 @@
                      <VerticalStackLayout Spacing="25"
                                           Padding="25,50,25,40">
 
+                            <!-- CABECERA -->
                             <Grid ColumnDefinitions="Auto, *"
                                   ColumnSpacing="15">
                                    <Label Grid.Column="0"
@@ -33,8 +34,10 @@
                                    </VerticalStackLayout>
                             </Grid>
 
+                            <!-- ── RESUMEN DE HOY ── -->
                             <Grid ColumnDefinitions="*,*,*"
                                   ColumnSpacing="10">
+
                                    <Frame Grid.Column="0"
                                           BackgroundColor="#E8F2E9"
                                           CornerRadius="20"
@@ -50,13 +53,16 @@
                                                         FontSize="11"
                                                         TextColor="#7A8B7C"
                                                         HorizontalOptions="Center"/>
-                                                 <Label Text="320 kcal"
+                                                 <!-- ETIQUETA KCAL QUEMADAS HOY -->
+                                                 <Label x:Name="LabelKcalHoy"
+                                                        Text="0 kcal"
                                                         FontSize="14"
                                                         FontAttributes="Bold"
                                                         TextColor="#8EB497"
                                                         HorizontalOptions="Center"/>
                                           </VerticalStackLayout>
                                    </Frame>
+
                                    <Frame Grid.Column="1"
                                           BackgroundColor="#E8F2E9"
                                           CornerRadius="20"
@@ -72,13 +78,16 @@
                                                         FontSize="11"
                                                         TextColor="#7A8B7C"
                                                         HorizontalOptions="Center"/>
-                                                 <Label Text="45 min"
+                                                 <!-- ETIQUETA MINUTOS TOTALES HOY -->
+                                                 <Label x:Name="LabelMinutosHoy"
+                                                        Text="0 min"
                                                         FontSize="14"
                                                         FontAttributes="Bold"
                                                         TextColor="#8EB497"
                                                         HorizontalOptions="Center"/>
                                           </VerticalStackLayout>
                                    </Frame>
+
                                    <Frame Grid.Column="2"
                                           BackgroundColor="#E8F2E9"
                                           CornerRadius="20"
@@ -94,15 +103,25 @@
                                                         FontSize="11"
                                                         TextColor="#7A8B7C"
                                                         HorizontalOptions="Center"/>
-                                                 <Label Text="7 días"
+                                                 <!-- ETIQUETA RACHA -->
+                                                 <Label x:Name="LabelRacha"
+                                                        Text="0 días"
                                                         FontSize="14"
                                                         FontAttributes="Bold"
                                                         TextColor="#8EB497"
                                                         HorizontalOptions="Center"/>
+                                                 <!-- XP debajo de la racha -->
+                                                 <Label x:Name="LabelXpHoy"
+                                                        Text="+0 XP"
+                                                        FontSize="11"
+                                                               TextColor="#F5C842"
+                                                        HorizontalOptions="Center"/>
                                           </VerticalStackLayout>
                                    </Frame>
+
                             </Grid>
 
+                            <!-- ── TARJETAS DE ACTIVIDAD ── -->
                             <VerticalStackLayout Spacing="15">
                                    <Label Text="Selecciona tu actividad"
                                           FontSize="14"
@@ -470,10 +489,12 @@
                                    </Grid>
                             </VerticalStackLayout>
 
+                            <!-- ── FORMULARIO ── -->
                             <VerticalStackLayout x:Name="ContenedorFormulario"
                                                  Spacing="15"
                                                  Margin="0,10,0,0"
                                                  IsVisible="False">
+
                                    <Label x:Name="LabelActividadSeleccionada"
                                           Text="Actividad"
                                           FontSize="16"
@@ -481,6 +502,7 @@
                                           TextColor="#8EB497"
                                           HorizontalOptions="Center"/>
 
+                                   <!-- Duración -->
                                    <VerticalStackLayout Spacing="8">
                                           <Label Text="Duración (minutos)"
                                                  FontSize="12"
@@ -498,13 +520,71 @@
                                                                 Radius="10"
                                                                 Opacity="0.08"/>
                                                  </Frame.Shadow>
-                                                 <Entry Text="30"
+                                                 <!-- ENTRY DURACIÓN -->
+                                                 <Entry x:Name="EntryTiempo"
+                                                        Placeholder="Ej: 45"
                                                         Keyboard="Numeric"
                                                         TextColor="#2D3A2F"
                                                         FontSize="14"/>
                                           </Frame>
                                    </VerticalStackLayout>
 
+                                   <!-- Calorías quemadas -->
+                                   <VerticalStackLayout Spacing="8">
+                                          <Label Text="Calorías quemadas"
+                                                 FontSize="12"
+                                                 TextColor="#7A8B7C"
+                                                 FontAttributes="Bold"
+                                                 Margin="5,0"/>
+                                          <Frame BackgroundColor="White"
+                                                 CornerRadius="20"
+                                                 HasShadow="True"
+                                                 BorderColor="Transparent"
+                                                 Padding="15,0">
+                                                 <Frame.Shadow>
+                                                        <Shadow Brush="#A0AF9E"
+                                                                Offset="0,4"
+                                                                Radius="10"
+                                                                Opacity="0.08"/>
+                                                 </Frame.Shadow>
+                                                 <!-- ENTRY KCAL -->
+                                                 <Entry x:Name="EntryKcal"
+                                                        Placeholder="Ej: 300"
+                                                        Keyboard="Numeric"
+                                                        TextColor="#2D3A2F"
+                                                        FontSize="14"/>
+                                          </Frame>
+                                   </VerticalStackLayout>
+
+                                   <!-- Distancia (oculto para Yoga, Gimnasio, Baile, Estiramiento) -->
+                                   <VerticalStackLayout x:Name="ContenedorDistancia"
+                                                        Spacing="8">
+                                          <Label Text="Distancia (km)"
+                                                 FontSize="12"
+                                                 TextColor="#7A8B7C"
+                                                 FontAttributes="Bold"
+                                                 Margin="5,0"/>
+                                          <Frame BackgroundColor="White"
+                                                 CornerRadius="20"
+                                                 HasShadow="True"
+                                                 BorderColor="Transparent"
+                                                 Padding="15,0">
+                                                 <Frame.Shadow>
+                                                        <Shadow Brush="#A0AF9E"
+                                                                Offset="0,4"
+                                                                Radius="10"
+                                                                Opacity="0.08"/>
+                                                 </Frame.Shadow>
+                                                 <!-- ENTRY DISTANCIA -->
+                                                 <Entry x:Name="EntryDistancia"
+                                                        Placeholder="Ej: 5.2"
+                                                        Keyboard="Numeric"
+                                                        TextColor="#2D3A2F"
+                                                        FontSize="14"/>
+                                          </Frame>
+                                   </VerticalStackLayout>
+
+                                   <!-- Notas (opcional, no se guarda en BD por ahora) -->
                                    <VerticalStackLayout Spacing="8">
                                           <Label Text="Notas (opcional)"
                                                  FontSize="12"
@@ -522,7 +602,8 @@
                                                                 Radius="10"
                                                                 Opacity="0.08"/>
                                                  </Frame.Shadow>
-                                                 <Editor Placeholder="¿Cómo te sentiste?"
+                                                 <Editor x:Name="EditorNotas"
+                                                         Placeholder="¿Cómo te sentiste?"
                                                          HeightRequest="80"
                                                          TextColor="#2D3A2F"
                                                          PlaceholderColor="#94A696"
@@ -531,7 +612,9 @@
                                           </Frame>
                                    </VerticalStackLayout>
 
+                                   <!-- Botón guardar -->
                                    <Button Text="Guardar Actividad"
+                                           Clicked="OnGuardarClicked"
                                            BackgroundColor="#8EB497"
                                            TextColor="White"
                                            FontAttributes="Bold"
@@ -546,118 +629,83 @@
                                                          Opacity="0.3"/>
                                           </Button.Shadow>
                                    </Button>
+
                             </VerticalStackLayout>
 
+                            <!-- ── ACTIVIDADES RECIENTES (datos reales) ── -->
                             <VerticalStackLayout Spacing="12">
                                    <Label Text="Actividades recientes"
                                           FontSize="12"
-                                          TextColor="#7A8B7C"
                                           FontAttributes="Bold"
+                                          TextColor="#7A8B7C"
                                           Margin="5,0"/>
 
-                                   <Frame BackgroundColor="White"
-                                          CornerRadius="20"
-                                          HasShadow="True"
-                                          BorderColor="Transparent"
-                                          Padding="15,15">
-                                          <Frame.Shadow>
-                                                 <Shadow Brush="#A0AF9E"
-                                                         Offset="0,4"
-                                                         Radius="10"
-                                                         Opacity="0.08"/>
-                                          </Frame.Shadow>
-                                          <Grid ColumnDefinitions="Auto, *, Auto"
-                                                ColumnSpacing="15">
-                                                 <Label Grid.Column="0"
-                                                        Text="🧘"
-                                                        FontSize="28"
-                                                        VerticalOptions="Center"/>
-                                                 <VerticalStackLayout Grid.Column="1"
-                                                                      VerticalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="Yoga"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"/>
-                                                        <Label Text="30 min • Hace 2 horas"
-                                                               FontSize="11"
-                                                               TextColor="#7A8B7C"/>
-                                                 </VerticalStackLayout>
-                                                 <Frame Grid.Column="2"
-                                                        BackgroundColor="#E8F2E9"
-                                                        CornerRadius="15"
-                                                        HasShadow="False"
-                                                        BorderColor="Transparent"
-                                                        Padding="12,8"
-                                                        VerticalOptions="Center">
-                                                        <Label Text="+25 XP"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#8EB497"/>
-                                                 </Frame>
-                                          </Grid>
-                                   </Frame>
+                                   <CollectionView x:Name="HistorialCollectionView">
+                                          <CollectionView.ItemTemplate>
+                                                 <DataTemplate>
+                                                        <Frame BackgroundColor="White"
+                                                               CornerRadius="20"
+                                                               HasShadow="True"
+                                                               BorderColor="Transparent"
+                                                               Padding="15"
+                                                               Margin="0,0,0,8">
+                                                               <Frame.Shadow>
+                                                                      <Shadow Brush="#A0AF9E"
+                                                                              Offset="0,4"
+                                                                              Radius="10"
+                                                                              Opacity="0.08"/>
+                                                               </Frame.Shadow>
+                                                               <Grid ColumnDefinitions="Auto, *, Auto"
+                                                                     ColumnSpacing="15">
+                                                                      <Label Grid.Column="0"
+                                                                             Text="{Binding EmojiActividad}"
+                                                                             FontSize="28"
+                                                                             VerticalOptions="Center"/>
+                                                                      <VerticalStackLayout Grid.Column="1"
+                                                                                           VerticalOptions="Center"
+                                                                                           Spacing="2">
+                                                                             <Label Text="{Binding Tipo_Actividad}"
+                                                                                    FontSize="14"
+                                                                                    FontAttributes="Bold"
+                                                                                    TextColor="#2D3A2F"/>
+                                                                             <Label Text="{Binding ResumenCorto}"
+                                                                                    FontSize="11"
+                                                                                    TextColor="#7A8B7C"/>
+                                                                      </VerticalStackLayout>
+                                                                      <Frame Grid.Column="2"
+                                                                             BackgroundColor="#E8F2E9"
+                                                                             CornerRadius="15"
+                                                                             HasShadow="False"
+                                                                             BorderColor="Transparent"
+                                                                             Padding="12,8"
+                                                                             VerticalOptions="Center">
+                                                                             <Label Text="{Binding XpTexto}"
+                                                                                    FontSize="12"
+                                                                                    FontAttributes="Bold"
+                                                                                    TextColor="#8EB497"/>
+                                                                      </Frame>
+                                                               </Grid>
+                                                        </Frame>
+                                                 </DataTemplate>
+                                          </CollectionView.ItemTemplate>
+                                   </CollectionView>
 
-                                   <Frame BackgroundColor="White"
-                                          CornerRadius="20"
-                                          HasShadow="True"
-                                          BorderColor="Transparent"
-                                          Padding="15,15">
-                                          <Frame.Shadow>
-                                                 <Shadow Brush="#A0AF9E"
-                                                         Offset="0,4"
-                                                         Radius="10"
-                                                         Opacity="0.08"/>
-                                          </Frame.Shadow>
-                                          <Grid ColumnDefinitions="Auto, *, Auto"
-                                                ColumnSpacing="15">
-                                                 <Label Grid.Column="0"
-                                                        Text="🚶"
-                                                        FontSize="28"
-                                                        VerticalOptions="Center"/>
-                                                 <VerticalStackLayout Grid.Column="1"
-                                                                      VerticalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="Caminar"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"/>
-                                                        <Label Text="45 min • Ayer"
-                                                               FontSize="11"
-                                                               TextColor="#7A8B7C"/>
-                                                 </VerticalStackLayout>
-                                                 <Frame Grid.Column="2"
-                                                        BackgroundColor="#E8F2E9"
-                                                        CornerRadius="15"
-                                                        HasShadow="False"
-                                                        BorderColor="Transparent"
-                                                        Padding="12,8"
-                                                        VerticalOptions="Center">
-                                                        <Label Text="+20 XP"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#8EB497"/>
-                                                 </Frame>
-                                          </Grid>
-                                   </Frame>
                             </VerticalStackLayout>
 
                      </VerticalStackLayout>
               </ScrollView>
 
-              <Frame Grid.Row="1"
-                     BackgroundColor="White"
+              <!-- BARRA NAVEGACIÓN -->
+              <Frame BackgroundColor="White"
                      CornerRadius="0"
                      Padding="10,6"
                      HasShadow="False"
                      BorderColor="#EEF2EE"
                      VerticalOptions="End">
-
                      <Grid ColumnDefinitions="*, *, *"
                            MaximumWidthRequest="800"
                            HorizontalOptions="FillAndExpand">
 
-                            <!-- Inicio -->
                             <VerticalStackLayout Grid.Column="0"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
@@ -675,7 +723,6 @@
                                           FontAttributes="Bold"/>
                             </VerticalStackLayout>
 
-                            <!-- Retos -->
                             <VerticalStackLayout Grid.Column="1"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
@@ -692,7 +739,6 @@
                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
 
-                            <!-- Perfil -->
                             <VerticalStackLayout Grid.Column="2"
                                                  HorizontalOptions="Center"
                                                  Spacing="2">
@@ -711,5 +757,6 @@
 
                      </Grid>
               </Frame>
+
        </Grid>
 </ContentPage>

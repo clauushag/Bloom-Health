@@ -171,7 +171,7 @@ public partial class NutricionPage : ContentPage
                 Imagen = ""
             };
             await _database.InsertarNutricionalAsync(nutricional);
-
+            await _database.SumarXPAsync(usuario.ID_Usuario, 10); // +10 XP por registrar comida
             // Limpiar formulario
             ManualNombreEntry.Text = "";
             ManualMarcaEntry.Text = "";
