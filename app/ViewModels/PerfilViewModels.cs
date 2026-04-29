@@ -32,7 +32,16 @@ public class PerfilViewModel : INotifyPropertyChanged
 
     // Añade estas dos propiedades si no las tienes ya
     public double ProgresoXP => AvatarActual != null ? Math.Min(AvatarActual.XP / 100.0, 1.0) : 0;
-
+    private string _tipDelDia;
+    public string TipDelDia
+    {
+        get => _tipDelDia;
+        set
+        {
+            _tipDelDia = value;
+            OnPropertyChanged();
+        }
+    }
     public string ImagenPlanta
     {
         get
