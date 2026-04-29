@@ -410,4 +410,10 @@ public class SaludDatabase
           ORDER BY r.ID_Registro DESC
           LIMIT 10", idUsuario);
     }
+    public async Task GuardarRegistroAsync(Mental registro)
+    {
+        
+        await _conexion.InsertAsync(registro);
+    }
+
 }
