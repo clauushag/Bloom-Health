@@ -114,7 +114,7 @@
                                                  <Label x:Name="LabelXpHoy"
                                                         Text="+0 XP"
                                                         FontSize="11"
-                                                               TextColor="#F5C842"
+                                                        TextColor="#F5C842"
                                                         HorizontalOptions="Center"/>
                                           </VerticalStackLayout>
                                    </Frame>
@@ -487,6 +487,97 @@
                                           </Frame>
 
                                    </Grid>
+                            </VerticalStackLayout>
+
+                            <!-- ── RETOS EN PROGRESO ── -->
+                            <VerticalStackLayout x:Name="ContenedorRetosEnProgreso"
+                                                 Spacing="10"
+                                          IsVisible="False">
+
+                                   <Label Text="🏆 Retos en curso"
+                                          FontSize="14"
+                                                 FontAttributes="Bold"
+                                          TextColor="#7A8B7C"
+                                                 Margin="5,0"/>
+
+                                   <Label x:Name="LabelSinRetos"
+                                          Text="No tienes retos activos. ¡Ve a Retos y acepta uno!"
+                                          FontSize="12"
+                                                 TextColor="#7A8B7C"
+                                          IsVisible="False"
+                                                 Margin="5,0"/>
+
+                                   <CollectionView x:Name="RetosEnProgresoCollectionView">
+                                          <CollectionView.ItemTemplate>
+                                                 <DataTemplate>
+                                                        <Frame BackgroundColor="White"
+                                                                      CornerRadius="16"
+                                                               HasShadow="True"
+                                                                      BorderColor="Transparent"
+                                                               Padding="15"
+                                                                      Margin="0,0,0,8">
+                                                               <Frame.Shadow>
+                                                                      <Shadow Brush="#A0AF9E"
+                                                                                    Offset="0,4"
+                                                                                    Radius="10"
+                                                                                    Opacity="0.08"/>
+                                                               </Frame.Shadow>
+                                                               <VerticalStackLayout Spacing="6">
+
+                                                                      <!-- Nombre y XP -->
+                                                                      <Grid ColumnDefinitions="Auto,*,Auto"
+                                                                                    ColumnSpacing="10">
+                                                                             <Label Grid.Column="0"
+                                                                                    Text="{Binding EmojiCategoria}"
+                                                                                    FontSize="22"
+                                                                                           VerticalOptions="Center"/>
+                                                                             <VerticalStackLayout Grid.Column="1"
+                                                                                                  VerticalOptions="Center"
+                                                                                           Spacing="2">
+                                                                                    <Label Text="{Binding Nombre}"
+                                                                                           FontSize="13"
+                                                                                                  FontAttributes="Bold"
+                                                                                           TextColor="#2D3A2F"/>
+                                                                                    <Label Text="{Binding Descripcion}"
+                                                                                           FontSize="11"
+                                                                                                  TextColor="#7A8B7C"/>
+                                                                             </VerticalStackLayout>
+                                                                             <Frame Grid.Column="2"
+                                                                                    BackgroundColor="#FFF8E1"
+                                                                                           CornerRadius="12"
+                                                                                    HasShadow="False"
+                                                                                           BorderColor="Transparent"
+                                                                                    Padding="8,4"
+                                                                                           VerticalOptions="Center">
+                                                                                    <Label Text="{Binding Puntos_Recompensa,
+                                              StringFormat='+{0} XP'}"
+                                                                                           FontSize="11"
+                                                                                                  FontAttributes="Bold"
+                                                                                           TextColor="#F5C842"/>
+                                                                             </Frame>
+                                                                      </Grid>
+
+                                                                      <!-- Barra de progreso -->
+                                                                      <Grid ColumnDefinitions="*,Auto"
+                                                                                    ColumnSpacing="8">
+                                                                             <ProgressBar Grid.Column="0"
+                                                                                          Progress="{Binding PorcentajeProgreso}"
+                                                                                          ProgressColor="#8EB497"
+                                                                                          BackgroundColor="#E8F2E9"
+                                                                                          VerticalOptions="Center"/>
+                                                                             <Label Grid.Column="1"
+                                                                                    Text="{Binding TextoProgreso}"
+                                                                                    FontSize="10"
+                                                                                           TextColor="#7A8B7C"
+                                                                                    VerticalOptions="Center"/>
+                                                                      </Grid>
+
+                                                               </VerticalStackLayout>
+                                                        </Frame>
+                                                 </DataTemplate>
+                                          </CollectionView.ItemTemplate>
+                                   </CollectionView>
+
                             </VerticalStackLayout>
 
                             <!-- ── FORMULARIO ── -->

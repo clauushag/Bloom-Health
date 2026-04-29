@@ -103,6 +103,19 @@ public partial class RegistroActividadPage : ContentPage
             // Sumamos XP al avatar
             await _database.SumarXPAsync(_usuarioActual.ID_Usuario, fisico.XP);
 
+            var retosCompletados = await _database.ComprobarRetosFisicoAsync(
+    _usuarioActual.ID_Usuario, fisico);
+
+            // Si hay retos completados los mostramos antes del resumen normal
+            foreach (var reto in retosCompletados)
+            {
+                await DisplayAlert(
+                    "🏆 ¡Reto completado!",
+                    $"Has completado el reto '{reto.Nombre}'\n" +
+                    $"🎉 +{reto.Puntos_Recompensa} XP de recompensa",
+                    "¡Genial!");
+            }
+
             // Actualizamos el resumen de hoy en pantalla
             await ActualizarResumenAsync();
 
@@ -164,7 +177,6 @@ public partial class RegistroActividadPage : ContentPage
     /// </summary>
     private async Task ActualizarResumenAsync()
     {
-        // Lanzamos las dos consultas en paralelo — son independientes
         var resumenTask = _database.ObtenerResumenActividadHoyAsync(_usuarioActual.ID_Usuario);
         var rachaTask = _database.ObtenerRachaAsync(_usuarioActual.ID_Usuario);
         await Task.WhenAll(resumenTask, rachaTask);
@@ -172,15 +184,21 @@ public partial class RegistroActividadPage : ContentPage
         var resumen = resumenTask.Result;
         int racha = rachaTask.Result;
 
-        // Actualizamos las etiquetas del XAML
         LabelKcalHoy.Text = $"{resumen.KcalQuemadas:F0} kcal quemadas hoy";
         LabelMinutosHoy.Text = $"{resumen.MinutosTotales} min de actividad hoy";
         LabelXpHoy.Text = $"+{resumen.XpGanado} XP ganados hoy";
         LabelRacha.Text = racha == 0
-                                    ? "Sin racha aún — ¡empieza hoy!"
-                                    : $"🔥 {racha} día{(racha > 1 ? "s" : "")} de racha";
+            ? "Sin racha aún — ¡empieza hoy!"
+            : $"🔥 {racha} día{(racha > 1 ? "s" : "")} de racha";
+
         var historial = await _database.ObtenerHistorialFisicoAsync(_usuarioActual.ID_Usuario);
         HistorialCollectionView.ItemsSource = historial;
+
+        // ← nuevo: cargamos los retos en progreso
+        var retosEnProgreso = await _database.ObtenerRetosEnProgresoAsync(_usuarioActual.ID_Usuario);
+        RetosEnProgresoCollectionView.ItemsSource = retosEnProgreso;
+        ContenedorRetosEnProgreso.IsVisible = retosEnProgreso.Count > 0;
+        LabelSinRetos.IsVisible = retosEnProgreso.Count == 0;
     }
 
     /// <summary>
@@ -227,7 +245,7 @@ public partial class RegistroActividadPage : ContentPage
     // ── Navegación ───────────────────────────────────────────────────────────
 
     private async void OnVolverClicked(object sender, EventArgs e) =>
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//MainPage");
 
     private async void OnInicioTapped(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync("//MainPage");

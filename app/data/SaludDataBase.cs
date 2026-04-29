@@ -25,14 +25,28 @@ public class SaludDatabase
 
     private async Task MigrarAsync()
     {
-        // ── FISICO ──────────────────────────────────────────────────────────────
-        // Obtenemos las columnas reales de la tabla en disco
+        // ── PROGRESO RETO ────────────────────────────────────────────────────────
+        var columnasProgreso = await _conexion.QueryAsync<ColumnInfo>(
+            "PRAGMA table_info(ProgresoReto);");
+        var nombresProgreso = columnasProgreso.Select(c => c.Name).ToHashSet();
+
+        if (!nombresProgreso.Contains("ID_Reto"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE ProgresoReto ADD COLUMN ID_Reto INTEGER NOT NULL DEFAULT 0;");
+
+        if (!nombresProgreso.Contains("FechaInicio"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE ProgresoReto ADD COLUMN FechaInicio TEXT NOT NULL DEFAULT '';");
+
+        if (!nombresProgreso.Contains("FechaFin"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE ProgresoReto ADD COLUMN FechaFin TEXT DEFAULT '';");
+
+        // ── FISICO ───────────────────────────────────────────────────────────────
         var columnas = await _conexion.QueryAsync<ColumnInfo>(
             "PRAGMA table_info(Fisico);");
         var nombres = columnas.Select(c => c.Name).ToHashSet();
 
-        // Si faltan columnas clave del modelo actual → recreamos la tabla entera
-        // Esto cubre cualquier combinación de columnas antiguas desconocidas
         bool necesitaRecrear = !nombres.Contains("XP")
                             || !nombres.Contains("Tipo_Actividad")
                             || !nombres.Contains("Distancia")
@@ -41,43 +55,31 @@ public class SaludDatabase
 
         if (necesitaRecrear)
         {
-            // 1. Desactivamos FK para poder hacer el DROP sin violar restricciones
             await _conexion.ExecuteAsync("PRAGMA foreign_keys = OFF;");
-
-            // 2. Renombramos la tabla vieja (no la borramos por si acaso)
-            await _conexion.ExecuteAsync(
-                "ALTER TABLE Fisico RENAME TO Fisico_old;");
-
-            // 3. Creamos la tabla nueva con la estructura correcta
+            await _conexion.ExecuteAsync("ALTER TABLE Fisico RENAME TO Fisico_old;");
             await _conexion.ExecuteAsync(@"
             CREATE TABLE Fisico (
-                ID_Registro INTEGER PRIMARY KEY,
-                Distancia   REAL    NOT NULL DEFAULT 0,
-                Tipo_Actividad TEXT NOT NULL DEFAULT '',
-                XP          INTEGER NOT NULL DEFAULT 0,
-                Kcal_Quemadas REAL  NOT NULL DEFAULT 0,
-                Tiempo_Ejercicio REAL NOT NULL DEFAULT 0,
+                ID_Registro      INTEGER PRIMARY KEY,
+                Distancia        REAL    NOT NULL DEFAULT 0,
+                Tipo_Actividad   TEXT    NOT NULL DEFAULT '',
+                XP               INTEGER NOT NULL DEFAULT 0,
+                Kcal_Quemadas    REAL    NOT NULL DEFAULT 0,
+                Tiempo_Ejercicio REAL    NOT NULL DEFAULT 0,
+                Pasos            INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
             );");
-
-            // 4. Copiamos los datos que podamos rescatar de la tabla vieja
-            //    COALESCE maneja columnas que no existían en la versión antigua
             await _conexion.ExecuteAsync(@"
             INSERT INTO Fisico (ID_Registro, Distancia, Tipo_Actividad, XP,
-                                Kcal_Quemadas, Tiempo_Ejercicio)
-            SELECT
-                ID_Registro,
-                COALESCE(Distancia, 0),
-                COALESCE(Tipo_Actividad, ''),
-                COALESCE(XP, 0),
-                COALESCE(Kcal_Quemadas, 0),
-                COALESCE(Tiempo_Ejercicio, 0)
+                                Kcal_Quemadas, Tiempo_Ejercicio, Pasos)
+            SELECT ID_Registro,
+                   COALESCE(Distancia, 0),
+                   COALESCE(Tipo_Actividad, ''),
+                   COALESCE(XP, 0),
+                   COALESCE(Kcal_Quemadas, 0),
+                   COALESCE(Tiempo_Ejercicio, 0),
+                   COALESCE(Pasos, 0)
             FROM Fisico_old;");
-
-            // 5. Borramos la tabla vieja
             await _conexion.ExecuteAsync("DROP TABLE Fisico_old;");
-
-            // 6. Reactivamos FK
             await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
         }
     }
@@ -144,15 +146,15 @@ public class SaludDatabase
             );");
         await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS ProgresoReto (
-                ID_ProgresoReto INTEGER PRIMARY KEY AUTOINCREMENT,
-                ID_Usuario INTEGER NOT NULL,
-                ID_Reto INTEGER NOT NULL,
-                FechaInicio TEXT NOT NULL,
-                FechaFin TEXT,
-                progreso INTEGER NOT NULL,
-                Estado TEXT NOT NULL,
-                FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
-                FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
+        ID_Progreso INTEGER PRIMARY KEY AUTOINCREMENT,
+        ID_Usuario INTEGER NOT NULL,
+        ID_Reto INTEGER NOT NULL,
+        FechaInicio TEXT NOT NULL DEFAULT '',
+        FechaFin TEXT DEFAULT '',
+        progreso INTEGER NOT NULL DEFAULT 0,
+        Estado TEXT NOT NULL DEFAULT '',
+        FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
+        FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
         await _conexion.ExecuteAsync(@"
@@ -268,24 +270,353 @@ public class SaludDatabase
     }
     private async Task InsertarRetosIniciales()
     {
-        // Si ya hay retos, no hacemos nada
         var count = await _conexion.Table<Retos>().CountAsync();
         if (count > 0) return;
 
-        // Lista de retos iniciales
         var retos = new List<Retos>
-        {
-            new Retos { Nombre = "Caminar 5.000 pasos", Descripcion = "Alcanza 5.000 pasos en un día", Puntos_Recompensa = 10, ID_Categoria =1, Objetivo = 5000 },
-            new Retos { Nombre = "Caminar 10.000 pasos", Descripcion = "Alcanza 10.000 pasos en un día", Puntos_Recompensa = 25, ID_Categoria =1, Objetivo = 10000 },
-            new Retos { Nombre = "Caminar 15.000 pasos", Descripcion = "Alcanza 15.000 pasos en un día", Puntos_Recompensa = 40, ID_Categoria =1, Objetivo = 15000 },
-            new Retos { Nombre = "Caminar 20.000 pasos", Descripcion = "Alcanza 20.000 pasos en un día", Puntos_Recompensa = 50, ID_Categoria =1, Objetivo = 20000 }
+    {
+        // ── ACTIVIDAD FÍSICA (ID_Categoria = 1) ─────────────────────────
+        new Retos { Nombre = "Primer paso",             Descripcion = "Registra tu primera actividad física",         Puntos_Recompensa = 10,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Caminar 5 km",            Descripcion = "Acumula 5 km caminando",                       Puntos_Recompensa = 15,  ID_Categoria = 1, Objetivo = 5 },
+        new Retos { Nombre = "Caminar 10 km",           Descripcion = "Acumula 10 km caminando",                      Puntos_Recompensa = 25,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Caminar 25 km",           Descripcion = "Acumula 25 km caminando",                      Puntos_Recompensa = 40,  ID_Categoria = 1, Objetivo = 25 },
+        new Retos { Nombre = "Caminar 50 km",           Descripcion = "Acumula 50 km caminando",                      Puntos_Recompensa = 60,  ID_Categoria = 1, Objetivo = 50 },
+        new Retos { Nombre = "Caminar 100 km",          Descripcion = "Acumula 100 km caminando",                     Puntos_Recompensa = 100, ID_Categoria = 1, Objetivo = 100 },
+        new Retos { Nombre = "Correr 1 km",             Descripcion = "Corre al menos 1 km",                          Puntos_Recompensa = 10,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Correr 5 km",             Descripcion = "Corre al menos 5 km",                          Puntos_Recompensa = 30,  ID_Categoria = 1, Objetivo = 5 },
+        new Retos { Nombre = "Correr 10 km",            Descripcion = "Corre 10 km de una vez",                       Puntos_Recompensa = 60,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Correr 21 km",            Descripcion = "Completa una media maratón",                   Puntos_Recompensa = 120, ID_Categoria = 1, Objetivo = 21 },
+        new Retos { Nombre = "Correr 42 km",            Descripcion = "Completa una maratón completa",                Puntos_Recompensa = 250, ID_Categoria = 1, Objetivo = 42 },
+        new Retos { Nombre = "Ciclismo 10 km",          Descripcion = "Pedalea al menos 10 km",                       Puntos_Recompensa = 20,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Ciclismo 25 km",          Descripcion = "Pedalea al menos 25 km",                       Puntos_Recompensa = 40,  ID_Categoria = 1, Objetivo = 25 },
+        new Retos { Nombre = "Ciclismo 50 km",          Descripcion = "Pedalea al menos 50 km",                       Puntos_Recompensa = 70,  ID_Categoria = 1, Objetivo = 50 },
+        new Retos { Nombre = "Ciclismo 100 km",         Descripcion = "Completa una ruta de 100 km",                  Puntos_Recompensa = 150, ID_Categoria = 1, Objetivo = 100 },
+        new Retos { Nombre = "Nadar 500 m",             Descripcion = "Nada al menos 500 metros",                     Puntos_Recompensa = 20,  ID_Categoria = 1, Objetivo = 0.5 },
+        new Retos { Nombre = "Nadar 1 km",              Descripcion = "Nada al menos 1 km",                           Puntos_Recompensa = 35,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Nadar 5 km",              Descripcion = "Acumula 5 km nadando",                         Puntos_Recompensa = 80,  ID_Categoria = 1, Objetivo = 5 },
+        new Retos { Nombre = "30 min de ejercicio",     Descripcion = "Haz 30 minutos de actividad física",           Puntos_Recompensa = 15,  ID_Categoria = 1, Objetivo = 30 },
+        new Retos { Nombre = "1 hora de ejercicio",     Descripcion = "Haz 60 minutos de actividad física",           Puntos_Recompensa = 30,  ID_Categoria = 1, Objetivo = 60 },
+        new Retos { Nombre = "2 horas de ejercicio",    Descripcion = "Acumula 120 minutos de actividad",             Puntos_Recompensa = 50,  ID_Categoria = 1, Objetivo = 120 },
+        new Retos { Nombre = "Semana activa",           Descripcion = "Registra actividad 7 días seguidos",           Puntos_Recompensa = 70,  ID_Categoria = 1, Objetivo = 7 },
+        new Retos { Nombre = "Mes activo",              Descripcion = "Registra actividad 30 días seguidos",          Puntos_Recompensa = 200, ID_Categoria = 1, Objetivo = 30 },
+        new Retos { Nombre = "Quemar 500 kcal",         Descripcion = "Quema 500 kcal en una sesión",                 Puntos_Recompensa = 40,  ID_Categoria = 1, Objetivo = 500 },
+        new Retos { Nombre = "Quemar 1000 kcal",        Descripcion = "Quema 1000 kcal en un día",                    Puntos_Recompensa = 80,  ID_Categoria = 1, Objetivo = 1000 },
+        new Retos { Nombre = "Quemar 5000 kcal",        Descripcion = "Acumula 5000 kcal quemadas",                   Puntos_Recompensa = 150, ID_Categoria = 1, Objetivo = 5000 },
+        new Retos { Nombre = "Yoga 1 vez",              Descripcion = "Completa una sesión de yoga",                  Puntos_Recompensa = 15,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Yoga 10 veces",           Descripcion = "Completa 10 sesiones de yoga",                 Puntos_Recompensa = 60,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Yoga 30 veces",           Descripcion = "Completa 30 sesiones de yoga",                 Puntos_Recompensa = 150, ID_Categoria = 1, Objetivo = 30 },
+        new Retos { Nombre = "Gimnasio 1 vez",          Descripcion = "Ve al gimnasio por primera vez",               Puntos_Recompensa = 15,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Gimnasio 10 veces",       Descripcion = "Ve al gimnasio 10 veces",                      Puntos_Recompensa = 60,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Gimnasio 30 veces",       Descripcion = "Ve al gimnasio 30 veces",                      Puntos_Recompensa = 150, ID_Categoria = 1, Objetivo = 30 },
+        new Retos { Nombre = "Bailar 1 vez",            Descripcion = "Registra una sesión de baile",                 Puntos_Recompensa = 15,  ID_Categoria = 1, Objetivo = 1 },
+        new Retos { Nombre = "Bailar 10 veces",         Descripcion = "Registra 10 sesiones de baile",                Puntos_Recompensa = 50,  ID_Categoria = 1, Objetivo = 10 },
+        new Retos { Nombre = "Estirar cada día",        Descripcion = "Registra 7 sesiones de estiramiento",          Puntos_Recompensa = 30,  ID_Categoria = 1, Objetivo = 7 },
+        new Retos { Nombre = "Sin excusas",             Descripcion = "Registra 3 actividades en un día",             Puntos_Recompensa = 50,  ID_Categoria = 1, Objetivo = 3 },
+        new Retos { Nombre = "Madrugadora",             Descripcion = "Registra 5 actividades antes de las 9h",       Puntos_Recompensa = 60,  ID_Categoria = 1, Objetivo = 5 },
 
-        };
+        // ── SUEÑO (ID_Categoria = 2) ─────────────────────────────────────
+        new Retos { Nombre = "Primera noche",           Descripcion = "Registra tus horas de sueño por primera vez",  Puntos_Recompensa = 10,  ID_Categoria = 2, Objetivo = 1 },
+        new Retos { Nombre = "Dormir bien",             Descripcion = "Duerme 8 horas una noche",                     Puntos_Recompensa = 15,  ID_Categoria = 2, Objetivo = 8 },
+        new Retos { Nombre = "Semana de sueño",         Descripcion = "Registra tu sueño 7 días seguidos",            Puntos_Recompensa = 40,  ID_Categoria = 2, Objetivo = 7 },
+        new Retos { Nombre = "Mes de sueño",            Descripcion = "Registra tu sueño 30 días seguidos",           Puntos_Recompensa = 120, ID_Categoria = 2, Objetivo = 30 },
+        new Retos { Nombre = "Sueño perfecto",          Descripcion = "Duerme entre 7-9 horas 5 noches seguidas",     Puntos_Recompensa = 60,  ID_Categoria = 2, Objetivo = 5 },
+        new Retos { Nombre = "Sin trasnochar",          Descripcion = "Acuéstate antes de las 23h durante 7 días",    Puntos_Recompensa = 50,  ID_Categoria = 2, Objetivo = 7 },
+        new Retos { Nombre = "100 noches registradas",  Descripcion = "Registra 100 noches de sueño",                 Puntos_Recompensa = 100, ID_Categoria = 2, Objetivo = 100 },
 
-        // Inserción masiva
+        // ── NUTRICIÓN (ID_Categoria = 3) ─────────────────────────────────
+        new Retos { Nombre = "Primera comida",          Descripcion = "Registra tu primera comida",                   Puntos_Recompensa = 10,  ID_Categoria = 3, Objetivo = 1 },
+        new Retos { Nombre = "Registro diario",         Descripcion = "Registra comidas 7 días seguidos",             Puntos_Recompensa = 40,  ID_Categoria = 3, Objetivo = 7 },
+        new Retos { Nombre = "Mes saludable",           Descripcion = "Registra comidas 30 días seguidos",            Puntos_Recompensa = 120, ID_Categoria = 3, Objetivo = 30 },
+        new Retos { Nombre = "500 kcal en un día",      Descripcion = "Registra al menos 500 kcal en un día",         Puntos_Recompensa = 10,  ID_Categoria = 3, Objetivo = 500 },
+        new Retos { Nombre = "Control calórico",        Descripcion = "Registra menos de 2000 kcal en un día",        Puntos_Recompensa = 20,  ID_Categoria = 3, Objetivo = 2000 },
+        new Retos { Nombre = "Proteínas al día",        Descripcion = "Registra más de 50g de proteínas en un día",   Puntos_Recompensa = 25,  ID_Categoria = 3, Objetivo = 50 },
+        new Retos { Nombre = "10 alimentos distintos",  Descripcion = "Registra 10 alimentos diferentes",             Puntos_Recompensa = 30,  ID_Categoria = 3, Objetivo = 10 },
+        new Retos { Nombre = "50 alimentos distintos",  Descripcion = "Registra 50 alimentos diferentes",             Puntos_Recompensa = 80,  ID_Categoria = 3, Objetivo = 50 },
+        new Retos { Nombre = "100 registros de comida", Descripcion = "Registra 100 comidas en total",                Puntos_Recompensa = 100, ID_Categoria = 3, Objetivo = 100 },
+        new Retos { Nombre = "Escáner de comida",       Descripcion = "Escanea 5 productos con el escáner",           Puntos_Recompensa = 20,  ID_Categoria = 3, Objetivo = 5 },
+        new Retos { Nombre = "Escáner experta",         Descripcion = "Escanea 25 productos con el escáner",          Puntos_Recompensa = 60,  ID_Categoria = 3, Objetivo = 25 },
+
+        // ── HIDRATACIÓN (ID_Categoria = 4) ───────────────────────────────
+        new Retos { Nombre = "Primera gota",            Descripcion = "Registra tu primer vaso de agua",              Puntos_Recompensa = 10,  ID_Categoria = 4, Objetivo = 1 },
+        new Retos { Nombre = "2 litros al día",         Descripcion = "Bebe 2 litros de agua en un día",              Puntos_Recompensa = 20,  ID_Categoria = 4, Objetivo = 2 },
+        new Retos { Nombre = "Hidratación semanal",     Descripcion = "Registra agua 7 días seguidos",                Puntos_Recompensa = 40,  ID_Categoria = 4, Objetivo = 7 },
+        new Retos { Nombre = "Hidratación mensual",     Descripcion = "Registra agua 30 días seguidos",               Puntos_Recompensa = 100, ID_Categoria = 4, Objetivo = 30 },
+        new Retos { Nombre = "Super hidratada",         Descripcion = "Bebe 3 litros en un día",                      Puntos_Recompensa = 30,  ID_Categoria = 4, Objetivo = 3 },
+
+        // ── BIENESTAR (ID_Categoria = 5) ─────────────────────────────────
+        new Retos { Nombre = "Bienvenida",              Descripcion = "Completa tu perfil por primera vez",           Puntos_Recompensa = 20,  ID_Categoria = 5, Objetivo = 1 },
+        new Retos { Nombre = "Racha de 3 días",         Descripcion = "Mantén una racha de 3 días activos",           Puntos_Recompensa = 20,  ID_Categoria = 5, Objetivo = 3 },
+        new Retos { Nombre = "Racha de 7 días",         Descripcion = "Mantén una racha de 7 días activos",           Puntos_Recompensa = 50,  ID_Categoria = 5, Objetivo = 7 },
+        new Retos { Nombre = "Racha de 14 días",        Descripcion = "Mantén una racha de 14 días activos",          Puntos_Recompensa = 100, ID_Categoria = 5, Objetivo = 14 },
+        new Retos { Nombre = "Racha de 30 días",        Descripcion = "Mantén una racha de 30 días activos",          Puntos_Recompensa = 200, ID_Categoria = 5, Objetivo = 30 },
+        new Retos { Nombre = "Racha de 100 días",       Descripcion = "Mantén una racha de 100 días activos",         Puntos_Recompensa = 500, ID_Categoria = 5, Objetivo = 100 },
+        new Retos { Nombre = "100 XP",                  Descripcion = "Acumula 100 puntos de XP",                     Puntos_Recompensa = 10,  ID_Categoria = 5, Objetivo = 100 },
+        new Retos { Nombre = "500 XP",                  Descripcion = "Acumula 500 puntos de XP",                     Puntos_Recompensa = 25,  ID_Categoria = 5, Objetivo = 500 },
+        new Retos { Nombre = "1000 XP",                 Descripcion = "Acumula 1000 puntos de XP",                    Puntos_Recompensa = 50,  ID_Categoria = 5, Objetivo = 1000 },
+        new Retos { Nombre = "5000 XP",                 Descripcion = "Acumula 5000 puntos de XP",                    Puntos_Recompensa = 150, ID_Categoria = 5, Objetivo = 5000 },
+        new Retos { Nombre = "Exploradora",             Descripcion = "Visita todas las secciones de la app",         Puntos_Recompensa = 30,  ID_Categoria = 5, Objetivo = 5 },
+
+        // ── SALUD MENTAL (ID_Categoria = 6) ──────────────────────────────
+        new Retos { Nombre = "Primera emoción",         Descripcion = "Registra tu estado de ánimo por primera vez",  Puntos_Recompensa = 10,  ID_Categoria = 6, Objetivo = 1 },
+        new Retos { Nombre = "Diario semanal",          Descripcion = "Registra tu estado de ánimo 7 días seguidos",  Puntos_Recompensa = 40,  ID_Categoria = 6, Objetivo = 7 },
+        new Retos { Nombre = "Diario mensual",          Descripcion = "Registra tu estado de ánimo 30 días seguidos", Puntos_Recompensa = 120, ID_Categoria = 6, Objetivo = 30 },
+        new Retos { Nombre = "Día increíble",           Descripcion = "Registra un estado de ánimo 'Increíble'",      Puntos_Recompensa = 15,  ID_Categoria = 6, Objetivo = 1 },
+        new Retos { Nombre = "Semana positiva",         Descripcion = "Registra 7 días con estado positivo",          Puntos_Recompensa = 60,  ID_Categoria = 6, Objetivo = 7 },
+        new Retos { Nombre = "100 registros mentales",  Descripcion = "Registra tu estado de ánimo 100 veces",        Puntos_Recompensa = 100, ID_Categoria = 6, Objetivo = 100 },
+        new Retos { Nombre = "Escritora",               Descripcion = "Escribe una nota en el diario 10 veces",       Puntos_Recompensa = 40,  ID_Categoria = 6, Objetivo = 10 },
+        new Retos { Nombre = "Mindfulness",             Descripcion = "Registra 5 sesiones de yoga o estiramiento",   Puntos_Recompensa = 35,  ID_Categoria = 6, Objetivo = 5 },
+    };
+
         await _conexion.InsertAllAsync(retos);
     }
 
+    public async Task<List<RetoConProgreso>> ObtenerRetosPageAsync(
+    int idUsuario, int offset = 0, int limit = 20)
+    {
+        return await _conexion.QueryAsync<RetoConProgreso>(@"
+        SELECT
+            r.ID_Reto,
+            r.Nombre,
+            r.Descripcion,
+            r.Puntos_Recompensa,
+            r.Objetivo,
+            r.ID_Categoria,
+            c.Nombre                        AS NombreCategoria,
+            COALESCE(p.ID_Progreso, 0)      AS ID_Progreso,
+            COALESCE(p.progreso, 0)         AS ProgresoActual,
+            COALESCE(p.Estado, 'Pendiente') AS Estado
+        FROM Retos r
+        LEFT JOIN Categorias c ON r.ID_Categoria = c.ID_Categoria
+        LEFT JOIN ProgresoReto p
+               ON p.ID_Reto = r.ID_Reto AND p.ID_Usuario = ?
+        ORDER BY
+            CASE COALESCE(p.Estado, 'Pendiente')
+                WHEN 'En progreso' THEN 1
+                WHEN 'Pendiente'   THEN 2
+                WHEN 'Completado'  THEN 3
+            END,
+            r.Puntos_Recompensa DESC
+        LIMIT ? OFFSET ?",
+            idUsuario, limit, offset);
+    }
+
+    public async Task AceptarRetoAsync(int idUsuario, int idReto)
+    {
+        var existente = await _conexion.Table<ProgresoReto>()
+            .FirstOrDefaultAsync(p => p.ID_Usuario == idUsuario && p.ID_Reto == idReto);
+
+        if (existente != null) return; // ya aceptado
+
+        var progreso = new ProgresoReto
+        {
+            ID_Usuario = idUsuario,
+            ID_Reto = idReto,
+            progreso = 0,
+            Estado = "En progreso"
+        };
+        progreso.SetFechaInicio(DateTime.Now);
+        await _conexion.InsertAsync(progreso);
+    }
+    public async Task<(int Completados, int EnProgreso, int Pendientes)>
+    ObtenerResumenRetosAsync(int idUsuario)
+    {
+        var completados = await _conexion.ExecuteScalarAsync<int>(
+            "SELECT COUNT(*) FROM ProgresoReto WHERE ID_Usuario = ? AND Estado = 'Completado'",
+            idUsuario);
+
+        var enProgreso = await _conexion.ExecuteScalarAsync<int>(
+            "SELECT COUNT(*) FROM ProgresoReto WHERE ID_Usuario = ? AND Estado = 'En progreso'",
+            idUsuario);
+
+        var totalRetos = await _conexion.Table<Retos>().CountAsync();
+        var pendientes = totalRetos - completados - enProgreso;
+
+        return (completados, enProgreso, pendientes);
+    }
+
+
+    public async Task<List<RetoConProgreso>> ComprobarRetosFisicoAsync(
+    int idUsuario, Fisico fisico)
+    {
+
+        var retosCompletadosAhora = new List<RetoConProgreso>();
+
+        // Traemos todos los retos que el usuario tiene en progreso
+        var retosEnProgreso = await _conexion.QueryAsync<RetoConProgreso>(@"
+        SELECT
+            r.ID_Reto, r.Nombre, r.Descripcion,
+            r.Puntos_Recompensa, r.Objetivo, r.ID_Categoria,
+            p.ID_Progreso, p.progreso AS ProgresoActual, p.Estado
+        FROM ProgresoReto p
+        INNER JOIN Retos r ON r.ID_Reto = p.ID_Reto
+        WHERE p.ID_Usuario = ? AND p.Estado = 'En progreso'",
+            idUsuario);
+
+        foreach (var reto in retosEnProgreso)
+        {
+            double incremento = CalcularIncrementoReto(reto, fisico);
+            if (incremento <= 0) continue;
+
+            double nuevoProgreso = reto.ProgresoActual + incremento;
+            bool completado = nuevoProgreso >= reto.Objetivo;
+
+            if (completado)
+            {
+                // Marcamos como completado y damos los puntos de recompensa
+                await _conexion.ExecuteAsync(@"
+                UPDATE ProgresoReto
+                SET progreso = ?, Estado = 'Completado', FechaFin = ?
+                WHERE ID_Progreso = ?",
+                    reto.Objetivo,
+                    DateTime.Now.ToString("yyyy-MM-dd"),
+                    reto.ID_Progreso);
+
+                await SumarXPAsync(idUsuario, reto.Puntos_Recompensa);
+                retosCompletadosAhora.Add(reto);
+            }
+            else
+            {
+                // Solo actualizamos el progreso
+                await _conexion.ExecuteAsync(@"
+                UPDATE ProgresoReto SET progreso = ?
+                WHERE ID_Progreso = ?",
+                    nuevoProgreso, reto.ID_Progreso);
+            }
+        }
+
+        return retosCompletadosAhora;
+    }
+
+    public async Task<List<RetoConProgreso>> ObtenerRetosEnProgresoAsync(int idUsuario)
+    {
+        return await _conexion.QueryAsync<RetoConProgreso>(@"
+        SELECT
+            r.ID_Reto,
+            r.Nombre,
+            r.Descripcion,
+            r.Puntos_Recompensa,
+            r.Objetivo,
+            r.ID_Categoria,
+            c.Nombre AS NombreCategoria,
+            p.ID_Progreso,          
+            p.progreso AS ProgresoActual,
+            p.Estado
+        FROM ProgresoReto p
+        INNER JOIN Retos r ON r.ID_Reto = p.ID_Reto
+        LEFT JOIN Categorias c ON r.ID_Categoria = c.ID_Categoria
+        WHERE p.ID_Usuario = ? AND p.Estado = 'En progreso'
+        ORDER BY p.progreso DESC",
+            idUsuario);
+    }
+
+    private double CalcularIncrementoReto(RetoConProgreso reto, Fisico fisico)
+    {
+        // Categoría 1 = Actividad Física
+        if (reto.ID_Categoria != 1) return 0;
+
+        string nombre = reto.Nombre.ToLower();
+
+        // Retos de distancia — solo cuentan actividades con distancia
+        if (nombre.Contains("km") && (
+            nombre.Contains("caminar") || nombre.Contains("correr") ||
+            nombre.Contains("ciclismo") || nombre.Contains("nadar")))
+        {
+            // Verificamos que la actividad sea del tipo correcto
+            if (nombre.Contains("caminar") && fisico.Tipo_Actividad != "Caminar") return 0;
+            if (nombre.Contains("correr") && fisico.Tipo_Actividad != "Correr") return 0;
+            if (nombre.Contains("ciclismo") && fisico.Tipo_Actividad != "Ciclismo") return 0;
+            if (nombre.Contains("nadar") && fisico.Tipo_Actividad != "Natación") return 0;
+            return fisico.Distancia;
+        }
+
+        // Retos de tiempo (minutos)
+        if (nombre.Contains("min") || nombre.Contains("hora"))
+            return fisico.Tiempo_Ejercicio;
+
+        // Retos de kcal quemadas
+        if (nombre.Contains("kcal") || nombre.Contains("quemar"))
+            return fisico.Kcal_Quemadas;
+
+        // Retos de sesiones (yoga, gimnasio, baile, estiramiento, actividades)
+        if (nombre.Contains("yoga") && fisico.Tipo_Actividad == "Yoga") return 1;
+        if (nombre.Contains("gimnasio") && fisico.Tipo_Actividad == "Gimnasio") return 1;
+        if (nombre.Contains("bail") && fisico.Tipo_Actividad == "Baile") return 1;
+        if (nombre.Contains("estirar") || nombre.Contains("estiramiento"))
+        {
+            if (fisico.Tipo_Actividad == "Estiramiento") return 1;
+            return 0;
+        }
+
+        // Retos de racha — los gestiona ObtenerRachaAsync, no se incrementan aquí
+        if (nombre.Contains("racha")) return 0;
+
+        // Reto "primer paso" y "sin excusas" — cualquier actividad cuenta
+        if (nombre.Contains("primer paso")) return 1;
+        if (nombre.Contains("sin excusas")) return 1;
+        if (nombre.Contains("actividad")) return 1;
+
+        return 0;
+    }
+
+    public class RetoConProgreso
+    {
+        public int ID_Reto { get; set; }
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+        public int Puntos_Recompensa { get; set; }
+        public double Objetivo { get; set; }
+        public int ID_Categoria { get; set; }
+        public int ID_Progreso { get; set; }
+        public string NombreCategoria { get; set; }
+        public double ProgresoActual { get; set; }
+        public string Estado { get; set; }
+
+        // Propiedades calculadas para el binding en XAML
+        [SQLite.Ignore]
+        public double PorcentajeProgreso =>
+            Objetivo > 0 ? Math.Min(ProgresoActual / Objetivo, 1.0) : 0;
+
+        [SQLite.Ignore]
+        public string TextoProgreso =>
+            $"{ProgresoActual:F0} / {Objetivo:F0}";
+
+        [SQLite.Ignore]
+        public bool EstaCompletado => Estado == "Completado";
+
+        [SQLite.Ignore]
+        public bool EstaEnProgreso => Estado == "En progreso";
+
+        [SQLite.Ignore]
+        public bool EstaPendiente => Estado == "Pendiente";
+
+        [SQLite.Ignore]
+        public Color ColorEstado => Estado switch
+        {
+            "Completado" => Color.FromArgb("#8EB497"),
+            "En progreso" => Color.FromArgb("#F5C842"),
+            _ => Color.FromArgb("#C0C0C0")
+        };
+
+        [SQLite.Ignore]
+        public string EmojiCategoria => ID_Categoria switch
+        {
+            1 => "🏃",
+            2 => "😴",
+            3 => "🥗",
+            4 => "💧",
+            5 => "🌱",
+            6 => "🧠",
+            _ => "⭐"
+        };
+
+        [SQLite.Ignore]
+        public string TextoBoton => Estado switch
+        {
+            "Completado" => "✅ Completado",
+            "En progreso" => "En curso",
+            _ => "Aceptar reto"
+        };
+    }
     public async Task CrearAvatarAsync()
     {
         Avatar avatar = new Avatar
@@ -412,7 +743,7 @@ public class SaludDatabase
     }
     public async Task GuardarRegistroAsync(Mental registro)
     {
-        
+
         await _conexion.InsertAsync(registro);
     }
 

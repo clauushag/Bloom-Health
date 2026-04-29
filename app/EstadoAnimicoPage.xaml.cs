@@ -143,7 +143,7 @@ public partial class EstadoAnimicoPage : ContentPage
     // Lógica para el botón de la flecha de atrás
     private async void OnVolverClicked(object sender, EventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("//MainPage");
     }
  // ─── Navegación (barra inferior) ─────────────────────────────────
     private async void OnInicioTapped(object sender, TappedEventArgs e)

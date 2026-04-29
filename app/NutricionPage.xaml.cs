@@ -85,6 +85,8 @@ public partial class NutricionPage : ContentPage
         KcalHoyLabel.Text = $"{kcalHoy:F0} kcal ingeridas hoy";
     }
 
+    private async void OnVolverClicked(object sender, EventArgs e) =>
+    await Shell.Current.GoToAsync("//MainPage");
     private async void OnAddFoodClicked(object sender, EventArgs e)
     {
         try

@@ -22,7 +22,7 @@
                                    VerticalOptions="Center"
                                    Margin="0,0,15,0">
                                    <Label.GestureRecognizers>
-                                          <TapGestureRecognizer/>
+                                          <TapGestureRecognizer Tapped="OnVolverClicked"/>
                                    </Label.GestureRecognizers>
                             </Label>
 
