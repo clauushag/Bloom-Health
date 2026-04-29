@@ -1,6 +1,6 @@
 ﻿using app.Data;
 using app.Models;
-
+using app.Services;
 namespace app
 {
     public partial class MainPage : ContentPage
@@ -13,6 +13,7 @@ namespace app
             _database = database;
             ViewModel = new PerfilViewModel();
             BindingContext = ViewModel;
+              _ = NotificacionService.InicializarAsync();
         }
         protected override async void OnAppearing()
         {

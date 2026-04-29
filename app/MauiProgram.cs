@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using app.Data;
 using ZXing.Net.Maui.Controls;
+using Plugin.LocalNotification;
 
 namespace app;
 
@@ -12,6 +13,7 @@ public static class MauiProgram
 		builder
 			.UseMauiApp<App>()
 			.UseBarcodeReader()
+			.UseLocalNotification()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -25,7 +27,7 @@ public static class MauiProgram
 
         // 2. Registramos la base de datos como un servicio
         builder.Services.AddSingleton(s => new SaludDatabase(dbPath));
-
+		
         // 3. Registramos la página principal para poder inyectarle la base de datos
         builder.Services.AddTransient<MainPage>();
 		builder.Services.AddTransient<Menu>();          

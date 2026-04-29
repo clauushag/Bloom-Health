@@ -12,6 +12,7 @@ Ejecuta los siguientes comandos en la terminal:
 ```bash
 dotnet add package sqlite-net-pcl
 dotnet add package SQLitePCLRaw.bundle_green
+dotnet add package Plugin.LocalNotification
 ```
 
 ---
@@ -20,6 +21,7 @@ dotnet add package SQLitePCLRaw.bundle_green
 
 ```bash
 dotnet run -f net10.0-windows10.0.19041.0
+dotnet run -f net10.0-android  
 ```
 
 ---
