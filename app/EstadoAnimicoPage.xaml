@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app.EstadoAnimicoPage"
-             BackgroundColor="#F7F9F7"
+             BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#121212}"
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*, Auto">
@@ -10,91 +10,107 @@
         <ScrollView Grid.Row="0" Padding="0,0,0,10">
             <VerticalStackLayout Spacing="0" Padding="20,24,20,10">
 
-                <!-- Cabecera (siempre visible) -->
+                <!-- CABECERA -->
                 <Label Text="¿Cómo estás hoy?"
-                       FontSize="28"
-                       FontAttributes="Bold"
-                       TextColor="#2D3A2F"
-                       HorizontalOptions="Start"
-                       Margin="0,0,0,4"/>
+                       FontSize="28" FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                       HorizontalOptions="Start" Margin="0,0,0,4"/>
                 <Label Text="Registra tu estado anímico diario"
                        FontSize="14"
-                       TextColor="#7A8B7C"
+                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                        Margin="0,0,0,28"/>
 
                 <!-- ═══════════════════════════════════════════════ -->
-                <!-- VISTA A: FORMULARIO (si no ha registrado hoy)  -->
+                <!-- VISTA A: FORMULARIO                            -->
                 <!-- ═══════════════════════════════════════════════ -->
                 <VerticalStackLayout x:Name="FormularioLayout" IsVisible="True" Spacing="0">
 
-                    <!-- Estado de ánimo -->
                     <Label Text="Estado de ánimo"
-                           FontSize="15"
-                           FontAttributes="Bold"
-                           TextColor="#2D3A2F"
+                           FontSize="15" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                            Margin="0,0,0,12"/>
 
+                    <!-- Botones de estado de ánimo -->
                     <Grid ColumnDefinitions="*, *, *, *, *"
-                          ColumnSpacing="8"
-                          Margin="0,0,0,28">
+                          ColumnSpacing="8" Margin="0,0,0,28">
 
                         <Border Grid.Column="0" x:Name="BtnMuyMal"
-                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                StrokeThickness="2" Padding="6,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Muy mal"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Label Text="😞" FontSize="26" HorizontalOptions="Center"/>
-                                <Label Text="Muy mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                                <Label Text="Muy mal" FontSize="9"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
                         <Border Grid.Column="1" x:Name="BtnMal"
-                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                StrokeThickness="2" Padding="6,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Mal"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Label Text="😕" FontSize="26" HorizontalOptions="Center"/>
-                                <Label Text="Mal" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                                <Label Text="Mal" FontSize="9"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
                         <Border Grid.Column="2" x:Name="BtnRegular"
-                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                StrokeThickness="2" Padding="6,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Regular"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Label Text="😐" FontSize="26" HorizontalOptions="Center"/>
-                                <Label Text="Regular" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                                <Label Text="Regular" FontSize="9"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
                         <Border Grid.Column="3" x:Name="BtnBien"
-                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                StrokeThickness="2" Padding="6,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Bien"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Label Text="🙂" FontSize="26" HorizontalOptions="Center"/>
-                                <Label Text="Bien" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                                <Label Text="Bien" FontSize="9"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
 
                         <Border Grid.Column="4" x:Name="BtnGenial"
-                                BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                                Stroke="#EEF2EE" StrokeThickness="2" Padding="6,10">
+                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                StrokeThickness="2" Padding="6,10">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnEstadoTapped" CommandParameter="Genial"/>
                             </Border.GestureRecognizers>
                             <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
                                 <Label Text="😄" FontSize="26" HorizontalOptions="Center"/>
-                                <Label Text="Genial" FontSize="9" TextColor="#7A8B7C" HorizontalOptions="Center"/>
+                                <Label Text="Genial" FontSize="9"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Border>
                     </Grid>
@@ -102,63 +118,74 @@
                     <!-- Horas de sueño -->
                     <Label Text="Horas de sueño"
                            FontSize="15" FontAttributes="Bold"
-                           TextColor="#2D3A2F" Margin="0,0,0,6"/>
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           Margin="0,0,0,6"/>
 
                     <Grid ColumnDefinitions="Auto, *, Auto"
                           ColumnSpacing="12" VerticalOptions="Center" Margin="0,0,0,4">
-                        <Border Grid.Column="0" BackgroundColor="#E8F0E9"
+                        <Border Grid.Column="0"
+                                BackgroundColor="{AppThemeBinding Light=#E8F0E9, Dark=#1E2E1E}"
                                 StrokeShape="RoundRectangle 12" Stroke="Transparent"
                                 Padding="0" WidthRequest="40" HeightRequest="40">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnMenosHoras"/>
                             </Border.GestureRecognizers>
                             <Label Text="−" FontSize="22" FontAttributes="Bold"
-                                   TextColor="#2D3A2F"
+                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
 
                         <Slider Grid.Column="1" x:Name="SliderSueno"
                                 Minimum="0" Maximum="12" Value="7"
-                                MinimumTrackColor="#4CAF72" MaximumTrackColor="#D8E8DA"
-                                ThumbColor="#2D3A2F" ValueChanged="OnSliderSuenoChanged"
+                                MinimumTrackColor="#4CAF72"
+                                MaximumTrackColor="{AppThemeBinding Light=#D8E8DA, Dark=#2C3C2C}"
+                                ThumbColor="{AppThemeBinding Light=#2D3A2F, Dark=#8EB497}"
+                                ValueChanged="OnSliderSuenoChanged"
                                 VerticalOptions="Center"/>
 
-                        <Border Grid.Column="2" BackgroundColor="#E8F0E9"
+                        <Border Grid.Column="2"
+                                BackgroundColor="{AppThemeBinding Light=#E8F0E9, Dark=#1E2E1E}"
                                 StrokeShape="RoundRectangle 12" Stroke="Transparent"
                                 Padding="0" WidthRequest="40" HeightRequest="40">
                             <Border.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="OnMasHoras"/>
                             </Border.GestureRecognizers>
                             <Label Text="+" FontSize="22" FontAttributes="Bold"
-                                   TextColor="#2D3A2F"
+                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                    HorizontalOptions="Center" VerticalOptions="Center"/>
                         </Border>
                     </Grid>
 
-                    <Border BackgroundColor="#E8F0E9" StrokeShape="RoundRectangle 12"
-                            Stroke="Transparent" Padding="14,10"
-                            HorizontalOptions="Center" Margin="0,0,0,28">
+                    <Border BackgroundColor="{AppThemeBinding Light=#E8F0E9, Dark=#1E2E1E}"
+                            StrokeShape="RoundRectangle 12" Stroke="Transparent"
+                            Padding="14,10" HorizontalOptions="Center" Margin="0,0,0,28">
                         <Label x:Name="LblHoras" Text="7 horas"
                                FontSize="18" FontAttributes="Bold"
-                               TextColor="#2D3A2F" HorizontalOptions="Center"/>
+                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                               HorizontalOptions="Center"/>
                     </Border>
 
                     <!-- Notas -->
-                    <Label Text="Notas del día" FontSize="15" FontAttributes="Bold"
-                           TextColor="#2D3A2F" Margin="0,0,0,10"/>
+                    <Label Text="Notas del día"
+                           FontSize="15" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           Margin="0,0,0,10"/>
 
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 16"
-                            Stroke="#EEF2EE" StrokeThickness="1.5"
-                            Padding="14,10" Margin="0,0,0,28">
+                    <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            StrokeShape="RoundRectangle 16"
+                            Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                            StrokeThickness="1.5" Padding="14,10" Margin="0,0,0,28">
                         <Editor x:Name="EditorNotas"
                                 Placeholder="¿Cómo ha ido el día? ¿Algo que destacar?..."
-                                PlaceholderColor="#ADBDAF" TextColor="#2D3A2F"
+                                PlaceholderColor="#ADBDAF"
+                                TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                 FontSize="14" HeightRequest="120"
                                 AutoSize="TextChanges" BackgroundColor="Transparent"/>
                     </Border>
 
                     <!-- Botón guardar -->
-                    <Border BackgroundColor="#2D3A2F" StrokeShape="RoundRectangle 18"
+                    <Border BackgroundColor="{AppThemeBinding Light=#2D3A2F, Dark=#8EB497}"
+                            StrokeShape="RoundRectangle 18"
                             Stroke="Transparent" Padding="0,16" Margin="0,0,0,8">
                         <Border.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnGuardarTapped"/>
@@ -175,53 +202,54 @@
                 </VerticalStackLayout>
 
                 <!-- ═══════════════════════════════════════════════════════ -->
-                <!-- VISTA B: RESUMEN DEL DÍA (si ya ha registrado hoy)    -->
+                <!-- VISTA B: RESUMEN DEL DÍA                               -->
                 <!-- ═══════════════════════════════════════════════════════ -->
                 <VerticalStackLayout x:Name="ResumenLayout" IsVisible="False" Spacing="0">
 
                     <!-- Tarjeta resumen de hoy -->
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
-                            Stroke="#EEF2EE" StrokeThickness="1.5"
-                            Padding="20,18" Margin="0,0,0,16">
+                    <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            StrokeShape="RoundRectangle 20"
+                            Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                            StrokeThickness="1.5" Padding="20,18" Margin="0,0,0,16">
                         <VerticalStackLayout Spacing="12">
 
-                            <!-- Emoji grande del estado -->
-                            <Label x:Name="LblEmojiHoy"
-                                   Text="😄"
-                                   FontSize="52"
-                                   HorizontalOptions="Center"/>
+                            <Label x:Name="LblEmojiHoy" Text="😄"
+                                   FontSize="52" HorizontalOptions="Center"/>
 
-                            <Label x:Name="LblEstadoHoy"
-                                   Text="Hoy te sientes: Genial"
+                            <Label x:Name="LblEstadoHoy" Text="Hoy te sientes: Genial"
                                    FontSize="18" FontAttributes="Bold"
-                                   TextColor="#2D3A2F"
+                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                    HorizontalOptions="Center"/>
 
-                            <!-- Separador -->
-                            <BoxView HeightRequest="1" Color="#EEF2EE" Margin="0,4"/>
+                            <BoxView HeightRequest="1"
+                                     Color="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                     Margin="0,4"/>
 
                             <!-- Sueño -->
                             <Grid ColumnDefinitions="Auto, *" ColumnSpacing="10">
-                                <Label Grid.Column="0" Text="🌙" FontSize="18" VerticalOptions="Center"/>
+                                <Label Grid.Column="0" Text="🌙"
+                                       FontSize="18" VerticalOptions="Center"/>
                                 <VerticalStackLayout Grid.Column="1" Spacing="0">
                                     <Label Text="Horas de sueño"
-                                           FontSize="12" TextColor="#7A8B7C"/>
-                                    <Label x:Name="LblSuenoHoy"
-                                           Text="7 horas"
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                    <Label x:Name="LblSuenoHoy" Text="7 horas"
                                            FontSize="15" FontAttributes="Bold"
-                                           TextColor="#2D3A2F"/>
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
                                 </VerticalStackLayout>
                             </Grid>
 
-                            <!-- Notas (solo si hay) -->
+                            <!-- Notas -->
                             <Grid x:Name="GridNotasHoy" ColumnDefinitions="Auto, *" ColumnSpacing="10">
-                                <Label Grid.Column="0" Text="📝" FontSize="18" VerticalOptions="Start"/>
+                                <Label Grid.Column="0" Text="📝"
+                                       FontSize="18" VerticalOptions="Start"/>
                                 <VerticalStackLayout Grid.Column="1" Spacing="0">
                                     <Label Text="Notas del día"
-                                           FontSize="12" TextColor="#7A8B7C"/>
-                                    <Label x:Name="LblNotasHoy"
-                                           Text=""
-                                           FontSize="14" TextColor="#2D3A2F"
+                                           FontSize="12"
+                                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                    <Label x:Name="LblNotasHoy" Text=""
+                                           FontSize="14"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                            LineBreakMode="WordWrap"/>
                                 </VerticalStackLayout>
                             </Grid>
@@ -232,45 +260,37 @@
                     <!-- Gráfica de la semana -->
                     <Label Text="Tu semana"
                            FontSize="15" FontAttributes="Bold"
-                           TextColor="#2D3A2F" Margin="0,0,0,12"/>
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           Margin="0,0,0,12"/>
 
-                    <Border BackgroundColor="White" StrokeShape="RoundRectangle 20"
-                            Stroke="#EEF2EE" StrokeThickness="1.5"
-                            Padding="16,20" Margin="0,0,0,16">
+                    <Border BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                            StrokeShape="RoundRectangle 20"
+                            Stroke="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                            StrokeThickness="1.5" Padding="16,20" Margin="0,0,0,16">
                         <VerticalStackLayout Spacing="16">
 
-                            <!-- Barras de estado de ánimo -->
                             <Label Text="Estado de ánimo"
-                                   FontSize="12" TextColor="#7A8B7C"/>
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
 
-                            <!-- Contenedor de barras (se rellena desde code-behind) -->
                             <Grid x:Name="GraficaEstados"
                                   ColumnDefinitions="*, *, *, *, *, *, *"
-                                  ColumnSpacing="6"
-                                  HeightRequest="100">
-                                <!-- Las 7 columnas se generan dinámicamente desde code-behind -->
-                            </Grid>
+                                  ColumnSpacing="6" HeightRequest="100"/>
 
-                            <!-- Leyenda días -->
                             <Grid x:Name="GraficaDias"
                                   ColumnDefinitions="*, *, *, *, *, *, *"
-                                  ColumnSpacing="6">
-                                <!-- Los labels de día se generan dinámicamente -->
-                            </Grid>
+                                  ColumnSpacing="6"/>
 
-                            <!-- Separador -->
-                            <BoxView HeightRequest="1" Color="#EEF2EE"/>
+                            <BoxView HeightRequest="1"
+                                     Color="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"/>
 
-                            <!-- Barras de sueño -->
                             <Label Text="Horas de sueño"
-                                   FontSize="12" TextColor="#7A8B7C"/>
+                                   FontSize="12"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
 
                             <Grid x:Name="GraficaSueno"
                                   ColumnDefinitions="*, *, *, *, *, *, *"
-                                  ColumnSpacing="6"
-                                  HeightRequest="80">
-                                <!-- Se genera dinámicamente -->
-                            </Grid>
+                                  ColumnSpacing="6" HeightRequest="80"/>
 
                         </VerticalStackLayout>
                     </Border>
@@ -280,33 +300,30 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Barra de navegación inferior -->
+        <!-- BARRA NAVEGACIÓN -->
         <Frame Grid.Row="1"
-               BackgroundColor="White" CornerRadius="0"
-               Padding="15,10" HasShadow="False"
-               BorderColor="#EEF2EE" VerticalOptions="End">
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+               CornerRadius="0" Padding="15,10" HasShadow="False"
+               BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+               VerticalOptions="End">
 
             <Grid ColumnDefinitions="*, *, *"
-                  MaximumWidthRequest="800"
-                  HorizontalOptions="FillAndExpand">
+                  MaximumWidthRequest="800" HorizontalOptions="FillAndExpand">
 
                 <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnInicioTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🏠" FontSize="22" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
+                    <Label Text="🏠" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                           FontAttributes="Bold"/>
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
 
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnRetosTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="🏆" FontSize="22" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="🏆" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
@@ -315,8 +332,7 @@
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPerfilTapped"/>
                     </VerticalStackLayout.GestureRecognizers>
-                    <Label Text="👤" FontSize="22" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="👤" FontSize="22" HorizontalOptions="Center"/>
                     <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>

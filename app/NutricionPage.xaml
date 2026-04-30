@@ -2,584 +2,419 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="app.NutricionPage"
-             BackgroundColor="#F7F9F7"
+             BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#121212}"
              Shell.NavBarIsVisible="False">
 
-       <Grid>
-              <ScrollView>
-                     <VerticalStackLayout Spacing="20"
-                                          Padding="25,50,25,40">
+    <Grid RowDefinitions="*, Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="20" Padding="25,50,25,40">
 
-                            <Grid ColumnDefinitions="Auto, *"
-                                  ColumnSpacing="15"
-                                  Margin="0,0,0,10">
-                                   <Label Grid.Column="0"
-                                          Text="←"
-                                          FontSize="26"
-                                          TextColor="#2D3A2F"
-                                          VerticalOptions="Center">
-                                          <Label.GestureRecognizers>
-                                                 <TapGestureRecognizer Tapped="OnVolverClicked"/>
-                                          </Label.GestureRecognizers>
-                                   </Label>
+                <!-- CABECERA -->
+                <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15" Margin="0,0,0,10">
+                    <Label Grid.Column="0"
+                           Text="←" FontSize="26"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnVolverClicked"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="Registro Nutricional"
+                               FontSize="20" FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
+                        <Label Text="Añade lo que comiste hoy"
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    </VerticalStackLayout>
+                </Grid>
 
-                                   <VerticalStackLayout Grid.Column="1"
-                                                        VerticalOptions="Center">
-                                          <Label Text="Registro Nutricional"
-                                                 FontSize="20"
-                                                 FontAttributes="Bold"
-                                                 TextColor="#2D3A2F"/>
-                                          <Label Text="Añade lo que comiste hoy"
-                                                 FontSize="12"
-                                                 TextColor="#7A8B7C"/>
-                                   </VerticalStackLayout>
-                            </Grid>
+                <!-- Resumen kcal -->
+                <Frame BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#1A2E1C}"
+                       CornerRadius="20" HasShadow="False"
+                       BorderColor="Transparent" Padding="15,10">
+                    <Label x:Name="KcalHoyLabel"
+                           Text="0 kcal ingeridas hoy"
+                           FontSize="13" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                           HorizontalOptions="Center"/>
+                </Frame>
 
-
-                            <!-- Resumen kcal de hoy -->
-                            <Frame BackgroundColor="#E8F2E9"
-                                   CornerRadius="20"
-                                   HasShadow="False"
-                                   BorderColor="Transparent"
-                                   Padding="15,10">
-                                   <Label x:Name="KcalHoyLabel"
-                                          Text="0 kcal ingeridas hoy"
-                                          FontSize="13"
-                                          FontAttributes="Bold"
-                                          TextColor="#2D3A2F"
-                                          HorizontalOptions="Center"/>
+                <!-- Tarjeta resultado nutricional -->
+                <Frame x:Name="ResultadoCard"
+                       IsVisible="False"
+                       BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       CornerRadius="25" HasShadow="True"
+                       BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
+                       Padding="20" Margin="0,0,0,10">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E" Offset="0,8" Radius="15" Opacity="0.2"/>
+                    </Frame.Shadow>
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="15">
+                            <Frame Grid.Column="0"
+                                   CornerRadius="15" Padding="0"
+                                   IsClippedToBounds="True"
+                                   HeightRequest="60" WidthRequest="60"
+                                   BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#1A2E1C}">
+                                <Image x:Name="FoodImage" Aspect="AspectFill"/>
                             </Frame>
-
-                            <!-- Tarjeta de Resultado Nutricional -->
-                            <Frame x:Name="ResultadoCard"
-                                   IsVisible="False"
-                                   BackgroundColor="White"
-                                   CornerRadius="25"
-                                   HasShadow="True"
-                                   BorderColor="Transparent"
-                                   Padding="20,20"
-                                   Margin="0,0,0,10">
-                                   <Frame.Shadow>
-                                          <Shadow Brush="#A0AF9E"
-                                                  Offset="0,8"
-                                                  Radius="15"
-                                                  Opacity="0.2"/>
-                                   </Frame.Shadow>
-
-                                   <VerticalStackLayout Spacing="15">
-                                          <!-- Header con Imagen, Título y botón cerrar -->
-                                          <Grid ColumnDefinitions="Auto,*,Auto"
-                                                ColumnSpacing="15">
-                                                 <Frame Grid.Column="0"
-                                                        CornerRadius="15"
-                                                        Padding="0"
-                                                        IsClippedToBounds="True"
-                                                        HeightRequest="60"
-                                                        WidthRequest="60"
-                                                        BackgroundColor="#E8F2E9">
-                                                        <Image x:Name="FoodImage"
-                                                               Aspect="AspectFill"/>
-                                                 </Frame>
-                                                 <VerticalStackLayout Grid.Column="1"
-                                                                      VerticalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label x:Name="FoodNameLabel"
-                                                               FontSize="16"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               MaxLines="2"
-                                                               LineBreakMode="TailTruncation"/>
-                                                        <Label x:Name="FoodBrandLabel"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"/>
-                                                 </VerticalStackLayout>
-                                                 <ImageButton Grid.Column="2"
-                                                              Source="{FontImage FontFamily=SegoeUI, Glyph='❌', Size=16, Color=#A0AF9E}"
-                                                              VerticalOptions="Start"
-                                                              HorizontalOptions="End"
-                                                              HeightRequest="30"
-                                                              WidthRequest="30"
-                                                              BackgroundColor="Transparent"
-                                                              Clicked="OnCloseCardClicked"/>
-                                          </Grid>
-
-                                          <BoxView HeightRequest="1"
-                                                   Color="#EEF2EE"
-                                                   Margin="0,5"/>
-
-                                          <!-- Cuadrícula Nutricional -->
-                                          <Grid RowDefinitions="Auto,Auto"
-                                                ColumnDefinitions="*,*,*"
-                                                RowSpacing="15"
-                                                ColumnSpacing="10">
-                                                 <!-- Kcal -->
-                                                 <VerticalStackLayout Grid.Row="0"
-                                                                      Grid.Column="0"
-                                                                      HorizontalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="🔥 Kcal"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label x:Name="KcalLabel"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               HorizontalOptions="Center"/>
-                                                 </VerticalStackLayout>
-                                                 <!-- Proteinas -->
-                                                 <VerticalStackLayout Grid.Row="0"
-                                                                      Grid.Column="1"
-                                                                      HorizontalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="🥩 Prot"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label x:Name="ProteinasLabel"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               HorizontalOptions="Center"/>
-                                                 </VerticalStackLayout>
-                                                 <!-- Carbos -->
-                                                 <VerticalStackLayout Grid.Row="0"
-                                                                      Grid.Column="2"
-                                                                      HorizontalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="🌾 Carb"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label x:Name="CarbosLabel"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               HorizontalOptions="Center"/>
-                                                 </VerticalStackLayout>
-
-                                                 <!-- Grasas -->
-                                                 <VerticalStackLayout Grid.Row="1"
-                                                                      Grid.Column="0"
-                                                                      HorizontalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="🥑 Grasas"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label x:Name="GrasasLabel"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               HorizontalOptions="Center"/>
-                                                 </VerticalStackLayout>
-                                                 <!-- Fibra -->
-                                                 <VerticalStackLayout Grid.Row="1"
-                                                                      Grid.Column="1"
-                                                                      HorizontalOptions="Center"
-                                                                      Spacing="2">
-                                                        <Label Text="🥦 Fibra"
-                                                               FontSize="12"
-                                                               TextColor="#7A8B7C"
-                                                               HorizontalOptions="Center"/>
-                                                        <Label x:Name="FibraLabel"
-                                                               FontSize="14"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#2D3A2F"
-                                                               HorizontalOptions="Center"/>
-                                                 </VerticalStackLayout>
-                                          </Grid>
-
-                                          <!-- Acción -->
-                                          <Button Text="Añadir a mi registro"
-                                                  BackgroundColor="#8EB497"
-                                                  TextColor="White"
-                                                  CornerRadius="20"
-                                                  Margin="0,10,0,0"
-                                                  FontAttributes="Bold"
-                                                  Clicked="OnAddFoodClicked"/>
-                                   </VerticalStackLayout>
-                            </Frame>
-                            <Grid>
-                                   <Frame BackgroundColor="#8EB497"
-                                          CornerRadius="25"
-                                          HasShadow="True"
-                                          BorderColor="Transparent"
-                                          Padding="20,40">
-                                          <!-- <Frame.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnAbrirScannerTapped"/>
-                                   </Frame.GestureRecognizers> -->
-                                          <Frame.Shadow>
-                                                 <Shadow Brush="#8EB497"
-                                                         Offset="0,12"
-                                                         Radius="20"
-                                                         Opacity="0.4"/>
-                                          </Frame.Shadow>
-
-                                          <VerticalStackLayout Spacing="10"
-                                                               HorizontalOptions="Center">
-                                                 <Label Text="📷"
-                                                        FontSize="40"
-                                                        HorizontalOptions="Center"
-                                                        TextColor="White"
-                                                        Margin="0,0,0,5"/>
-                                                 <Label Text="Escanear Código de Barras"
-                                                        FontSize="18"
-                                                        FontAttributes="Bold"
-                                                        TextColor="White"
-                                                        HorizontalOptions="Center"/>
-                                                 <Label Text="Modo rápido de registro"
-                                                        FontSize="12"
-                                                        TextColor="#D1E2D4"
-                                                        HorizontalOptions="Center"/>
-                                          </VerticalStackLayout>
-                                   </Frame>
-                                   <Button Text=""
-                                           BackgroundColor="Transparent"
-                                           HorizontalOptions="Fill"
-                                           VerticalOptions="Fill"
-                                           Clicked="OnAbrirScannerClicked"/>
-                            </Grid>
-                            <!-- Añadir alimentos manualmente -->
-                            <Grid ColumnDefinitions="*, Auto, *"
-                                  ColumnSpacing="15"
-                                  VerticalOptions="Center"
-                                  Margin="0,5">
-                                   <BoxView Grid.Column="0"
-                                            HeightRequest="1"
-                                            Color="#D1E2D4"
-                                            VerticalOptions="Center"/>
-                                   <Label Grid.Column="1"
-                                          Text="Añadir manualmente"
-                                          FontSize="11"
-                                          TextColor="#A0AF9E"
-                                          VerticalOptions="Center"/>
-                                   <BoxView Grid.Column="2"
-                                            HeightRequest="1"
-                                            Color="#D1E2D4"
-                                            VerticalOptions="Center"/>
-                            </Grid>
-                            <!-- Formulario manual -->
-                            <Frame BackgroundColor="White"
-                                   CornerRadius="25"
-                                   HasShadow="True"
-                                   BorderColor="Transparent"
-                                   Padding="20,20"
-                                   Margin="0,0,0,10">
-                                   <Frame.Shadow>
-                                          <Shadow Brush="#A0AF9E"
-                                                  Offset="0,8"
-                                                  Radius="15"
-                                                  Opacity="0.2"/>
-                                   </Frame.Shadow>
-
-                                   <VerticalStackLayout Spacing="14">
-
-                                          <!-- Nombre -->
-                                          <VerticalStackLayout Spacing="4">
-                                                 <Label Text="Nombre del alimento *"
-                                                        FontSize="12"
-                                                        FontAttributes="Bold"
-                                                        TextColor="#7A8B7C"/>
-                                                 <Frame BackgroundColor="#F7F9F7"
-                                                        CornerRadius="12"
-                                                        BorderColor="#D1E2D4"
-                                                        Padding="12,0"
-                                                        HasShadow="False">
-                                                        <Entry x:Name="ManualNombreEntry"
-                                                               Placeholder="Ej: Pechuga de pollo"
-                                                               PlaceholderColor="#C0CFC2"
-                                                               TextColor="#2D3A2F"
-                                                               FontSize="14"
-                                                               HeightRequest="44"
-                                                               BackgroundColor="Transparent"/>
-                                                 </Frame>
-                                          </VerticalStackLayout>
-
-                                          <!-- Marca -->
-                                          <VerticalStackLayout Spacing="4">
-                                                 <Label Text="Marca (opcional)"
-                                                        FontSize="12"
-                                                        FontAttributes="Bold"
-                                                        TextColor="#7A8B7C"/>
-                                                 <Frame BackgroundColor="#F7F9F7"
-                                                        CornerRadius="12"
-                                                        BorderColor="#D1E2D4"
-                                                        Padding="12,0"
-                                                        HasShadow="False">
-                                                        <Entry x:Name="ManualMarcaEntry"
-                                                               Placeholder="Ej: Hacendado"
-                                                               PlaceholderColor="#C0CFC2"
-                                                               TextColor="#2D3A2F"
-                                                               FontSize="14"
-                                                               HeightRequest="44"
-                                                               BackgroundColor="Transparent"/>
-                                                 </Frame>
-                                          </VerticalStackLayout>
-
-                                          <!-- Kcal -->
-                                          <VerticalStackLayout Spacing="4">
-                                                 <Label Text="🔥 Calorías (kcal) *"
-                                                        FontSize="12"
-                                                        FontAttributes="Bold"
-                                                        TextColor="#7A8B7C"/>
-                                                 <Frame BackgroundColor="#F7F9F7"
-                                                        CornerRadius="12"
-                                                        BorderColor="#D1E2D4"
-                                                        Padding="12,0"
-                                                        HasShadow="False">
-                                                        <Entry x:Name="ManualKcalEntry"
-                                                               Placeholder="Ej: 165"
-                                                               PlaceholderColor="#C0CFC2"
-                                                               TextColor="#2D3A2F"
-                                                               FontSize="14"
-                                                               HeightRequest="44"
-                                                               Keyboard="Numeric"
-                                                               BackgroundColor="Transparent"/>
-                                                 </Frame>
-                                          </VerticalStackLayout>
-
-                                          <!-- Proteínas + Carbos -->
-                                          <Grid ColumnDefinitions="*,*"
-                                                ColumnSpacing="12">
-                                                 <VerticalStackLayout Grid.Column="0"
-                                                                      Spacing="4">
-                                                        <Label Text="💪 Proteínas (g)"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#7A8B7C"/>
-                                                        <Frame BackgroundColor="#F7F9F7"
-                                                               CornerRadius="12"
-                                                               BorderColor="#D1E2D4"
-                                                               Padding="12,0"
-                                                               HasShadow="False">
-                                                               <Entry x:Name="ManualProteinasEntry"
-                                                                      Placeholder="Ej: 31"
-                                                                      PlaceholderColor="#C0CFC2"
-                                                                      TextColor="#2D3A2F"
-                                                                      FontSize="14"
-                                                                      HeightRequest="44"
-                                                                      Keyboard="Numeric"
-                                                                      BackgroundColor="Transparent"/>
-                                                        </Frame>
-                                                 </VerticalStackLayout>
-
-                                                 <VerticalStackLayout Grid.Column="1"
-                                                                      Spacing="4">
-                                                        <Label Text="🌾 Carbohidratos (g)"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#7A8B7C"/>
-                                                        <Frame BackgroundColor="#F7F9F7"
-                                                               CornerRadius="12"
-                                                               BorderColor="#D1E2D4"
-                                                               Padding="12,0"
-                                                               HasShadow="False">
-                                                               <Entry x:Name="ManualCarbosEntry"
-                                                                      Placeholder="Ej: 0"
-                                                                      PlaceholderColor="#C0CFC2"
-                                                                      TextColor="#2D3A2F"
-                                                                      FontSize="14"
-                                                                      HeightRequest="44"
-                                                                      Keyboard="Numeric"
-                                                                      BackgroundColor="Transparent"/>
-                                                        </Frame>
-                                                 </VerticalStackLayout>
-                                          </Grid>
-
-                                          <!-- Grasas + Fibra -->
-                                          <Grid ColumnDefinitions="*,*"
-                                                ColumnSpacing="12">
-                                                 <VerticalStackLayout Grid.Column="0"
-                                                                      Spacing="4">
-                                                        <Label Text="🧈 Grasas (g)"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#7A8B7C"/>
-                                                        <Frame BackgroundColor="#F7F9F7"
-                                                               CornerRadius="12"
-                                                               BorderColor="#D1E2D4"
-                                                               Padding="12,0"
-                                                               HasShadow="False">
-                                                               <Entry x:Name="ManualGrasasEntry"
-                                                                      Placeholder="Ej: 3.6"
-                                                                      PlaceholderColor="#C0CFC2"
-                                                                      TextColor="#2D3A2F"
-                                                                      FontSize="14"
-                                                                      HeightRequest="44"
-                                                                      Keyboard="Numeric"
-                                                                      BackgroundColor="Transparent"/>
-                                                        </Frame>
-                                                 </VerticalStackLayout>
-
-                                                 <VerticalStackLayout Grid.Column="1"
-                                                                      Spacing="4">
-                                                        <Label Text="🌿 Fibra (g)"
-                                                               FontSize="12"
-                                                               FontAttributes="Bold"
-                                                               TextColor="#7A8B7C"/>
-                                                        <Frame BackgroundColor="#F7F9F7"
-                                                               CornerRadius="12"
-                                                               BorderColor="#D1E2D4"
-                                                               Padding="12,0"
-                                                               HasShadow="False">
-                                                               <Entry x:Name="ManualFibraEntry"
-                                                                      Placeholder="Ej: 0"
-                                                                      PlaceholderColor="#C0CFC2"
-                                                                      TextColor="#2D3A2F"
-                                                                      FontSize="14"
-                                                                      HeightRequest="44"
-                                                                      Keyboard="Numeric"
-                                                                      BackgroundColor="Transparent"/>
-                                                        </Frame>
-                                                 </VerticalStackLayout>
-                                          </Grid>
-
-                                          <!-- Botón guardar -->
-                                          <Button Text="➕  Añadir alimento"
-                                                  BackgroundColor="#5C8B65"
-                                                  TextColor="White"
-                                                  FontSize="15"
-                                                  FontAttributes="Bold"
-                                                  CornerRadius="16"
-                                                  HeightRequest="52"
-                                                  Margin="0,6,0,0"
-                                                  Clicked="OnGuardarManualClicked">
-                                                 <Button.Shadow>
-                                                        <Shadow Brush="#5C8B65"
-                                                                Offset="0,6"
-                                                                Radius="12"
-                                                                Opacity="0.35"/>
-                                                 </Button.Shadow>
-                                          </Button>
-
-                                   </VerticalStackLayout>
-                            </Frame>
-                            <CollectionView x:Name="HistorialCollectionView"
-                                                 EmptyView="Aún no has registrado ningún alimento.">
-                                   <CollectionView.ItemTemplate>
-                                          <DataTemplate>
-                                                 <Frame BackgroundColor="White"
-                                                        CornerRadius="20"
-                                                        HasShadow="True"
-                                                        BorderColor="Transparent"
-                                                        Padding="15"
-                                                        Margin="0,0,0,10">
-                                                        <Frame.Shadow>
-                                                               <Shadow Brush="#A0AF9E"
-                                                                             Offset="0,4"
-                                                                             Radius="10"
-                                                                             Opacity="0.08"/>
-                                                        </Frame.Shadow>
-                                                        <Grid ColumnDefinitions="Auto, *, Auto"
-                                                                      ColumnSpacing="12">
-                                                               <Border Grid.Column="0"
-                                                                             StrokeShape="RoundRectangle 10"
-                                                                             StrokeThickness="0"
-                                                                             HeightRequest="45"
-                                                                             WidthRequest="45"
-                                                                             BackgroundColor="#F1F5F1">
-                                                                      <Image Source="{Binding Imagen}"
-                                                                             Aspect="AspectFill"/>
-                                                               </Border>
-                                                               <VerticalStackLayout Grid.Column="1"
-                                                                                    VerticalOptions="Center"
-                                                                                    Spacing="2">
-                                                                      <Label Text="{Binding Nombre}"
-                                                                             FontSize="14"
-                                                                             FontAttributes="Bold"
-                                                                             TextColor="#2D3A2F"/>
-                                                                      <Label Text="{Binding Marca}"
-                                                                             FontSize="11"
-                                                                             TextColor="#7A8B7C"/>
-                                                               </VerticalStackLayout>
-                                                               <VerticalStackLayout Grid.Column="2"
-                                                                                    VerticalOptions="Center"
-                                                                                    HorizontalOptions="End"
-                                                                                    Spacing="2">
-                                                                      <Label Text="{Binding Kcal, StringFormat='{0:F0} kcal'}"
-                                                                             FontSize="13"
-                                                                             FontAttributes="Bold"
-                                                                             TextColor="#8EB497"
-                                                                             HorizontalOptions="End"/>
-                                                                      <Label Text="{Binding Proteinas, StringFormat='{0:F1}g prot'}"
-                                                                             FontSize="10"
-                                                                             TextColor="#7A8B7C"
-                                                                             HorizontalOptions="End"/>
-                                                               </VerticalStackLayout>
-                                                        </Grid>
-                                                 </Frame>
-                                          </DataTemplate>
-                                   </CollectionView.ItemTemplate>
-                            </CollectionView>
-                     </VerticalStackLayout>
-              </ScrollView>
-
-              <Frame Grid.Row="1"
-                     BackgroundColor="White"
-                     CornerRadius="0"
-                     Padding="15,10"
-                     HasShadow="False"
-                     BorderColor="#EEF2EE"
-                     VerticalOptions="End">
-
-                     <Grid ColumnDefinitions="*, *, *"
-                           MaximumWidthRequest="800"
-                           HorizontalOptions="FillAndExpand">
-
-                            <!-- Inicio -->
-                            <VerticalStackLayout Grid.Column="0"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnInicioTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="🏠"
-                                          FontSize="22"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                                   <Label Text="Inicio"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                                          FontAttributes="Bold"/>
-                            </VerticalStackLayout>
-
-                            <!-- Retos -->
                             <VerticalStackLayout Grid.Column="1"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnRetosTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="🏆"
-                                          FontSize="22"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                   <Label Text="Retos"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                                 VerticalOptions="Center" Spacing="2">
+                                <Label x:Name="FoodNameLabel"
+                                       FontSize="16" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       MaxLines="2" LineBreakMode="TailTruncation"/>
+                                <Label x:Name="FoodBrandLabel"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
+                            <ImageButton Grid.Column="2"
+                                         Source="{FontImage FontFamily=SegoeUI, Glyph='❌', Size=16, Color=#A0AF9E}"
+                                         VerticalOptions="Start" HorizontalOptions="End"
+                                         HeightRequest="30" WidthRequest="30"
+                                         BackgroundColor="Transparent"
+                                         Clicked="OnCloseCardClicked"/>
+                        </Grid>
 
-                            <!-- Perfil -->
-                            <VerticalStackLayout Grid.Column="2"
-                                                 HorizontalOptions="Center"
-                                                 Spacing="2">
-                                   <VerticalStackLayout.GestureRecognizers>
-                                          <TapGestureRecognizer Tapped="OnPerfilTapped"/>
-                                   </VerticalStackLayout.GestureRecognizers>
-                                   <Label Text="👤"
-                                          FontSize="22"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                                   <Label Text="Perfil"
-                                          FontSize="11"
-                                          HorizontalOptions="Center"
-                                          TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                        <BoxView HeightRequest="1"
+                                 Color="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+                                 Margin="0,5"/>
+
+                        <!-- Cuadrícula nutricional -->
+                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*,*"
+                              RowSpacing="15" ColumnSpacing="10">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0"
+                                                 HorizontalOptions="Center" Spacing="2">
+                                <Label Text="🔥 Kcal" FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="KcalLabel" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       HorizontalOptions="Center"/>
                             </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="1"
+                                                 HorizontalOptions="Center" Spacing="2">
+                                <Label Text="🥩 Prot" FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="ProteinasLabel" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="2"
+                                                 HorizontalOptions="Center" Spacing="2">
+                                <Label Text="🌾 Carb" FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="CarbosLabel" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="0"
+                                                 HorizontalOptions="Center" Spacing="2">
+                                <Label Text="🥑 Grasas" FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="GrasasLabel" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="1" Grid.Column="1"
+                                                 HorizontalOptions="Center" Spacing="2">
+                                <Label Text="🥦 Fibra" FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                       HorizontalOptions="Center"/>
+                                <Label x:Name="FibraLabel" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Grid>
 
-                     </Grid>
-              </Frame>
-       </Grid>
+                        <Button Text="Añadir a mi registro"
+                                BackgroundColor="#8EB497" TextColor="White"
+                                CornerRadius="20" Margin="0,10,0,0"
+                                FontAttributes="Bold"
+                                Clicked="OnAddFoodClicked"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Botón escáner -->
+                <Grid>
+                    <Frame BackgroundColor="#8EB497" CornerRadius="25"
+                           HasShadow="True" BorderColor="Transparent" Padding="20,40">
+                        <Frame.Shadow>
+                            <Shadow Brush="#8EB497" Offset="0,12" Radius="20" Opacity="0.4"/>
+                        </Frame.Shadow>
+                        <VerticalStackLayout Spacing="10" HorizontalOptions="Center">
+                            <Label Text="📷" FontSize="40"
+                                   HorizontalOptions="Center" TextColor="White" Margin="0,0,0,5"/>
+                            <Label Text="Escanear Código de Barras"
+                                   FontSize="18" FontAttributes="Bold"
+                                   TextColor="White" HorizontalOptions="Center"/>
+                            <Label Text="Modo rápido de registro"
+                                   FontSize="12" TextColor="#D1E2D4"
+                                   HorizontalOptions="Center"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                    <Button Text="" BackgroundColor="Transparent"
+                            HorizontalOptions="Fill" VerticalOptions="Fill"
+                            Clicked="OnAbrirScannerClicked"/>
+                </Grid>
+
+                <!-- Separador "Añadir manualmente" -->
+                <Grid ColumnDefinitions="*, Auto, *" ColumnSpacing="15"
+                      VerticalOptions="Center" Margin="0,5">
+                    <BoxView Grid.Column="0" HeightRequest="1"
+                             Color="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                             VerticalOptions="Center"/>
+                    <Label Grid.Column="1" Text="Añadir manualmente"
+                           FontSize="11"
+                           TextColor="{AppThemeBinding Light=#A0AF9E, Dark=#6A7A6C}"
+                           VerticalOptions="Center"/>
+                    <BoxView Grid.Column="2" HeightRequest="1"
+                             Color="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                             VerticalOptions="Center"/>
+                </Grid>
+
+                <!-- Formulario manual -->
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                       CornerRadius="25" HasShadow="True"
+                       BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
+                       Padding="20" Margin="0,0,0,10">
+                    <Frame.Shadow>
+                        <Shadow Brush="#A0AF9E" Offset="0,8" Radius="15" Opacity="0.2"/>
+                    </Frame.Shadow>
+                    <VerticalStackLayout Spacing="14">
+
+                        <!-- Nombre -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Nombre del alimento *" FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                   CornerRadius="12"
+                                   BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                   Padding="12,0" HasShadow="False">
+                                <Entry x:Name="ManualNombreEntry"
+                                       Placeholder="Ej: Pechuga de pollo"
+                                       PlaceholderColor="#C0CFC2"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       FontSize="14" HeightRequest="44"
+                                       BackgroundColor="Transparent"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Marca -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Marca (opcional)" FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                   CornerRadius="12"
+                                   BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                   Padding="12,0" HasShadow="False">
+                                <Entry x:Name="ManualMarcaEntry"
+                                       Placeholder="Ej: Hacendado"
+                                       PlaceholderColor="#C0CFC2"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       FontSize="14" HeightRequest="44"
+                                       BackgroundColor="Transparent"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Kcal -->
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="🔥 Calorías (kcal) *" FontSize="12"
+                                   FontAttributes="Bold"
+                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                            <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                   CornerRadius="12"
+                                   BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                   Padding="12,0" HasShadow="False">
+                                <Entry x:Name="ManualKcalEntry"
+                                       Placeholder="Ej: 165"
+                                       PlaceholderColor="#C0CFC2"
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                       FontSize="14" HeightRequest="44"
+                                       Keyboard="Numeric" BackgroundColor="Transparent"/>
+                            </Frame>
+                        </VerticalStackLayout>
+
+                        <!-- Proteínas + Carbos -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="💪 Proteínas (g)" FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                       CornerRadius="12"
+                                       BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                       Padding="12,0" HasShadow="False">
+                                    <Entry x:Name="ManualProteinasEntry"
+                                           Placeholder="Ej: 31"
+                                           PlaceholderColor="#C0CFC2"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           FontSize="14" HeightRequest="44"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                <Label Text="🌾 Carbohidratos (g)" FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                       CornerRadius="12"
+                                       BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                       Padding="12,0" HasShadow="False">
+                                    <Entry x:Name="ManualCarbosEntry"
+                                           Placeholder="Ej: 0"
+                                           PlaceholderColor="#C0CFC2"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           FontSize="14" HeightRequest="44"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Grasas + Fibra -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="4">
+                                <Label Text="🧈 Grasas (g)" FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                       CornerRadius="12"
+                                       BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                       Padding="12,0" HasShadow="False">
+                                    <Entry x:Name="ManualGrasasEntry"
+                                           Placeholder="Ej: 3.6"
+                                           PlaceholderColor="#C0CFC2"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           FontSize="14" HeightRequest="44"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                <Label Text="🌿 Fibra (g)" FontSize="12"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                <Frame BackgroundColor="{AppThemeBinding Light=#F7F9F7, Dark=#2A2A2A}"
+                                       CornerRadius="12"
+                                       BorderColor="{AppThemeBinding Light=#D1E2D4, Dark=#3C3C3C}"
+                                       Padding="12,0" HasShadow="False">
+                                    <Entry x:Name="ManualFibraEntry"
+                                           Placeholder="Ej: 0"
+                                           PlaceholderColor="#C0CFC2"
+                                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
+                                           FontSize="14" HeightRequest="44"
+                                           Keyboard="Numeric" BackgroundColor="Transparent"/>
+                                </Frame>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Botón añadir -->
+                        <Button Text="➕  Añadir alimento"
+                                BackgroundColor="#5C8B65" TextColor="White"
+                                FontSize="15" FontAttributes="Bold"
+                                CornerRadius="16" HeightRequest="52"
+                                Margin="0,6,0,0"
+                                Clicked="OnGuardarManualClicked">
+                            <Button.Shadow>
+                                <Shadow Brush="#5C8B65" Offset="0,6" Radius="12" Opacity="0.35"/>
+                            </Button.Shadow>
+                        </Button>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Historial -->
+                <CollectionView x:Name="HistorialCollectionView"
+                                EmptyView="Aún no has registrado ningún alimento.">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="20" HasShadow="True"
+                                   BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
+                                   Padding="15" Margin="0,0,0,10">
+                                <Frame.Shadow>
+                                    <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
+                                </Frame.Shadow>
+                                <Grid ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12">
+                                    <Border Grid.Column="0"
+                                            StrokeShape="RoundRectangle 10"
+                                            StrokeThickness="0"
+                                            HeightRequest="45" WidthRequest="45"
+                                            BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#2A2A2A}">
+                                        <Image Source="{Binding Imagen}" Aspect="AspectFill"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         VerticalOptions="Center" Spacing="2">
+                                        <Label Text="{Binding Nombre}"
+                                               FontSize="14" FontAttributes="Bold"
+                                               TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
+                                        <Label Text="{Binding Marca}"
+                                               FontSize="11"
+                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                                    </VerticalStackLayout>
+                                    <VerticalStackLayout Grid.Column="2"
+                                                         VerticalOptions="Center"
+                                                         HorizontalOptions="End" Spacing="2">
+                                        <Label Text="{Binding Kcal, StringFormat='{0:F0} kcal'}"
+                                               FontSize="13" FontAttributes="Bold"
+                                               TextColor="#8EB497" HorizontalOptions="End"/>
+                                        <Label Text="{Binding Proteinas, StringFormat='{0:F1}g prot'}"
+                                               FontSize="10"
+                                               TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
+                                               HorizontalOptions="End"/>
+                                    </VerticalStackLayout>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BARRA NAVEGACIÓN -->
+        <Frame Grid.Row="1"
+               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+               CornerRadius="0" Padding="15,10" HasShadow="False"
+               BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
+               VerticalOptions="End">
+            <Grid ColumnDefinitions="*, *, *"
+                  MaximumWidthRequest="800" HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnInicioTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏠" FontSize="22" HorizontalOptions="Center"/>
+                    <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnRetosTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="🏆" FontSize="22" HorizontalOptions="Center"/>
+                    <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
+                    <VerticalStackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnPerfilTapped"/>
+                    </VerticalStackLayout.GestureRecognizers>
+                    <Label Text="👤" FontSize="22" HorizontalOptions="Center"/>
+                    <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
+                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                </VerticalStackLayout>
+
+            </Grid>
+        </Frame>
+
+    </Grid>
 </ContentPage>
