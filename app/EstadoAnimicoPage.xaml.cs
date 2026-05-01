@@ -1,4 +1,4 @@
-namespace app; // Recuerda cambiar "app" si tu proyecto se llama diferente
+namespace app;
 using System.Globalization;
 using app.Data;
 using app.Models;
@@ -9,7 +9,7 @@ public partial class EstadoAnimicoPage : ContentPage
     private readonly SaludDatabase _database;
     private string _estadoSeleccionado = string.Empty;
     private Dictionary<string, Border> _botonesEstado = null!;
-    // Mapeo estado → emoji
+
     private static readonly Dictionary<string, string> _emojis = new()
     {
         { "Muy mal", "😞" },
@@ -19,7 +19,6 @@ public partial class EstadoAnimicoPage : ContentPage
         { "Genial",  "😄" }
     };
 
-    // Mapeo estado → valor numérico para la gráfica (0‒4)
     private static readonly Dictionary<string, int> _valorEstado = new()
     {
         { "Muy mal", 0 },
@@ -28,6 +27,17 @@ public partial class EstadoAnimicoPage : ContentPage
         { "Bien",    3 },
         { "Genial",  4 }
     };
+
+    // Color de fondo normal según el tema actual
+    private Color ColorNormal => Application.Current.RequestedTheme == AppTheme.Dark
+        ? Color.FromArgb("#1E1E1E")
+        : Colors.White;
+
+    // Borde normal según el tema actual
+    private Color BordeNormal => Application.Current.RequestedTheme == AppTheme.Dark
+        ? Color.FromArgb("#3C3C3C")
+        : Color.FromArgb("#EEF2EE");
+
     public EstadoAnimicoPage(SaludDatabase database)
     {
         InitializeComponent();
@@ -40,10 +50,9 @@ public partial class EstadoAnimicoPage : ContentPage
             { Mental.EstadosAnimo[3], BtnBien   },
             { Mental.EstadosAnimo[4], BtnGenial }
         };
-                // Valor inicial del slider
         ActualizarLabelHoras(SliderSueno.Value);
     }
-    // ─── Ciclo de vida ───────────────────────────────────────────────────────────
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -53,18 +62,16 @@ public partial class EstadoAnimicoPage : ContentPage
 
         if (registroHoy != null)
         {
-            // Ya guardó hoy → ocultar formulario, mostrar resumen
             MostrarResumenHoy(registroHoy);
             var semana = await _database.ObtenerMentalSemanaAsync(_usuarioActual.ID_Usuario);
             MostrarGraficaSemana(semana);
         }
         else
         {
-            // No ha guardado → mostrar formulario normal
             MostrarFormulario();
         }
     }
-    // ─── Mostrar/ocultar vistas ──────────────────────────────────────────────────
+
     private void MostrarFormulario()
     {
         FormularioLayout.IsVisible = true;
@@ -86,43 +93,39 @@ public partial class EstadoAnimicoPage : ContentPage
         GridNotasHoy.IsVisible = hayNotas;
         LblNotasHoy.Text       = registro.Notas_diario ?? string.Empty;
     }
- // ─── Gráfica semanal ─────────────────────────────────────────────────────────
+
     private void MostrarGraficaSemana(List<SaludDatabase.MentalConFecha> semana)
     {
-        // Construimos los 7 días (hoy inclusive) siempre en orden
         var hoy     = DateTime.Today;
         var colores = new[] { "#FF6B6B", "#FFA94D", "#FFD43B", "#69DB7C", "#4CAF72" };
         var dias    = new[] { "L", "M", "X", "J", "V", "S", "D" };
 
-        // Limpiamos por si se repinta
         GraficaEstados.Children.Clear();
         GraficaDias.Children.Clear();
         GraficaSueno.Children.Clear();
 
         for (int col = 0; col < 7; col++)
         {
-            var fecha    = hoy.AddDays(col - 6); // hace 6 días → hoy
+            var fecha    = hoy.AddDays(col - 6);
             var fechaStr = fecha.ToString("yyyy-MM-dd");
             var reg      = semana.FirstOrDefault(r => r.Fecha == fechaStr);
 
-            // ── Barra de estado de ánimo ──────────────────────────────────────
             int    nivel  = reg != null ? _valorEstado.GetValueOrDefault(reg.Estado_Animo, 0) : -1;
-            double altura = nivel >= 0 ? (nivel + 1) * 18.0 : 4; // 18‒90 px
+            double altura = nivel >= 0 ? (nivel + 1) * 18.0 : 4;
             string color  = nivel >= 0 ? colores[nivel] : "#EEF2EE";
 
             var barraEstado = new Border
             {
-                BackgroundColor = Color.FromArgb(color),
-                StrokeShape     = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(6, 6, 0, 0) },
-                Stroke          = Colors.Transparent,
-                HeightRequest   = altura,
-                VerticalOptions = LayoutOptions.End,
+                BackgroundColor   = Color.FromArgb(color),
+                StrokeShape       = new Microsoft.Maui.Controls.Shapes.RoundRectangle { CornerRadius = new CornerRadius(6, 6, 0, 0) },
+                Stroke            = Colors.Transparent,
+                HeightRequest     = altura,
+                VerticalOptions   = LayoutOptions.End,
                 HorizontalOptions = LayoutOptions.Fill
             };
             Grid.SetColumn(barraEstado, col);
             GraficaEstados.Children.Add(barraEstado);
 
-            // Emoji encima de la barra
             if (nivel >= 0)
             {
                 var emoji = new Label
@@ -137,7 +140,6 @@ public partial class EstadoAnimicoPage : ContentPage
                 GraficaEstados.Children.Add(emoji);
             }
 
-            // ── Label de día ─────────────────────────────────────────────────
             bool esHoy  = fecha == hoy;
             var lblDia  = new Label
             {
@@ -150,7 +152,6 @@ public partial class EstadoAnimicoPage : ContentPage
             Grid.SetColumn(lblDia, col);
             GraficaDias.Children.Add(lblDia);
 
-            // ── Barra de sueño ────────────────────────────────────────────────
             double horas       = reg?.Horas_Sueno ?? 0;
             double alturaSueno = horas > 0 ? Math.Clamp(horas / 12.0 * 70, 4, 70) : 4;
             string colorSueno  = horas >= 7 ? "#4CAF72" : horas >= 5 ? "#FFD43B" : "#FF6B6B";
@@ -169,58 +170,57 @@ public partial class EstadoAnimicoPage : ContentPage
             GraficaSueno.Children.Add(barraSueno);
         }
     }
-// ─── Guardar registro ────────────────────────────────────────────────────────
+
     private async void OnGuardarTapped(object sender, TappedEventArgs e)
     {
-        // Validaciones básicas
         if (string.IsNullOrWhiteSpace(_estadoSeleccionado))
         {
             await DisplayAlert("Atención", "Por favor selecciona tu estado de ánimo.", "OK");
             return;
         }
 
-        // 1. Crea y guarda el RegistroDiario
         RegistroDiario registroDiario = new RegistroDiario();
-        registroDiario.SetFecha(DateTime.Now);  // en vez del ToString manual
+        registroDiario.SetFecha(DateTime.Now);
         registroDiario.ID_Usuario = _usuarioActual.ID_Usuario;
         int idRegistro = await _database.InsertarRegistroAsync(registroDiario);
-        // Construye el objeto del modelo
+
         Mental registro = new Mental
         {
-            ID_Registro = idRegistro,
+            ID_Registro   = idRegistro,
             Estado_Animo  = _estadoSeleccionado,
             Horas_Sueno   = SliderSueno.Value,
             Notas_diario  = string.IsNullOrWhiteSpace(EditorNotas.Text)
                             ? null
                             : EditorNotas.Text.Trim()
         };
+
         if (!registro.EstaCompleto())
         {
-            await DisplayAlert("Debug",$"ID_Registro: {registro.ID_Registro}\nEstado_Animo: {registro.Estado_Animo}\nHoras_Sueno: {registro.Horas_Sueno}\nNotas_Diario: {registro.Notas_diario}","OK");
+            await DisplayAlert("Debug",
+                $"ID_Registro: {registro.ID_Registro}\nEstado_Animo: {registro.Estado_Animo}\n" +
+                $"Horas_Sueno: {registro.Horas_Sueno}\nNotas_Diario: {registro.Notas_diario}", "OK");
             return;
         }
 
         try
         {
-             // Persiste en la base de datos
-        await _database.GuardarRegistroAsync(registro);
-
+            await _database.GuardarRegistroAsync(registro);
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error al guardar", ex.Message, "OK");
             return;
-        }       
-        // Feedback visual
+        }
+
         LblConfirmacion.IsVisible = true;
         await Task.Delay(2500);
         LblConfirmacion.IsVisible = false;
 
-        // Tras guardar, cambia directamente a la vista resumen
         MostrarResumenHoy(registro);
         var semana = await _database.ObtenerMentalSemanaAsync(_usuarioActual.ID_Usuario);
         MostrarGraficaSemana(semana);
     }
+
     // ─── Selección de estado de ánimo ────────────────────────────────
     private void OnEstadoTapped(object sender, TappedEventArgs e)
     {
@@ -231,8 +231,12 @@ public partial class EstadoAnimicoPage : ContentPage
         foreach (var (key, btn) in _botonesEstado)
         {
             bool seleccionado = key == estado;
-            btn.BackgroundColor = seleccionado ? Color.FromArgb("#D6EDDA") : Colors.White;
-            btn.Stroke          = seleccionado ? Color.FromArgb("#4CAF72") : Color.FromArgb("#EEF2EE");
+            btn.BackgroundColor = seleccionado
+                ? Color.FromArgb("#2A3A2A")      // verde oscuro al seleccionar
+                : ColorNormal;                    // blanco o #1E1E1E según tema
+            btn.Stroke = seleccionado
+                ? Color.FromArgb("#8EB497")       // borde verde al seleccionar
+                : BordeNormal;                    // borde normal según tema
             btn.StrokeThickness = seleccionado ? 2.5 : 1.5;
         }
     }
@@ -253,11 +257,11 @@ public partial class EstadoAnimicoPage : ContentPage
     }
 
     private void OnMasHoras(object sender, TappedEventArgs e)
-{
-    double nuevo = Math.Min(SliderSueno.Maximum, SliderSueno.Value + 0.5);
-    SliderSueno.Value = nuevo;
-    ActualizarLabelHoras(nuevo);
-}
+    {
+        double nuevo = Math.Min(SliderSueno.Maximum, SliderSueno.Value + 0.5);
+        SliderSueno.Value = nuevo;
+        ActualizarLabelHoras(nuevo);
+    }
 
     private void ActualizarLabelHoras(double horas)
     {
@@ -266,27 +270,22 @@ public partial class EstadoAnimicoPage : ContentPage
 
     private void ResetearFormulario()
     {
-        // Quita la selección de estado
         _estadoSeleccionado = string.Empty;
         foreach (var btn in _botonesEstado.Values)
         {
-            btn.BackgroundColor = Colors.White;
-            btn.Stroke          = Color.FromArgb("#EEF2EE");
+            btn.BackgroundColor = ColorNormal;   // ← usa el tema actual
+            btn.Stroke          = BordeNormal;   // ← usa el tema actual
             btn.StrokeThickness = 1.5;
         }
 
-        // Resetea horas y notas
-        SliderSueno.Value  = 7;
-        EditorNotas.Text   = string.Empty;
+        SliderSueno.Value = 7;
+        EditorNotas.Text  = string.Empty;
     }
 
-
-  // ─── Navegación ──────────────────────────────────────────────────────────────
+    // ─── Navegación ──────────────────────────────────────────────────
     private async void OnVolverClicked(object sender, EventArgs e)
-    {
-        await Shell.Current.GoToAsync("//MainPage");
-    }
- // ─── Navegación (barra inferior) ─────────────────────────────────
+        => await Shell.Current.GoToAsync("//MainPage");
+
     private async void OnInicioTapped(object sender, TappedEventArgs e)
         => await Shell.Current.GoToAsync("//MainPage");
 
@@ -295,5 +294,4 @@ public partial class EstadoAnimicoPage : ContentPage
 
     private async void OnPerfilTapped(object sender, TappedEventArgs e)
         => await Shell.Current.GoToAsync("//PerfilPage");
-
 }

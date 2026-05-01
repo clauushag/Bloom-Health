@@ -7,7 +7,6 @@
 
     <Grid RowDefinitions="Auto, *, Auto">
 
-        <!-- CABECERA (se queda rosa, buen contraste en ambos modos) -->
         <Frame Grid.Row="0"
                BackgroundColor="#F29EBB"
                Padding="25,50,25,20"
@@ -76,7 +75,7 @@
                           RowDefinitions="Auto, Auto"
                           ColumnSpacing="15" RowSpacing="15">
 
-                        <Frame Grid.Row="0" Grid.Column="0"
+                        <Frame x:Name="FaseMenstruacion" Grid.Row="0" Grid.Column="0"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -84,6 +83,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseMenstruacion"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout Spacing="5">
                                 <Label Text="🩸" FontSize="20"/>
                                 <Label Text="Menstruación"
@@ -94,7 +96,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="0" Grid.Column="1"
+                        <Frame x:Name="FaseFolicular" Grid.Row="0" Grid.Column="1"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -102,6 +104,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseFolicular"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout Spacing="5">
                                 <Label Text="⚡" FontSize="20"/>
                                 <Label Text="Folicular"
@@ -112,7 +117,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="1" Grid.Column="0"
+                        <Frame x:Name="FaseOvulacion" Grid.Row="1" Grid.Column="0"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -120,6 +125,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseOvulacion"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout Spacing="5">
                                 <Label Text="🙂" FontSize="20"/>
                                 <Label Text="Ovulación"
@@ -130,7 +138,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="1" Grid.Column="1"
+                        <Frame x:Name="FaseLutea" Grid.Row="1" Grid.Column="1"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -138,6 +146,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseLutea"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout Spacing="5">
                                 <Label Text="🌙" FontSize="20"/>
                                 <Label Text="Lútea"
@@ -162,7 +173,7 @@
                           RowDefinitions="Auto, Auto"
                           ColumnSpacing="12" RowSpacing="12">
 
-                        <Frame Grid.Row="0" Grid.Column="0"
+                        <Frame x:Name="SintomaColicos" Grid.Row="0" Grid.Column="0"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -170,6 +181,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaColicos"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="🤕" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Cólicos" FontSize="11" FontAttributes="Bold"
@@ -178,7 +192,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="0" Grid.Column="1"
+                        <Frame x:Name="SintomaCabeza" Grid.Row="0" Grid.Column="1"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -186,6 +200,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCabeza"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="🤯" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Dolor de cabeza" FontSize="10" FontAttributes="Bold"
@@ -195,7 +212,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="0" Grid.Column="2"
+                        <Frame x:Name="SintomaHinchazón" Grid.Row="0" Grid.Column="2"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -203,6 +220,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaHinchazón"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="🎈" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Hinchazón" FontSize="10" FontAttributes="Bold"
@@ -211,7 +231,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="1" Grid.Column="0"
+                        <Frame x:Name="SintomaCambiosAnimo" Grid.Row="1" Grid.Column="0"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -219,6 +239,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCambiosAnimo"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="🎭" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Cambios ánimo" FontSize="10" FontAttributes="Bold"
@@ -228,7 +251,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="1" Grid.Column="1"
+                        <Frame x:Name="SintomaFatiga" Grid.Row="1" Grid.Column="1"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -236,6 +259,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaFatiga"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="😴" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Fatiga" FontSize="11" FontAttributes="Bold"
@@ -244,7 +270,7 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Grid.Row="1" Grid.Column="2"
+                        <Frame x:Name="SintomaAcne" Grid.Row="1" Grid.Column="2"
                                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
                                CornerRadius="20" HasShadow="True"
                                BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
@@ -252,6 +278,9 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaAcne"/>
+                            </Frame.GestureRecognizers>
                             <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
                                 <Label Text="🌋" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Acné" FontSize="11" FontAttributes="Bold"
@@ -272,49 +301,64 @@
                     <ScrollView Orientation="Horizontal"
                                 HorizontalScrollBarVisibility="Never">
                         <HorizontalStackLayout Spacing="12">
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="18" HasShadow="True"
-                                   Padding="15,10"
+                            <Frame x:Name="SentimientoTriste"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="18" HasShadow="True" Padding="15,10"
                                    BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoTriste"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="😢" FontSize="30"/>
                             </Frame>
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="18" HasShadow="True"
-                                   Padding="15,10"
+                            <Frame x:Name="SentimientoPreocupado"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="18" HasShadow="True" Padding="15,10"
                                    BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoPreocupado"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="😟" FontSize="30"/>
                             </Frame>
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="18" HasShadow="True"
-                                   Padding="15,10"
+                            <Frame x:Name="SentimientoNeutral"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="18" HasShadow="True" Padding="15,10"
                                    BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoNeutral"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="😐" FontSize="30"/>
                             </Frame>
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="18" HasShadow="True"
-                                   Padding="15,10"
+                            <Frame x:Name="SentimientoBien"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="18" HasShadow="True" Padding="15,10"
                                    BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoBien"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="🙂" FontSize="30"/>
                             </Frame>
-                            <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                                   CornerRadius="18" HasShadow="True"
-                                   Padding="15,10"
+                            <Frame x:Name="SentimientoFeliz"
+                                   BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                                   CornerRadius="18" HasShadow="True" Padding="15,10"
                                    BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoFeliz"/>
+                                </Frame.GestureRecognizers>
                                 <Label Text="😁" FontSize="30"/>
                             </Frame>
                         </HorizontalStackLayout>
@@ -384,7 +428,6 @@
                VerticalOptions="End">
             <Grid ColumnDefinitions="*, *, *"
                   MaximumWidthRequest="800" HorizontalOptions="FillAndExpand">
-
                 <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnInicioTapped"/>
@@ -393,7 +436,6 @@
                     <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnRetosTapped"/>
@@ -402,7 +444,6 @@
                     <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
-
                 <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
                     <VerticalStackLayout.GestureRecognizers>
                         <TapGestureRecognizer Tapped="OnPerfilTapped"/>
@@ -411,7 +452,6 @@
                     <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
-
             </Grid>
         </Frame>
 

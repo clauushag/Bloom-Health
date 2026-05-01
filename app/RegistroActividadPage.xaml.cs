@@ -10,7 +10,6 @@ public partial class RegistroActividadPage : ContentPage
     private SaludDatabase _database;
     private Usuario _usuarioActual;
 
-    // Objetos que se rellenan con los datos del formulario
     public Fisico fisico { get; set; }
     public RegistroDiario registro { get; set; }
 
@@ -29,7 +28,6 @@ public partial class RegistroActividadPage : ContentPage
 
         await _database.InicializarAsync();
 
-        // Obtenemos el usuario real de la BD — ya no hay ID hardcodeado
         _usuarioActual = await _database.ObtenerUsuarioAsync();
         if (_usuarioActual == null)
         {
@@ -37,7 +35,6 @@ public partial class RegistroActividadPage : ContentPage
             return;
         }
 
-        // Cargamos las estadísticas de hoy para mostrarlas al entrar
         await ActualizarResumenAsync();
     }
 
@@ -45,19 +42,27 @@ public partial class RegistroActividadPage : ContentPage
 
     private void OnActividadTapped(object sender, TappedEventArgs e)
     {
+        bool esDark = Application.Current.RequestedTheme == AppTheme.Dark 
+              || Application.Current.UserAppTheme == AppTheme.Dark;
+
         // Deseleccionamos la tarjeta anterior
         if (_frameSeleccionadoAnteriormente != null)
         {
-            _frameSeleccionadoAnteriormente.BackgroundColor = Colors.White;
-            _frameSeleccionadoAnteriormente.BorderColor = Colors.Transparent;
+            _frameSeleccionadoAnteriormente.BackgroundColor = esDark
+                ? Color.FromArgb("#1E1E1E")
+                : Colors.White;
+            _frameSeleccionadoAnteriormente.BorderColor = esDark
+                ? Color.FromArgb("#3C3C3C")
+                : Colors.Transparent;
         }
 
         var frameActual = (Frame)sender;
-        frameActual.BackgroundColor = Color.FromArgb("#F0F5F1");
+        frameActual.BackgroundColor = esDark
+            ? Color.FromArgb("#2A3A2A")
+            : Color.FromArgb("#F0F5F1");
         frameActual.BorderColor = Color.FromArgb("#8EB497");
         _frameSeleccionadoAnteriormente = frameActual;
 
-        // Guardamos el tipo de actividad en el modelo
         if (e.Parameter != null)
         {
             fisico.Tipo_Actividad = e.Parameter.ToString();
@@ -65,9 +70,6 @@ public partial class RegistroActividadPage : ContentPage
         }
 
         ContenedorFormulario.IsVisible = true;
-
-        // Mostramos u ocultamos el campo distancia según la actividad
-        // (Yoga y Gimnasio no necesitan distancia — viene de RequiereDistancia en Fisico.cs)
         ContenedorDistancia.IsVisible = fisico.RequiereDistancia;
     }
 
@@ -75,11 +77,9 @@ public partial class RegistroActividadPage : ContentPage
 
     private async void OnGuardarClicked(object sender, EventArgs e)
     {
-        // Leemos los campos del formulario y los metemos en el modelo
         if (!LeerFormulario())
-            return; // LeerFormulario ya muestra el alert de error si falla
+            return;
 
-        // Validación del modelo (EsValido() en Fisico.cs)
         if (!fisico.EsValido())
         {
             await DisplayAlert("Campos incompletos", "Rellena todos los campos obligatorios.", "OK");
@@ -88,25 +88,20 @@ public partial class RegistroActividadPage : ContentPage
 
         try
         {
-            // Calculamos el XP según la duración antes de guardar
             fisico.XP = fisico.CalcularXP();
 
-            // Creamos el RegistroDiario con el usuario real
             registro.SetFecha(DateTime.Now);
             registro.ID_Usuario = _usuarioActual.ID_Usuario;
 
-            // Insertamos primero el registro padre y luego el hijo Fisico
             int idRegistro = await _database.InsertarRegistroAsync(registro);
             fisico.ID_Registro = idRegistro;
             await _database.InsertarFisicoAsync(fisico);
 
-            // Sumamos XP al avatar
             await _database.SumarXPAsync(_usuarioActual.ID_Usuario, fisico.XP);
 
             var retosCompletados = await _database.ComprobarRetosFisicoAsync(
-    _usuarioActual.ID_Usuario, fisico);
+                _usuarioActual.ID_Usuario, fisico);
 
-            // Si hay retos completados los mostramos antes del resumen normal
             foreach (var reto in retosCompletados)
             {
                 await DisplayAlert(
@@ -116,13 +111,8 @@ public partial class RegistroActividadPage : ContentPage
                     "¡Genial!");
             }
 
-            // Actualizamos el resumen de hoy en pantalla
             await ActualizarResumenAsync();
-
-            // Mostramos feedback al usuario con los datos de la sesión
             await MostrarResumenSesionAsync(fisico);
-
-            // Reseteamos el formulario para permitir añadir otra actividad
             ResetearFormulario();
         }
         catch (Exception ex)
@@ -133,13 +123,8 @@ public partial class RegistroActividadPage : ContentPage
 
     // ── Métodos auxiliares ───────────────────────────────────────────────────
 
-    /// <summary>
-    /// Lee los Entry del formulario XAML y los mete en el objeto fisico.
-    /// Devuelve false y muestra un alert si algún campo tiene formato incorrecto.
-    /// </summary>
     private bool LeerFormulario()
     {
-        // Tiempo — obligatorio siempre
         if (!int.TryParse(EntryTiempo.Text, out int tiempo) || tiempo <= 0)
         {
             DisplayAlert("Campo inválido", "Introduce una duración válida en minutos.", "OK");
@@ -147,7 +132,6 @@ public partial class RegistroActividadPage : ContentPage
         }
         fisico.Tiempo_Ejercicio = tiempo;
 
-        // Kcal — obligatorio siempre
         if (!double.TryParse(EntryKcal.Text, NumberStyles.Any,
                 CultureInfo.InvariantCulture, out double kcal) || kcal <= 0)
         {
@@ -156,7 +140,6 @@ public partial class RegistroActividadPage : ContentPage
         }
         fisico.Kcal_Quemadas = kcal;
 
-        // Distancia — solo obligatorio si la actividad lo requiere
         if (fisico.RequiereDistancia)
         {
             if (!double.TryParse(EntryDistancia.Text, NumberStyles.Any,
@@ -171,10 +154,6 @@ public partial class RegistroActividadPage : ContentPage
         return true;
     }
 
-    /// <summary>
-    /// Consulta la BD y actualiza las etiquetas de resumen de hoy:
-    /// kcal quemadas, minutos totales, XP ganado y racha de días.
-    /// </summary>
     private async Task ActualizarResumenAsync()
     {
         var resumenTask = _database.ObtenerResumenActividadHoyAsync(_usuarioActual.ID_Usuario);
@@ -194,16 +173,12 @@ public partial class RegistroActividadPage : ContentPage
         var historial = await _database.ObtenerHistorialFisicoAsync(_usuarioActual.ID_Usuario);
         HistorialCollectionView.ItemsSource = historial;
 
-        // ← nuevo: cargamos los retos en progreso
         var retosEnProgreso = await _database.ObtenerRetosEnProgresoAsync(_usuarioActual.ID_Usuario);
         RetosEnProgresoCollectionView.ItemsSource = retosEnProgreso;
         ContenedorRetosEnProgreso.IsVisible = retosEnProgreso.Count > 0;
         LabelSinRetos.IsVisible = retosEnProgreso.Count == 0;
     }
 
-    /// <summary>
-    /// Muestra un alert con el resumen de la sesión recién guardada.
-    /// </summary>
     private async Task MostrarResumenSesionAsync(Fisico f)
     {
         string distanciaLinea = f.RequiereDistancia
@@ -220,9 +195,6 @@ public partial class RegistroActividadPage : ContentPage
             "¡Genial!");
     }
 
-    /// <summary>
-    /// Limpia el formulario y oculta el contenedor para poder registrar otra actividad.
-    /// </summary>
     private void ResetearFormulario()
     {
         fisico = new Fisico();
@@ -234,8 +206,13 @@ public partial class RegistroActividadPage : ContentPage
 
         if (_frameSeleccionadoAnteriormente != null)
         {
-            _frameSeleccionadoAnteriormente.BackgroundColor = Colors.White;
-            _frameSeleccionadoAnteriormente.BorderColor = Colors.Transparent;
+            bool esDark = Application.Current.UserAppTheme == AppTheme.Dark;
+            _frameSeleccionadoAnteriormente.BackgroundColor = esDark
+                ? Color.FromArgb("#1E1E1E")
+                : Colors.White;
+            _frameSeleccionadoAnteriormente.BorderColor = esDark
+                ? Color.FromArgb("#3C3C3C")
+                : Colors.Transparent;
             _frameSeleccionadoAnteriormente = null;
         }
 
