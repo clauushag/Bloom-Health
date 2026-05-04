@@ -1,5 +1,6 @@
 using app.Data;
 using app.Models;
+using System.Collections.ObjectModel;
 
 namespace app;
 
@@ -8,18 +9,21 @@ public partial class RetosPage : ContentPage
     private SaludDatabase _database;
     private Usuario _usuarioActual;
 
-    // Paginación
     private int _offset = 0;
     private const int PageSize = 20;
     private bool _cargando = false;
     private bool _hayMas = true;
 
-    private List<SaludDatabase.RetoConProgreso> _retos = new();
+    // ObservableCollection notifica cambios item a item — no redibujar todo
+    private ObservableCollection<SaludDatabase.RetoConProgreso> _retos = new();
 
     public RetosPage(SaludDatabase database)
     {
         InitializeComponent();
         _database = database;
+
+        // Asignamos UNA sola vez en el constructor — nunca más tocamos ItemsSource
+        RetosCollectionView.ItemsSource = _retos;
     }
 
     protected override async void OnAppearing()
@@ -28,43 +32,50 @@ public partial class RetosPage : ContentPage
         _usuarioActual = await _database.ObtenerUsuarioAsync();
         if (_usuarioActual == null) return;
 
-        // Recargamos desde 0 cada vez que entramos
-        // (por si se completó un reto desde RegistroActividadPage)
-        await RecargarAsync();
+        IniciarRecargaEnBackground();
     }
 
-    private async Task RecargarAsync()
+    private void IniciarRecargaEnBackground()
     {
         _offset = 0;
         _hayMas = true;
-        _retos.Clear();
 
-        await CargarMasRetosAsync();
-        await ActualizarResumenAsync();
+        // Limpiamos en el hilo de UI antes de lanzar las tareas
+        MainThread.BeginInvokeOnMainThread(() => _retos.Clear());
+
+        _ = EjecutarConManejoDeErrorAsync(CargarMasRetosAsync());
+        _ = EjecutarConManejoDeErrorAsync(ActualizarResumenAsync());
     }
 
-    /// <summary>
-    /// Carga el siguiente bloque de 20 retos y los añade a la lista.
-    /// El CollectionView con RemainingItemsThreshold llama a esto automáticamente
-    /// cuando el usuario llega al final.
-    /// </summary>
+    private static async Task EjecutarConManejoDeErrorAsync(Task tarea)
+    {
+        try { await tarea; }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[RetosPage] Error: {ex.Message}");
+        }
+    }
+
     private async Task CargarMasRetosAsync()
     {
-        if (_cargando || !_hayMas) return;
+        if (_cargando || !_hayMas||_usuarioActual == null) return;
         _cargando = true;
 
         var nuevos = await _database.ObtenerRetosPageAsync(
             _usuarioActual.ID_Usuario, _offset, PageSize);
 
         if (nuevos.Count < PageSize)
-            _hayMas = false; // ya no hay más páginas
+            _hayMas = false;
 
-        _retos.AddRange(nuevos);
         _offset += nuevos.Count;
 
-        // Asignamos una nueva lista para forzar el refresco del CollectionView
-        RetosCollectionView.ItemsSource = null;
-        RetosCollectionView.ItemsSource = _retos;
+        // Añadimos item a item — ObservableCollection renderiza cada uno
+        // de forma incremental sin invalidar los ya visibles
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            foreach (var reto in nuevos)
+                _retos.Add(reto);
+        });
 
         _cargando = false;
     }
@@ -74,18 +85,19 @@ public partial class RetosPage : ContentPage
         var (completados, enProgreso, pendientes) =
             await _database.ObtenerResumenRetosAsync(_usuarioActual.ID_Usuario);
 
-        LabelCompletados.Text = completados.ToString();
-        LabelEnProgreso.Text  = enProgreso.ToString();
-        LabelPendientes.Text  = pendientes.ToString();
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            LabelCompletados.Text = completados.ToString();
+            LabelEnProgreso.Text  = enProgreso.ToString();
+            LabelPendientes.Text  = pendientes.ToString();
+        });
     }
 
-    // Se llama automáticamente cuando el usuario llega al final del scroll
     private async void OnRetosThresholdReached(object sender, EventArgs e)
     {
         await CargarMasRetosAsync();
     }
 
-    // El usuario pulsa "Aceptar reto"
     private async void OnAceptarRetoClicked(object sender, EventArgs e)
     {
         var btn  = (Button)sender;
@@ -94,14 +106,13 @@ public partial class RetosPage : ContentPage
         if (reto.EstaCompletado || reto.EstaEnProgreso) return;
 
         await _database.AceptarRetoAsync(_usuarioActual.ID_Usuario, reto.ID_Reto);
-        await RecargarAsync();
+        IniciarRecargaEnBackground();
 
         await DisplayAlert("✅ Reto aceptado",
             $"Has aceptado el reto '{reto.Nombre}'.\n" +
             $"Complétalo registrando tus actividades.", "¡Vamos!");
     }
 
-    // ── Navegación ───────────────────────────────────────────────────────────
     private async void OnInicioTapped(object sender, EventArgs e) =>
         await Shell.Current.GoToAsync("//MainPage");
 

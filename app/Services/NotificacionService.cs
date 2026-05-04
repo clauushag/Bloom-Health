@@ -7,24 +7,14 @@ public static class NotificacionService
 {
     // IDs únicos para cada notificación
     private const int ID_RECORDATORIO_ANIMO = 1001;
+    private const int ID_RECORDATORIO_MENSTRUACION = 1002;
 
     public static async Task InicializarAsync()
     {
         await LocalNotificationCenter.Current.RequestNotificationPermission();
-        await LocalNotificationCenter.Current.RequestNotificationPermission();
     
-        var notificacion = new NotificationRequest
-        {
-            NotificationId = ID_RECORDATORIO_ANIMO,
-            Title          = "¿Cómo estás hoy? 🌱",
-            Description    = "No olvides registrar tu estado anímico",
-            Schedule       = new NotificationRequestSchedule
-            {
-                NotifyTime = DateTime.Now.AddSeconds(10), // 10 segundos tras cerrar
-            }
-        };
+        _=ProgramarRecordatorioAnimoAsync();
 
-        await LocalNotificationCenter.Current.Show(notificacion);
     }
 
     private static async Task ProgramarRecordatorioAnimoAsync()
@@ -32,14 +22,14 @@ public static class NotificacionService
         // Evita reprogramar si ya está puesta
         if (Preferences.Get("notif_animo_programada", false)) return;
 
-        var notificacion = new NotificationRequest
+        NotificationRequest notificacion = new NotificationRequest
         {
             NotificationId = ID_RECORDATORIO_ANIMO,
             Title          = "¿Cómo estás hoy? 🌱",
             Description    = "No olvides registrar tu estado anímico",
             Schedule       = new NotificationRequestSchedule
             {
-                NotifyTime = DateTime.Now.AddMinutes(2), // Para pruebas, luego cambia a .AddDays(1) o el tiempo que quieras
+                NotifyTime = DateTime.Parse("09:00:00"), //todos los dias a las 9 am
                 RepeatType = NotificationRepeat.Daily
             }
         };
@@ -53,5 +43,20 @@ public static class NotificacionService
     {
         LocalNotificationCenter.Current.Cancel(ID_RECORDATORIO_ANIMO);
         Preferences.Set("notif_animo_programada", false); // se reprograma mañana
+    }
+
+    public static async Task ProgramarRecordatorioMensatruacionAsync(int diasHastaProximoPeriodo)
+    {
+        NotificationRequest notification = new NotificationRequest
+        {
+            NotificationId = ID_RECORDATORIO_MENSTRUACION,
+            Title          = "¿Tu periodo comenzó? 🌸",
+            Description    = "Registra el inicio de tu menstruación para un mejor seguimiento",
+            Schedule       = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Now.AddDays(diasHastaProximoPeriodo)// cada X días (ajustable según ciclo)
+            }
+        };
+        await LocalNotificationCenter.Current.Show(notification);
     }
 }

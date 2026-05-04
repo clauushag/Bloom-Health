@@ -1,5 +1,6 @@
 using app.Data;
 using app.Models;
+using app.Services;
 
 namespace app;
 
@@ -310,6 +311,7 @@ public partial class MenstrualPage : ContentPage
             ActualizarTarjetaCiclo(estado);
 
             await DisplayAlert("✓", "Tu registro se ha guardado correctamente", "OK");
+            _=NotificacionService.ProgramarRecordatorioMensatruacionAsync(28); // Programar notificación para el próximo periodo
         }
         catch (Exception ex)
         {
