@@ -82,8 +82,25 @@ public class SaludDatabase
             await _conexion.ExecuteAsync("DROP TABLE Fisico_old;");
             await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
         }
-    }
+        // ── MENSTRUACIÓN ───────────────────────────────────────────────────────────────
+        var columnasMenstruacion = await _conexion.QueryAsync<ColumnInfo>("PRAGMA table_info(Menstruacion);");
+        var nombresMenstruacion = columnasMenstruacion.Select(c => c.Name).ToHashSet();
+        if (!nombresMenstruacion.Contains("Fase"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE Menstruacion ADD COLUMN Fase TEXT NOT NULL DEFAULT '';");
 
+        if (!nombresMenstruacion.Contains("Notas"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE Menstruacion ADD COLUMN Notas TEXT DEFAULT '';");
+
+        if (!nombresMenstruacion.Contains("Duracion_Ciclo"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE Menstruacion ADD COLUMN Duracion_Ciclo INTEGER NOT NULL DEFAULT 28;");
+
+        if (!nombresMenstruacion.Contains("Duracion_Periodo"))
+            await _conexion.ExecuteAsync(
+                "ALTER TABLE Menstruacion ADD COLUMN Duracion_Periodo INTEGER NOT NULL DEFAULT 5;");
+    }   
     // Clase auxiliar para mapear el resultado de PRAGMA table_info
     private class ColumnInfo
     {
@@ -146,15 +163,15 @@ public class SaludDatabase
             );");
         await _conexion.ExecuteAsync(@"
             CREATE TABLE IF NOT EXISTS ProgresoReto (
-        ID_Progreso INTEGER PRIMARY KEY AUTOINCREMENT,
-        ID_Usuario INTEGER NOT NULL,
-        ID_Reto INTEGER NOT NULL,
-        FechaInicio TEXT NOT NULL DEFAULT '',
-        FechaFin TEXT DEFAULT '',
-        progreso INTEGER NOT NULL DEFAULT 0,
-        Estado TEXT NOT NULL DEFAULT '',
-        FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
-        FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
+                ID_Progreso INTEGER PRIMARY KEY AUTOINCREMENT,
+                ID_Usuario INTEGER NOT NULL,
+                ID_Reto INTEGER NOT NULL,
+                FechaInicio TEXT NOT NULL DEFAULT '',
+                FechaFin TEXT DEFAULT '',
+                progreso INTEGER NOT NULL DEFAULT 0,
+                Estado TEXT NOT NULL DEFAULT '',
+                FOREIGN KEY (ID_Usuario) REFERENCES Usuario(ID_Usuario),
+                FOREIGN KEY (ID_Reto) REFERENCES Retos(ID_Reto)
             );");
 
         await _conexion.ExecuteAsync(@"
@@ -216,8 +233,12 @@ public class SaludDatabase
             CREATE TABLE IF NOT EXISTS Menstruacion (
                 ID_Registro INTEGER PRIMARY KEY,
                 Fecha_Inicio_Ciclo TEXT NOT NULL,
-                Estado_Animo TEXT NOT NULL,
-                Sintomas TEXT NOT NULL,
+                Fase TEXT NOT NULL DEFAULT '',
+                Estado_Animo TEXT NOT NULL DEFAULT '',
+                Sintomas TEXT NOT NULL DEFAULT '',
+                Notas TEXT DEFAULT '',
+                Duracion_Ciclo INTEGER NOT NULL DEFAULT 28,
+                Duracion_Periodo INTEGER NOT NULL DEFAULT 5,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
             );");
 
@@ -786,4 +807,190 @@ public class SaludDatabase
             idUsuario, hace7dias);
     }
 
+    // ─── CICLO MENSTRUAL ────────────────────────────────────────────────
+
+    /// Guarda (o actualiza) el registro menstrual de HOY para la usuaria.
+    public async Task<Menstruacion> GuardarMenstruacionAsync(
+        int idUsuario,
+        string fechaInicioCiclo,
+        string fase,
+        string estadoAnimo,
+        List<string> sintomas,
+        string notas,
+        int duracionCiclo = 28,
+        int duracionPeriodo = 5)
+    {
+        await InicializarAsync();
+    
+        var hoy = DateTime.Now.ToString("yyyy-MM-dd");
+    
+        // Buscamos si ya hay un RegistroDiario de hoy para esta usuaria.
+        // Si no, lo creamos (toda fila de Menstruacion necesita un ID_Registro padre).
+        var registroHoy = await _conexion.QueryAsync<RegistroDiario>(
+            @"SELECT * FROM RegistroDiario
+            WHERE ID_Usuario = ? AND Fecha LIKE ?
+            LIMIT 1",
+            idUsuario, hoy + "%");
+    
+        int idRegistro;
+        if (registroHoy.Count == 0)
+        {
+            var nuevo = new RegistroDiario
+            {
+                ID_Usuario = idUsuario,
+                Fecha = hoy
+            };
+            await _conexion.InsertAsync(nuevo);
+            idRegistro = nuevo.ID_Registro;
+        }
+        else
+        {
+            idRegistro = registroHoy[0].ID_Registro;
+        }
+    
+        // Comprobamos si ya hay un Menstruacion enganchado a ese ID_Registro
+        var existente = await _conexion.FindAsync<Menstruacion>(idRegistro);
+    
+        var menstruacion = new Menstruacion
+        {
+            ID_Registro = idRegistro,
+            Fecha_Inicio_Ciclo = fechaInicioCiclo,
+            Fase = fase ?? "",
+            Estado_Animo = estadoAnimo ?? "",
+            Sintomas = sintomas != null ? string.Join(",", sintomas) : "",
+            Notas = notas ?? "",
+            Duracion_Ciclo = duracionCiclo,
+            Duracion_Periodo = duracionPeriodo
+        };
+    
+        if (existente == null)
+            await _conexion.InsertAsync(menstruacion);
+        else
+            await _conexion.UpdateAsync(menstruacion);
+    
+        return menstruacion;
+    }
+    
+    /// Devuelve el registro de Menstruacion de HOY (o null si no existe).
+    public async Task<Menstruacion?> ObtenerMenstruacionHoyAsync(int idUsuario)
+    {
+        await InicializarAsync();
+        var hoy = DateTime.Now.ToString("yyyy-MM-dd");
+    
+        var resultado = await _conexion.QueryAsync<Menstruacion>(
+            @"SELECT m.* FROM Menstruacion m
+            INNER JOIN RegistroDiario r ON m.ID_Registro = r.ID_Registro
+            WHERE r.ID_Usuario = ? AND r.Fecha LIKE ?",
+            idUsuario, hoy + "%");
+    
+        return resultado.FirstOrDefault();
+    }
+    
+    /// Devuelve el ÚLTIMO registro menstrual de la usuaria (el más reciente),
+    /// sea de hoy o no. Sirve para saber cuándo empezó el ciclo actual y poder
+    /// calcular en qué día del ciclo está hoy.
+    public async Task<Menstruacion?> ObtenerUltimaMenstruacionAsync(int idUsuario)
+    {
+        await InicializarAsync();
+    
+        var resultado = await _conexion.QueryAsync<Menstruacion>(
+            @"SELECT m.* FROM Menstruacion m
+            INNER JOIN RegistroDiario r ON m.ID_Registro = r.ID_Registro
+            WHERE r.ID_Usuario = ?
+            ORDER BY r.Fecha DESC
+            LIMIT 1",
+            idUsuario);
+    
+        return resultado.FirstOrDefault();
+    }
+    
+    /// Devuelve el historial de registros menstruales de la usuaria
+    public async Task<List<Menstruacion>> ObtenerHistorialMenstruacionAsync(int idUsuario)
+    {
+        await InicializarAsync();
+    
+        return await _conexion.QueryAsync<Menstruacion>(
+            @"SELECT m.* FROM Menstruacion m
+            INNER JOIN RegistroDiario r ON m.ID_Registro = r.ID_Registro
+            WHERE r.ID_Usuario = ?
+            ORDER BY r.Fecha DESC
+            LIMIT 12",
+            idUsuario);
+    }
+    
+    // ─── CÁLCULOS DEL CICLO ────
+    /// Datos calculados sobre el estado actual del ciclo menstrual.
+    public class EstadoCiclo
+    {
+        public int DiaActual { get; set; }              // Día 12 de 28
+        public int DuracionCiclo { get; set; }          // 28
+        public double Progreso { get; set; }            // 0.0 a 1.0 (para la barra)
+        public int DiasParaProximoPeriodo { get; set; } // 16
+        public string FaseActual { get; set; } = "";    // "Menstruacion", "Folicular"...
+        public DateTime FechaInicioCiclo { get; set; }
+        public DateTime FechaProximoPeriodo { get; set; }
+        public bool TieneDatos { get; set; }            // false = aún no ha registrado nada
+    }
+    
+    /// Calcula en qué día del ciclo está la usuaria hoy a partir del último registro.
+    /// Si no hay datos previos devuelve un EstadoCiclo "vacío" para que la pantalla
+    /// muestre valores por defecto.
+    public async Task<EstadoCiclo> CalcularEstadoCicloAsync(int idUsuario)
+    {
+        var ultima = await ObtenerUltimaMenstruacionAsync(idUsuario);
+    
+        if (ultima == null || string.IsNullOrEmpty(ultima.Fecha_Inicio_Ciclo))
+        {
+            return new EstadoCiclo
+            {
+                TieneDatos = false,
+                DuracionCiclo = 28
+            };
+        }
+    
+        var fechaInicio = DateTime.Parse(ultima.Fecha_Inicio_Ciclo);
+        int duracion = ultima.Duracion_Ciclo > 0 ? ultima.Duracion_Ciclo : 28;
+        int duracionPeriodo = ultima.Duracion_Periodo > 0 ? ultima.Duracion_Periodo : 5;
+    
+        // Día del ciclo (1 = primer día de la regla)
+        int diasDesdeInicio = (DateTime.Today - fechaInicio.Date).Days;
+    
+        // Si han pasado más días que la duración del ciclo, asumimos que ya empezó
+        // un ciclo nuevo (la usuaria simplemente no lo ha registrado aún).
+        // Lo "rebobinamos" para mostrar el día relativo al ciclo actual estimado.
+        int diaActual = (diasDesdeInicio % duracion) + 1;
+    
+        int diasParaProximo = duracion - (diasDesdeInicio % duracion);
+    
+        return new EstadoCiclo
+        {
+            TieneDatos = true,
+            DiaActual = diaActual,
+            DuracionCiclo = duracion,
+            Progreso = (double)(diaActual - 1) / duracion,
+            DiasParaProximoPeriodo = diasParaProximo,
+            FaseActual = CalcularFase(diaActual, duracion, duracionPeriodo),
+            FechaInicioCiclo = fechaInicio,
+            FechaProximoPeriodo = fechaInicio.AddDays(duracion)
+        };
+    }
+    
+    /// Devuelve la fase del ciclo en función del día actual.
+    /// Reglas estándar (basadas en un ciclo de 28 días, escaladas a la duración real):
+    ///   - Menstruación: días 1 a 5 (duracionPeriodo)
+    ///   - Folicular: del día 6 hasta 2 días antes de la ovulación
+    ///   - Ovulación: día 14 ± 2  (centrado en duracion - 14)
+    ///   - Lútea: desde el final de la ovulación hasta el final del ciclo
+    private static string CalcularFase(int diaActual, int duracionCiclo, int duracionPeriodo)
+    {
+        // La ovulación ocurre típicamente 14 días ANTES del próximo periodo
+        int diaOvulacion = duracionCiclo - 14;
+        int inicioOvulacion = diaOvulacion - 2;
+        int finOvulacion = diaOvulacion + 2;
+    
+        if (diaActual <= duracionPeriodo) return "Menstruacion";
+        if (diaActual < inicioOvulacion) return "Folicular";
+        if (diaActual <= finOvulacion) return "Ovulacion";
+        return "Lutea";
+    }
 }

@@ -47,17 +47,20 @@
                                 <Label Text="Tu ciclo actual"
                                        FontSize="14" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                                <Label Text="Día 12 de 28"
+                                <Label x:Name="LblDiaCiclo"
+                                       Text="Día 12 de 28"
                                        FontSize="12"
                                        TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                             </VerticalStackLayout>
                         </Grid>
-                        <ProgressBar Progress="0.42"
-                                     ProgressColor="#F29EBB"
-                                     HeightRequest="10"
-                                     BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#2C2C2C}"
-                                     Margin="0,5"/>
-                        <Label Text="Próximo periodo estimado: en 16 días"
+                        <ProgressBar x:Name="BarraProgreso"
+                               Progress="0.42"
+                               ProgressColor="#F29EBB"
+                               HeightRequest="10"
+                               BackgroundColor="{AppThemeBinding Light=#E8F2E9, Dark=#2C2C2C}"
+                               Margin="0,5"/>
+                        <Label x:Name="LblProximoPeriodo"
+                               Text="Próximo periodo estimado: en 16 días"
                                FontSize="11"
                                TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
                                HorizontalOptions="Center"/>
@@ -378,7 +381,8 @@
                         <Frame.Shadow>
                             <Shadow Brush="#A0AF9E" Offset="0,6" Radius="15" Opacity="0.1"/>
                         </Frame.Shadow>
-                        <Editor Placeholder="Escribe cómo te sientes o cualquier observación..."
+                        <Editor x:Name="EditorNotas"
+                                Placeholder="Escribe cómo te sientes o cualquier observación..."
                                 HeightRequest="80"
                                 TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
                                 PlaceholderColor="#94A696"
@@ -389,6 +393,7 @@
 
                 <!-- Botón Guardar -->
                 <Button Text="Guardar Registro"
+                        Clicked="OnGuardarClicked"
                         BackgroundColor="#F29EBB"
                         TextColor="White"
                         FontAttributes="Bold"
