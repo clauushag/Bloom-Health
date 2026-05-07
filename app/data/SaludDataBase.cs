@@ -645,7 +645,7 @@ public class SaludDatabase
             ID_Usuario = 1, // Aquí deberías poner el ID del usuario actual
             Nivel_Evolucion = 1,
             XP = 0,
-            Estado_Salud = Avatar.Tipos_Estados_Salud[2] // "Brotando"
+            Estado_Salud = Avatar.Tipos_Estados_Salud[1]
         };
         await _conexion.InsertAsync(avatar);
     }
