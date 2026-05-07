@@ -86,10 +86,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseMenstruacion"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseMenstruacion"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🩸" FontSize="20"/>
                                 <Label Text="Menstruación"
                                        FontSize="13" FontAttributes="Bold"
@@ -107,10 +107,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseFolicular"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseFolicular"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="⚡" FontSize="20"/>
                                 <Label Text="Folicular"
                                        FontSize="13" FontAttributes="Bold"
@@ -128,10 +128,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseOvulacion"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseOvulacion"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🙂" FontSize="20"/>
                                 <Label Text="Ovulación"
                                        FontSize="13" FontAttributes="Bold"
@@ -149,10 +149,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,5" Radius="15" Opacity="0.1"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseLutea"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout Spacing="5">
+                            <VerticalStackLayout Spacing="5" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnFaseTapped" CommandParameter="FaseLutea"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🌙" FontSize="20"/>
                                 <Label Text="Lútea"
                                        FontSize="13" FontAttributes="Bold"
@@ -184,10 +184,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaColicos"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaColicos"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🤕" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Cólicos" FontSize="11" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -203,10 +203,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCabeza"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCabeza"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🤯" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Dolor de cabeza" FontSize="10" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -223,10 +223,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaHinchazón"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaHinchazón"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🎈" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Hinchazón" FontSize="10" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -242,10 +242,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCambiosAnimo"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaCambiosAnimo"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🎭" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Cambios ánimo" FontSize="10" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -262,10 +262,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaFatiga"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaFatiga"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="😴" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Fatiga" FontSize="11" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -281,10 +281,10 @@
                             <Frame.Shadow>
                                 <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.08"/>
                             </Frame.Shadow>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaAcne"/>
-                            </Frame.GestureRecognizers>
-                            <VerticalStackLayout HorizontalOptions="Center" Spacing="8">
+                            <VerticalStackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnSintomaTapped" CommandParameter="SintomaAcne"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Label Text="🌋" FontSize="26" HorizontalOptions="Center"/>
                                 <Label Text="Acné" FontSize="11" FontAttributes="Bold"
                                        TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
@@ -311,10 +311,11 @@
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoTriste"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="😢" FontSize="30"/>
+                                <Label Text="😢" FontSize="30" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoTriste"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                             <Frame x:Name="SentimientoPreocupado"
                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
@@ -323,10 +324,11 @@
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoPreocupado"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="😟" FontSize="30"/>
+                                <Label Text="😟" FontSize="30" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoPreocupado"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                             <Frame x:Name="SentimientoNeutral"
                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
@@ -335,10 +337,11 @@
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoNeutral"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="😐" FontSize="30"/>
+                                <Label Text="😐" FontSize="30" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoNeutral"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                             <Frame x:Name="SentimientoBien"
                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
@@ -347,10 +350,11 @@
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoBien"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="🙂" FontSize="30"/>
+                                <Label Text="🙂" FontSize="30" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoBien"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                             <Frame x:Name="SentimientoFeliz"
                                    BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
@@ -359,10 +363,11 @@
                                 <Frame.Shadow>
                                     <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.1"/>
                                 </Frame.Shadow>
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoFeliz"/>
-                                </Frame.GestureRecognizers>
-                                <Label Text="😁" FontSize="30"/>
+                                <Label Text="😁" FontSize="30" HorizontalOptions="Fill" VerticalOptions="Fill">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnSentimientoTapped" CommandParameter="SentimientoFeliz"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                         </HorizontalStackLayout>
                     </ScrollView>

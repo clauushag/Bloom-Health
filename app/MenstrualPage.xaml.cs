@@ -185,6 +185,19 @@ public partial class MenstrualPage : ContentPage
             _fechaInicioCiclo = DateTime.Parse(m.Fecha_Inicio_Ciclo);
     }
 
+    // ── COLORES DE SELECCIÓN según el tema activo ────────────────────
+    private Color ColorSeleccionado =>
+        Application.Current.RequestedTheme == AppTheme.Dark
+            ? Color.FromArgb("#2A1A1F")
+            : Color.FromArgb("#FCF0F4");
+
+    // ── ANIMACIÓN AL PULSAR ──────────────────────────────────────────
+    private async Task AnimarPulsacion(View view)
+    {
+        await view.ScaleTo(0.92, 80, Easing.CubicOut);
+        await view.ScaleTo(1.0, 100, Easing.CubicIn);
+    }
+
     // ── SELECCIÓN DESDE CÓDIGO (reaprovecha la lógica visual) ───────
     private void SeleccionarFasePorKey(string key)
     {
@@ -195,7 +208,7 @@ public partial class MenstrualPage : ContentPage
             _faseSeleccionada.BorderColor = BordeNormal;
         }
         var frame = _fases[key];
-        frame.BackgroundColor = Color.FromArgb("#2A1A1F");
+        frame.BackgroundColor = Color.FromArgb("#FDE3EA");
         frame.BorderColor = Color.FromArgb("#F29EBB");
         _faseSeleccionada = frame;
         _faseSeleccionadaKey = key;
@@ -210,7 +223,7 @@ public partial class MenstrualPage : ContentPage
             _sentimientoSeleccionado.BorderColor = BordeNormal;
         }
         var frame = _sentimientos[key];
-        frame.BackgroundColor = Color.FromArgb("#2A1A1F");
+        frame.BackgroundColor = ColorSeleccionado;
         frame.BorderColor = Color.FromArgb("#F29EBB");
         _sentimientoSeleccionado = frame;
         _sentimientoSeleccionadoKey = key;
@@ -221,15 +234,20 @@ public partial class MenstrualPage : ContentPage
         if (!_sintomas.ContainsKey(key)) return;
         var frame = _sintomas[key];
         _sintomasSeleccionados.Add(key);
-        frame.BackgroundColor = Color.FromArgb("#2A1A1F");
+        frame.BackgroundColor = ColorSeleccionado;
         frame.BorderColor = Color.FromArgb("#F29EBB");
     }
 
     // ── HANDLERS DE TAP ─────────────────────────────────────────────
-    private void OnFaseTapped(object sender, TappedEventArgs e)
+    private async void OnFaseTapped(object sender, TappedEventArgs e)
     {
         var key = e.Parameter?.ToString();
         if (key == null || !_fases.ContainsKey(key)) return;
+
+        // Animación de pulsación
+        if (_fases.TryGetValue(key, out var frameFase))
+            await AnimarPulsacion(frameFase);
+
         SeleccionarFasePorKey(key);
 
         // Si selecciona "Menstruación" y no había fecha de inicio guardada,
@@ -241,11 +259,14 @@ public partial class MenstrualPage : ContentPage
         }
     }
 
-    private void OnSintomaTapped(object sender, TappedEventArgs e)
+    private async void OnSintomaTapped(object sender, TappedEventArgs e)
     {
         var key = e.Parameter?.ToString();
         if (key == null || !_sintomas.ContainsKey(key)) return;
         var frame = _sintomas[key];
+
+        // Animación de pulsación
+        await AnimarPulsacion(frame);
 
         if (_sintomasSeleccionados.Contains(key))
         {
@@ -256,15 +277,44 @@ public partial class MenstrualPage : ContentPage
         else
         {
             _sintomasSeleccionados.Add(key);
-            frame.BackgroundColor = Color.FromArgb("#2A1A1F");
+            frame.BackgroundColor = ColorSeleccionado;
             frame.BorderColor = Color.FromArgb("#F29EBB");
         }
     }
 
-    private void OnSentimientoTapped(object sender, TappedEventArgs e)
+    private void OnFaseBtnClicked(object sender, EventArgs e)
+    {
+        var btn = (Button)sender;
+        var key = btn.CommandParameter?.ToString();
+        if (key == null) return;
+        OnFaseTapped(sender, new TappedEventArgs(key));
+    }
+
+    private void OnSintomaBtnClicked(object sender, EventArgs e)
+    {
+        var btn = (Button)sender;
+        var key = btn.CommandParameter?.ToString();
+        if (key == null) return;
+        OnSintomaTapped(sender, new TappedEventArgs(key));
+    }
+
+    private void OnSentimientoBtnClicked(object sender, EventArgs e)
+    {
+        var btn = (Button)sender;
+        var key = btn.CommandParameter?.ToString();
+        if (key == null) return;
+        OnSentimientoTapped(sender, new TappedEventArgs(key));
+    }
+
+    private async void OnSentimientoTapped(object sender, TappedEventArgs e)
     {
         var key = e.Parameter?.ToString();
         if (key == null || !_sentimientos.ContainsKey(key)) return;
+
+        // Animación de pulsación
+        if (_sentimientos.TryGetValue(key, out var frameSent))
+            await AnimarPulsacion(frameSent);
+
         SeleccionarSentimientoPorKey(key);
     }
 
@@ -299,19 +349,19 @@ public partial class MenstrualPage : ContentPage
         try
         {
             await _database.GuardarMenstruacionAsync(
-                idUsuario:        _usuarioActual.ID_Usuario,
+                idUsuario: _usuarioActual.ID_Usuario,
                 fechaInicioCiclo: _fechaInicioCiclo.Value.ToString("yyyy-MM-dd"),
-                fase:             fase,
-                estadoAnimo:      sentimiento,
-                sintomas:         sintomasSeleccionados,
-                notas:            EditorNotas.Text ?? "");
+                fase: fase,
+                estadoAnimo: sentimiento,
+                sintomas: sintomasSeleccionados,
+                notas: EditorNotas.Text ?? "");
 
             // Recargamos la tarjeta superior para reflejar el día actual
             var estado = await _database.CalcularEstadoCicloAsync(_usuarioActual.ID_Usuario);
             ActualizarTarjetaCiclo(estado);
 
             await DisplayAlert("✓", "Tu registro se ha guardado correctamente", "OK");
-            _=NotificacionService.ProgramarRecordatorioMensatruacionAsync(28); // Programar notificación para el próximo periodo
+            _ = NotificacionService.ProgramarRecordatorioMensatruacionAsync(28); // Programar notificación para el próximo periodo
         }
         catch (Exception ex)
         {
