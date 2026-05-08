@@ -6,7 +6,7 @@ namespace app;
 
 public partial class RegistroActividadPage : ContentPage
 {
-    private Frame _frameSeleccionadoAnteriormente;
+    private Frame  _cardSeleccionada;
     private SaludDatabase _database;
     private Usuario _usuarioActual;
 
@@ -40,39 +40,40 @@ public partial class RegistroActividadPage : ContentPage
 
     // ── Selección de actividad ───────────────────────────────────────────────
 
-    private void OnActividadTapped(object sender, TappedEventArgs e)
+    private void OnActividadTapped(object sender, EventArgs e)
     {
-        bool esDark = Application.Current.RequestedTheme == AppTheme.Dark 
-              || Application.Current.UserAppTheme == AppTheme.Dark;
+        bool esDark = Application.Current.RequestedTheme == AppTheme.Dark
+            || Application.Current.UserAppTheme == AppTheme.Dark;
 
-        // Deseleccionamos la tarjeta anterior
-        if (_frameSeleccionadoAnteriormente != null)
+        if (_cardSeleccionada != null)
         {
-            _frameSeleccionadoAnteriormente.BackgroundColor = esDark
+            _cardSeleccionada.BackgroundColor = esDark
                 ? Color.FromArgb("#1E1E1E")
                 : Colors.White;
-            _frameSeleccionadoAnteriormente.BorderColor = esDark
+            _cardSeleccionada.BorderColor = esDark
                 ? Color.FromArgb("#3C3C3C")
                 : Colors.Transparent;
         }
 
-        var frameActual = (Frame)sender;
-        frameActual.BackgroundColor = esDark
+        var boton = (Button)sender;
+        var grid = (Grid)boton.Parent;
+        _cardSeleccionada = (Frame)grid.Children[0];
+
+        _cardSeleccionada.BackgroundColor = esDark
             ? Color.FromArgb("#2A3A2A")
             : Color.FromArgb("#F0F5F1");
-        frameActual.BorderColor = Color.FromArgb("#8EB497");
-        _frameSeleccionadoAnteriormente = frameActual;
+        _cardSeleccionada.BorderColor = Color.FromArgb("#8EB497");
 
-        if (e.Parameter != null)
+        var actividad = boton.CommandParameter?.ToString();
+        if (!string.IsNullOrEmpty(actividad))
         {
-            fisico.Tipo_Actividad = e.Parameter.ToString();
-            LabelActividadSeleccionada.Text = "Registrar " + fisico.Tipo_Actividad;
+            fisico.Tipo_Actividad = actividad;
+            LabelActividadSeleccionada.Text = "Registrar " + actividad;
         }
 
         ContenedorFormulario.IsVisible = true;
         ContenedorDistancia.IsVisible = fisico.RequiereDistancia;
     }
-
     // ── Guardar ──────────────────────────────────────────────────────────────
 
     private async void OnGuardarClicked(object sender, EventArgs e)
@@ -204,16 +205,16 @@ public partial class RegistroActividadPage : ContentPage
         EntryKcal.Text = "";
         EntryDistancia.Text = "";
 
-        if (_frameSeleccionadoAnteriormente != null)
+        if (_cardSeleccionada != null)
         {
             bool esDark = Application.Current.UserAppTheme == AppTheme.Dark;
-            _frameSeleccionadoAnteriormente.BackgroundColor = esDark
+            _cardSeleccionada.BackgroundColor = esDark
                 ? Color.FromArgb("#1E1E1E")
                 : Colors.White;
-            _frameSeleccionadoAnteriormente.BorderColor = esDark
+            _cardSeleccionada.BorderColor = esDark
                 ? Color.FromArgb("#3C3C3C")
                 : Colors.Transparent;
-            _frameSeleccionadoAnteriormente = null;
+            _cardSeleccionada = null;
         }
 
         ContenedorFormulario.IsVisible = false;
