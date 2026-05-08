@@ -42,6 +42,8 @@ namespace app
                 {
                     ViewModel.UsuarioActual = usuario;
                     ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
+                    System.Diagnostics.Debug.WriteLine($"[Avatar] ID: {ViewModel.AvatarActual?.ID_Avatar}, Nivel: {ViewModel.AvatarActual?.Nivel_Evolucion}, Imagen: {ViewModel.AvatarActual?.ImagenPlanta}");
+
                 }
             }
             catch (Exception ex)
