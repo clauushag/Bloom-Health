@@ -89,5 +89,15 @@ namespace app
         {
             await Shell.Current.GoToAsync("//PerfilPage");
         }
+        private async void OnActualizarDatosClicked(object sender, EventArgs e)
+        {
+            if (ViewModel.UsuarioActual != null)
+            {
+                // Guardamos los cambios en la base de datos
+                await _database.InsertarUsuarioAsync(ViewModel.UsuarioActual);
+                
+                await DisplayAlert("Éxito", "Tus datos físicos han sido actualizados correctamente.", "OK");
+            }
+        }
     }
 }

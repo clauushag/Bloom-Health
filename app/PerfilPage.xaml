@@ -6,14 +6,12 @@
              Shell.NavBarIsVisible="False">
 
     <Grid RowDefinitions="*, Auto">
-
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Spacing="20"
                                  Padding="25,40,25,20"
                                  MaximumWidthRequest="800"
                                  HorizontalOptions="Fill">
 
-                <!-- CABECERA -->
                 <VerticalStackLayout Spacing="2" Margin="0,0,0,10">
                     <Label Text="Perfil"
                            FontSize="28"
@@ -24,242 +22,100 @@
                            TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
 
-                <!-- TARJETA USUARIO (verde, se queda igual en ambos modos) -->
-                <Frame BackgroundColor="#8EB497"
-                       CornerRadius="30"
-                       HasShadow="False"
-                       BorderColor="Transparent"
-                       Padding="25"
-                       HorizontalOptions="Fill">
+                <Frame BackgroundColor="#8EB497" CornerRadius="30" HasShadow="False" Padding="25">
                     <VerticalStackLayout Spacing="20">
                         <Grid ColumnDefinitions="Auto, *" ColumnSpacing="15">
-                            <Border StrokeShape="RoundRectangle 30"
-                                    HeightRequest="60"
-                                    WidthRequest="60"
-                                    BackgroundColor="#A4C7AB"
-                                    StrokeThickness="0">
-                                <Label Text="👤"
-                                       FontSize="30"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
+                            <Border StrokeShape="RoundRectangle 30" HeightRequest="60" WidthRequest="60" BackgroundColor="#A4C7AB" StrokeThickness="0">
+                                <Label Text="👤" FontSize="30" HorizontalOptions="Center" VerticalOptions="Center"/>
                             </Border>
                             <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                                <Label Text="{Binding UsuarioActual.Nombre, StringFormat='{0}.'}"
-                                       FontSize="20"
-                                       FontAttributes="Bold"
-                                       TextColor="White"/>
-                                <Label Text="{Binding UsuarioActual.FechaNacimiento}"
-                                       FontSize="12"
-                                       TextColor="#E1EFE3"/>
+                                <Label Text="{Binding UsuarioActual.Nombre, StringFormat='{0}.'}" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="{Binding UsuarioActual.FechaNacimiento}" FontSize="12" TextColor="#E1EFE3"/>
                             </VerticalStackLayout>
                         </Grid>
 
-                        <BoxView HeightRequest="0.5"
-                                 BackgroundColor="#A4C7AB"
-                                 Margin="0,5"/>
+                        <BoxView HeightRequest="0.5" BackgroundColor="#A4C7AB" Margin="0,5"/>
 
                         <Grid ColumnDefinitions="*, *, *">
                             <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center">
-                                <Label Text="Racha" FontSize="11"
-                                       TextColor="#E1EFE3" HorizontalOptions="Center"/>
-                                <Label Text="7 días" FontSize="18"
-                                       FontAttributes="Bold" TextColor="White"
-                                       HorizontalOptions="Center"/>
+                                <Label Text="Racha" FontSize="11" TextColor="#E1EFE3" HorizontalOptions="Center"/>
+                                <Label Text="7 días" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center">
-                                <Label Text="XP Total" FontSize="11"
-                                       TextColor="#E1EFE3" HorizontalOptions="Center"/>
-                                <Label Text="{Binding AvatarActual.XP}"
-                                       FontSize="18" FontAttributes="Bold"
-                                       TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="XP Total" FontSize="11" TextColor="#E1EFE3" HorizontalOptions="Center"/>
+                                <Label Text="{Binding AvatarActual.XP}" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                             <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center">
-                                <Label Text="Nivel" FontSize="11"
-                                       TextColor="#E1EFE3" HorizontalOptions="Center"/>
-                                <Label Text="{Binding AvatarActual.Nivel_Evolucion}"
-                                       FontSize="18" FontAttributes="Bold"
-                                       TextColor="White" HorizontalOptions="Center"/>
+                                <Label Text="Nivel" FontSize="11" TextColor="#E1EFE3" HorizontalOptions="Center"/>
+                                <Label Text="{Binding AvatarActual.Nivel_Evolucion}" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center"/>
                             </VerticalStackLayout>
                         </Grid>
                     </VerticalStackLayout>
                 </Frame>
 
-                <!-- SECCIÓN CONFIGURACIÓN -->
-                <Label Text="Configuración"
-                       FontSize="13"
-                       FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                       Margin="5,10,0,0"/>
+                <Label Text="Mis Datos Físicos" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}" Margin="5,10,0,0"/>
+                
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" CornerRadius="20" Padding="20" HasShadow="False" BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
+                    <VerticalStackLayout Spacing="15">
+                        <Grid ColumnDefinitions="*, *" ColumnSpacing="20">
+                            <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                <Label Text="PESO (KG)" FontSize="10" FontAttributes="Bold" TextColor="#7A8B7C"/>
+                                <Entry Text="{Binding UsuarioActual.Peso}" Keyboard="Numeric" FontSize="16" FontAttributes="Bold" 
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=White}" BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#2C2C2C}"/>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="5">
+                                <Label Text="ALTURA (CM)" FontSize="10" FontAttributes="Bold" TextColor="#7A8B7C"/>
+                                <Entry Text="{Binding UsuarioActual.Altura}" Keyboard="Numeric" FontSize="16" FontAttributes="Bold" 
+                                       TextColor="{AppThemeBinding Light=#2D3A2F, Dark=White}" BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#2C2C2C}"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                        
+                        <Button Text="ACTUALIZAR DATOS" 
+                                Clicked="OnActualizarDatosClicked"
+                                BackgroundColor="#8EB497" 
+                                TextColor="White" 
+                                FontAttributes="Bold" 
+                                CornerRadius="15" 
+                                HeightRequest="45"/>
+                    </VerticalStackLayout>
+                </Frame>
 
-                <!-- Tarjeta Modo Oscuro -->
-                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       CornerRadius="20"
-                       Padding="15,10"
-                       HasShadow="False"
-                       BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
-                       HorizontalOptions="Fill">
-                    <Frame.Shadow>
-                        <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.05"/>
-                    </Frame.Shadow>
+                <Label Text="Configuración" FontSize="13" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}" Margin="5,10,0,0"/>
+
+                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" CornerRadius="20" Padding="15,10" HasShadow="False" BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}">
                     <Grid ColumnDefinitions="Auto, *, Auto">
-                        <Label Text="🌙"
-                               FontSize="18"
-                               VerticalOptions="Center"
-                               Margin="5,0,15,0"/>
+                        <Label Text="🌙" FontSize="18" VerticalOptions="Center" Margin="5,0,15,0"/>
                         <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Modo Oscuro"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=White}"/>
-                            <Label x:Name="LblEstadoModoOscuro"
-                                   Text="Desactivado"
-                                   FontSize="12"
-                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                            <Label Text="Modo Oscuro" FontSize="14" FontAttributes="Bold" TextColor="{AppThemeBinding Light=#2D3A2F, Dark=White}"/>
+                            <Label x:Name="LblEstadoModoOscuro" Text="Desactivado" FontSize="12" TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                         </VerticalStackLayout>
-                        <Switch x:Name="SwitchModoOscuro"
-                                Grid.Column="2"
-                                OnColor="#8EB497"
-                                ThumbColor="White"
-                                VerticalOptions="Center"
-                                Toggled="OnModoOscuroToggled"/>
+                        <Switch x:Name="SwitchModoOscuro" Grid.Column="2" OnColor="#8EB497" ThumbColor="White" VerticalOptions="Center" Toggled="OnModoOscuroToggled"/>
                     </Grid>
                 </Frame>
 
-                <!-- SECCIÓN ACCIONES -->
-                <Label Text="Acciones"
-                       FontSize="13"
-                       FontAttributes="Bold"
-                       TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"
-                       Margin="5,10,0,0"/>
-
-                <!-- Tarjeta Exportar PDF -->
-                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       CornerRadius="20"
-                       Padding="15"
-                       HasShadow="False"
-                       BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
-                       HorizontalOptions="Fill">
-                    <Frame.Shadow>
-                        <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.05"/>
-                    </Frame.Shadow>
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Border BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#2A2A2A}"
-                                StrokeShape="RoundRectangle 10"
-                                HeightRequest="40"
-                                WidthRequest="40"
-                                StrokeThickness="0"
-                                Margin="0,0,15,0">
-                            <Label Text="⬇️"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Exportar Informe PDF"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                            <Label Text="Descarga tu progreso mensual"
-                                   FontSize="11"
-                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </Frame>
-
-                <!-- Tarjeta Sincronizar Nube -->
-                <Frame BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-                       CornerRadius="20"
-                       Padding="15"
-                       HasShadow="False"
-                       BorderColor="{AppThemeBinding Light=Transparent, Dark=#3C3C3C}"
-                       HorizontalOptions="Fill">
-                    <Frame.Shadow>
-                        <Shadow Brush="#A0AF9E" Offset="0,4" Radius="10" Opacity="0.05"/>
-                    </Frame.Shadow>
-                    <Grid ColumnDefinitions="Auto, *">
-                        <Border BackgroundColor="{AppThemeBinding Light=#F1F5F1, Dark=#2A2A2A}"
-                                StrokeShape="RoundRectangle 10"
-                                HeightRequest="40"
-                                WidthRequest="40"
-                                StrokeThickness="0"
-                                Margin="0,0,15,0">
-                            <Label Text="☁️"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-                        </Border>
-                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                            <Label Text="Sincronizar con Nube"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                            <Label Text="Drive / iCloud"
-                                   FontSize="11"
-                                   TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
-                        </VerticalStackLayout>
-                    </Grid>
-                </Frame>
-
-                <!-- LINKS INFERIORES -->
-                <VerticalStackLayout Spacing="20" Margin="10,10,0,40">
-                    <Label Text="Notificaciones"
-                           FontSize="14"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                    <Label Text="Privacidad y seguridad"
-                           FontSize="14"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                    <Label Text="Ayuda y soporte"
-                           FontSize="14"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"/>
-                </VerticalStackLayout>
+                <BoxView HeightRequest="40" Color="Transparent"/>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- BARRA NAVEGACIÓN -->
-        <Frame Grid.Row="1"
-               BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}"
-               CornerRadius="0"
-               Padding="15,10"
-               HasShadow="False"
-               BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}"
-               VerticalOptions="End">
-
-            <Grid ColumnDefinitions="*, *, *"
-                  MaximumWidthRequest="800"
-                  HorizontalOptions="FillAndExpand">
-
-                <!-- Inicio -->
+        <Frame Grid.Row="1" BackgroundColor="{AppThemeBinding Light=White, Dark=#1E1E1E}" CornerRadius="0" Padding="15,10" HasShadow="False" BorderColor="{AppThemeBinding Light=#EEF2EE, Dark=#3C3C3C}" VerticalOptions="End">
+            <Grid ColumnDefinitions="*, *, *">
                 <VerticalStackLayout Grid.Column="0" HorizontalOptions="Center" Spacing="2">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnInicioTapped"/>
-                    </VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnInicioTapped"/></VerticalStackLayout.GestureRecognizers>
                     <Label Text="🏠" FontSize="22" HorizontalOptions="Center"/>
-                    <Label Text="Inicio" FontSize="11" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="Inicio" FontSize="11" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
-
-                <!-- Retos -->
                 <VerticalStackLayout Grid.Column="1" HorizontalOptions="Center" Spacing="2">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnRetosTapped"/>
-                    </VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnRetosTapped"/></VerticalStackLayout.GestureRecognizers>
                     <Label Text="🏆" FontSize="22" HorizontalOptions="Center"/>
-                    <Label Text="Retos" FontSize="11" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
+                    <Label Text="Retos" FontSize="11" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#7A8B7C, Dark=#A0AF9E}"/>
                 </VerticalStackLayout>
-
-                <!-- Perfil (activo) -->
                 <VerticalStackLayout Grid.Column="2" HorizontalOptions="Center" Spacing="2">
-                    <VerticalStackLayout.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="OnPerfilTapped"/>
-                    </VerticalStackLayout.GestureRecognizers>
+                    <VerticalStackLayout.GestureRecognizers><TapGestureRecognizer Tapped="OnPerfilTapped"/></VerticalStackLayout.GestureRecognizers>
                     <Label Text="👤" FontSize="22" HorizontalOptions="Center"/>
-                    <Label Text="Perfil" FontSize="11" HorizontalOptions="Center"
-                           TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}"
-                           FontAttributes="Bold"/>
+                    <Label Text="Perfil" FontSize="11" HorizontalOptions="Center" TextColor="{AppThemeBinding Light=#2D3A2F, Dark=#E1EFE3}" FontAttributes="Bold"/>
                 </VerticalStackLayout>
-
             </Grid>
         </Frame>
-
     </Grid>
 </ContentPage>
