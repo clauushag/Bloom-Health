@@ -22,7 +22,7 @@ namespace app
             ViewModel = new PerfilViewModel();
             BindingContext = ViewModel;
             ViewModel.TipDelDia = _tips[DateTime.Now.DayOfYear % _tips.Length];
-              _ = NotificacionService.InicializarAsync();
+            _ = NotificacionService.InicializarAsync();
         }
         protected override async void OnAppearing()
         {
@@ -43,7 +43,8 @@ namespace app
                     ViewModel.UsuarioActual = usuario;
                     ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
                 }
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // CAMBIO: En debug te muestra el error; en release lo puedes loguear
                 // en tu sistema de telemetría (AppCenter, Firebase, etc.)
@@ -75,22 +76,22 @@ namespace app
         // Navegaciones desde el menú
         private async void OnActividadTapped(object sender, EventArgs e)
             => await CerrarMenuYNavegar("//RegistroActividadPage");
- 
+
         private async void OnComidaTapped(object sender, EventArgs e)
             => await CerrarMenuYNavegar("//NutricionPage");
- 
+
         private async void OnEstadoTapped(object sender, EventArgs e)
             => await CerrarMenuYNavegar("//EstadoAnimicoPage");
- 
+
         private async void OnMenstrualTapped(object sender, EventArgs e)
             => await CerrarMenuYNavegar("//MenstrualPage");
- 
+
         private async void OnInicioTapped(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("//MainPage");
- 
+
         private async void OnRetosTapped(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("//RetosPage");
- 
+
         private async void OnPerfilTapped(object sender, EventArgs e)
             => await Shell.Current.GoToAsync("//PerfilPage");
     }

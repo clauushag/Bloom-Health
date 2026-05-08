@@ -32,6 +32,7 @@ public class PerfilViewModel : INotifyPropertyChanged
 
     // Añade estas dos propiedades si no las tienes ya
     public double ProgresoXP => AvatarActual != null ? Math.Min(AvatarActual.XP / 100.0, 1.0) : 0;
+    public string ImagenPlanta => AvatarActual?.ImagenPlanta ?? "plantamarchita.png";
     private string _tipDelDia;
     public string TipDelDia
     {
@@ -40,21 +41,6 @@ public class PerfilViewModel : INotifyPropertyChanged
         {
             _tipDelDia = value;
             OnPropertyChanged();
-        }
-    }
-    public string ImagenPlanta
-    {
-        get
-        {
-            if (AvatarActual == null) return "planta_marchita.png";
-            return AvatarActual.XP switch
-            {
-                < 100 => "planta_marchita.png",
-                < 250 => "planta_debil.png",
-                < 500 => "planta_normal.png",
-                < 800 => "plantafuerte.png",
-                _ => "planta_radiante.png"
-            };
         }
     }
 
