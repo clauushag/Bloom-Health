@@ -3,7 +3,9 @@ using SQLite;
 namespace app.Models;
 
 [Table("Menstruacion")]
-public class Menstruacion
+
+// Caso de Uso de Olivia
+public class Menstruacion 
 {
     [PrimaryKey]
     [Column("ID_Registro")]

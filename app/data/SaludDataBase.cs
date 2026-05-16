@@ -82,7 +82,7 @@ public class SaludDatabase
             await _conexion.ExecuteAsync("DROP TABLE Fisico_old;");
             await _conexion.ExecuteAsync("PRAGMA foreign_keys = ON;");
         }
-        // ── MENSTRUACIÓN ───────────────────────────────────────────────────────────────
+        // ── MENSTRUACIÓN: Caso de uso de Olivia ───────────────────────────────────────────────────────────────
         var columnasMenstruacion = await _conexion.QueryAsync<ColumnInfo>("PRAGMA table_info(Menstruacion);");
         var nombresMenstruacion = columnasMenstruacion.Select(c => c.Name).ToHashSet();
         if (!nombresMenstruacion.Contains("Fase"))
@@ -240,7 +240,7 @@ public class SaludDatabase
                 Duracion_Ciclo INTEGER NOT NULL DEFAULT 28,
                 Duracion_Periodo INTEGER NOT NULL DEFAULT 5,
                 FOREIGN KEY (ID_Registro) REFERENCES RegistroDiario(ID_Registro)
-            );");
+            );"); // Caso de Uso de Olivia
 
     }
 
@@ -826,7 +826,7 @@ public class SaludDatabase
             idUsuario, hace7dias);
     }
 
-    // ─── CICLO MENSTRUAL ────────────────────────────────────────────────
+    // ─── CICLO MENSTRUAL: Caso de uso de Olivia ────────────────────────────────────────────────
 
     /// Guarda (o actualiza) el registro menstrual de HOY para la usuaria.
     public async Task<Menstruacion> GuardarMenstruacionAsync(
@@ -937,7 +937,7 @@ public class SaludDatabase
             idUsuario);
     }
 
-    // ─── CÁLCULOS DEL CICLO ────
+    // ─── CÁLCULOS DEL CICLO: CU de Olivia ────
     /// Datos calculados sobre el estado actual del ciclo menstrual.
     public class EstadoCiclo
     {

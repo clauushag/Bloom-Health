@@ -4,6 +4,7 @@ using app.Services;
 
 namespace app;
 
+// Caso de uso Olivia 
 public partial class MenstrualPage : ContentPage
 {
     // ── DEPENDENCIAS ────────────────────────────────────────────────
