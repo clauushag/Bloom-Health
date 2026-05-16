@@ -3,6 +3,7 @@ using Microsoft.Maui.Controls;
 using app.Data;
 using app.Models;
 
+// Caso de uso "Personalizar Perfil": Claudia Sánchez Aguilar
 namespace app
 {
     public partial class PerfilPage : ContentPage
@@ -40,7 +41,7 @@ namespace app
                 ViewModel.UsuarioActual = usuario;
                 ViewModel.AvatarActual = await _database.ObtenerAvatarAsync(ViewModel.UsuarioActual.ID_Usuario);
             }
-         
+
 
         }
         private void OnModoOscuroToggled(object sender, ToggledEventArgs e)
@@ -95,7 +96,7 @@ namespace app
             {
                 // Guardamos los cambios en la base de datos
                 await _database.InsertarUsuarioAsync(ViewModel.UsuarioActual);
-                
+
                 await DisplayAlert("Éxito", "Tus datos físicos han sido actualizados correctamente.", "OK");
             }
         }

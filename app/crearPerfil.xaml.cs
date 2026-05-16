@@ -3,6 +3,7 @@ using app.Models;
 
 namespace app;
 
+// Caso de uso "Registrar Usuario": Claudia Sánchez Aguilar
 public partial class crearPerfil : ContentPage
 {
     private SaludDatabase _database;
