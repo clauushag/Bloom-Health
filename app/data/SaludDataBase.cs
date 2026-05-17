@@ -245,11 +245,13 @@ public class SaludDatabase
 
     }
 
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     public async Task InsertarNutricionalAsync(Nutricional nutricional)
     {
         await _conexion.InsertAsync(nutricional);
     }
 
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     public async Task<List<Nutricional>> ObtenerHistorialNutricionalAsync(int idUsuario)
     {
         // Une RegistroDiario con Nutricional para obtener solo los del usuario actual
@@ -261,6 +263,7 @@ public class SaludDatabase
           LIMIT 20", idUsuario);
     }
 
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     public async Task<double> ObtenerKcalHoyAsync(int idUsuario)
     {
         var hoy = DateTime.Now.ToString("yyyy-MM-dd");

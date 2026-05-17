@@ -43,6 +43,7 @@ public partial class NutricionPage : ContentPage
         await CargarHistorial();
     }
 
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     private void MostrarResultado()
     {
         double.TryParse(Kcal, NumberStyles.Any, CultureInfo.InvariantCulture, out double kcal);
@@ -87,6 +88,8 @@ public partial class NutricionPage : ContentPage
 
     private async void OnVolverClicked(object sender, EventArgs e) =>
     await Shell.Current.GoToAsync("//MainPage");
+
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     private async void OnAddFoodClicked(object sender, EventArgs e)
     {
         try
@@ -198,6 +201,7 @@ public partial class NutricionPage : ContentPage
         Nombre = "";
     }
 
+    // Caso de uso: Escanear código de barras y registrar comida — Manuel
     private async void OnAbrirScannerClicked(object sender, EventArgs e)
     {
         PermissionStatus status = await Permissions.CheckStatusAsync<Permissions.Camera>();
