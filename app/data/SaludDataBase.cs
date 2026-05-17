@@ -108,6 +108,7 @@ public class SaludDatabase
         public string Name { get; set; }
     }
 
+    // Caso de uso Registrar Usuario (Claudia)
     public async Task InsertarUsuarioAsync(Usuario usuario)
     {
         await _conexion.InsertAsync(usuario);
@@ -638,11 +639,13 @@ public class SaludDatabase
             _ => "Aceptar reto"
         };
     }
+
+    // Se genera al realizar el caso de uso Registrar Usuario (Claudia)
     public async Task CrearAvatarAsync()
     {
         Avatar avatar = new Avatar
         {
-            ID_Usuario = 1, // Aquí deberías poner el ID del usuario actual
+            ID_Usuario = 1, // Aquí debe poner el ID del usuario actual
             Nivel_Evolucion = 2,
             XP = 15,
             Estado_Salud = Avatar.Tipos_Estados_Salud[1]
