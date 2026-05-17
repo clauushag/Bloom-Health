@@ -1,12 +1,28 @@
 # 📘 README
 
+
+## 🌐 Repositorio
+
+👉 https://github.com/clauushag/Bloom-Health
+
+
+## 👨‍💻 Desarrolladores
+
+- **Carlos Blázquez Puch**
+- **Manuel Cencerrado Pedrero**
+- **Carlota Martín Vallejo**
+- **Olivia Ruiz Batalla**
+- **Claudia Sánchez Aguilar**
+
+
+
 ## 🔌 Extensiones necesarias
 - .NET MAUI  
 - SQLite Viewer  
 
 ---
 
-## 📦 Comandos para instalar paquetes NuGet
+## 📦 Instalación de dependencias
 Ejecuta los siguientes comandos en la terminal:
 
 ```bash
@@ -29,7 +45,7 @@ dotnet run -f net10.0-android
 ## 🗄️ Ubicación de la base de datos (BBDD)
 
 ```
-C:\Users\<usuario>\AppData\Local\User Name\com.companyname.app\Data
+C:\Users\<usuario>\AppData\Local\User Name\com.bloomhealth.app\Data
 ```
 
 > Reemplaza `<usuario>` por tu nombre de usuario en el sistema.
