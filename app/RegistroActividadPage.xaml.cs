@@ -1,8 +1,7 @@
+namespace app; //Caso de Uso de Carlota
 using app.Data;
 using app.Models;
 using System.Globalization;
-
-namespace app;
 
 public partial class RegistroActividadPage : ContentPage
 {
@@ -106,7 +105,7 @@ public partial class RegistroActividadPage : ContentPage
             foreach (var reto in retosCompletados)
             {
                 await DisplayAlert(
-                    "🏆 ¡Reto completado!",
+                    "🏆¡Reto completado!",
                     $"Has completado el reto '{reto.Nombre}'\n" +
                     $"🎉 +{reto.Puntos_Recompensa} XP de recompensa",
                     "¡Genial!");

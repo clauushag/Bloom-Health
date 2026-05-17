@@ -1,8 +1,7 @@
-namespace app;
+namespace app; //Caso de Uso de Carlota
 using System.Globalization;
 using app.Data;
 using app.Models;
-
 public partial class EstadoAnimicoPage : ContentPage
 {
     private Usuario _usuarioActual = null!;
@@ -273,8 +272,8 @@ public partial class EstadoAnimicoPage : ContentPage
         _estadoSeleccionado = string.Empty;
         foreach (var btn in _botonesEstado.Values)
         {
-            btn.BackgroundColor = ColorNormal;   // ← usa el tema actual
-            btn.Stroke          = BordeNormal;   // ← usa el tema actual
+            btn.BackgroundColor = ColorNormal;   
+            btn.Stroke          = BordeNormal;   
             btn.StrokeThickness = 1.5;
         }
 
