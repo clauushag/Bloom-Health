@@ -25,7 +25,7 @@ public class SaludDatabase
 
     private async Task MigrarAsync()
     {
-        // ── PROGRESO RETO ────────────────────────────────────────────────────────
+        // ── PROGRESO RETO Caso de uso Carlota ────────────────────────────────────────────────────────
         var columnasProgreso = await _conexion.QueryAsync<ColumnInfo>(
             "PRAGMA table_info(ProgresoReto);");
         var nombresProgreso = columnasProgreso.Select(c => c.Name).ToHashSet();
@@ -252,7 +252,7 @@ public class SaludDatabase
     }
 
     // Caso de uso: Escanear código de barras y registrar comida — Manuel
-    public async Task<List<Nutricional>> ObtenerHistorialNutricionalAsync(int idUsuario)
+    public async Task<List<Nutricional>> ObtenerHistorialNutricionalAsync(int idUsuario) 
     {
         // Une RegistroDiario con Nutricional para obtener solo los del usuario actual
         return await _conexion.QueryAsync<Nutricional>(
@@ -583,7 +583,7 @@ public class SaludDatabase
         return 0;
     }
 
-    public class RetoConProgreso
+    public class RetoConProgreso  // Caso de uso Carlota
     {
         public int ID_Reto { get; set; }
         public string Nombre { get; set; }
